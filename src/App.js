@@ -1,89 +1,31 @@
-import React, { useContext } from 'react';
+import React from 'react';
+// import PropTypes from 'prop-types';
 import Card from './card';
 import MultiBackend, { Preview } from 'react-dnd-multi-backend';
 import HTML5toTouch from 'react-dnd-multi-backend/dist/esm/HTML5toTouch';
 import { DndProvider } from 'react-dnd';
 import MyCardsDropZone from './my_cards_drop_zone';
 import PlayerDrop from './player_drop';
-import PropTypes from 'prop-types';
+import CardWrap from './card_wrap';
+import GeneratePreview from './generate_preview';
+import { blackCards, whiteCards } from './data';
 import styled from 'styled-components';
 
 import './App.css';
 
-const GeneratePreview = ({ width, height }) => {
-  const { style, item } = useContext(Preview.Context);
-  return <div style={{ ...style, zIndex: '2', borderRadius: '8px', backgroundColor: item.bgColor, color: item.color, width, height, display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  padding: '1em', }}>{item.text}</div>;
-};
-GeneratePreview.propTypes = {
-  width: PropTypes.number,
-  height: PropTypes.number,
-};
-GeneratePreview.defaultProps = {
-  width: null,
-  height: null,
-}
-
-const BlackCard = ({ innerRef, text }) => {
+const BlackCard = React.memo(({ innerRef, text }) => {
   return (
-    <>
-      <Card innerRef={innerRef} type="blackCard" bgColor="#000" color="#fff" text={text} />
-    </>
+    <Card innerRef={innerRef} type="blackCard" bgColor="#000" color="#fff" text={text} />
   )
-}
+})
 
-const PickUpPile = ({ text }) => {
+const PickUpPile = React.memo(({ id, text }) => {
   return (
-    <>
-      <Card type="whiteCard" bgColor="#fff" color="#000" text={text} />
-    </>
+    <Card id={id} type="whiteCard" bgColor="#fff" color="#000" text={text} />
   )
-}
+})
 
-const Table = styled.div`
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-`;
-
-const Piles = styled.div`
-  display: flex;
-  width: calc(50% - 1em);
-  justify-content: space-between;
-  align-items: center;
-  @media (orientation: portrait) {
-    width: 100%;
-  }
-`;
-
-const PlayerDecks = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  width: calc(50% - 1em);
-  justify-content: space-between;
-  align-content: space-between;
-
-  @media (orientation: portrait) {
-    width: 100%;
-    height: calc(50vh - 1em);
-  }
-`;
-
-const CardsWrap = styled.div`
-  display: flex; 
-  flex-grow: 1; 
-  padding: 1em; 
-  justify-content: space-between;
-
-  @media (orientation: portrait) {
-    flex-direction: column;
-    width: 100%;
-  }
-`;
-
-class App extends React.Component {
+class App extends React.PureComponent {
   componentDidMount() {
     this.setState({
       cardDimensions: {
@@ -94,10 +36,23 @@ class App extends React.Component {
   }
 
   state = {
-    blackCardWidth: null
+    blackCardWidth: null,
+    blackCards,
+    whiteCards,
+    myCards: [],
   }
 
   blackCardRef = React.createRef();
+
+  addCardToMyCards = passedInCard => {
+    if (this.state.myCards.length === 7) {
+      return;
+    }
+
+    this.setState(prevState => {
+      return { myCards: [...prevState.myCards, passedInCard] };
+    });
+  }
 
   render() {
     return (
@@ -106,8 +61,16 @@ class App extends React.Component {
           <Table>
             <CardsWrap>
               <Piles>
-                <BlackCard innerRef={this.blackCardRef} cardDimensions={this.state.cardDimensions} text="I like to poop on _______." />
-                <PickUpPile text="Your face." />
+                <CardWrap innerRef={this.blackCardRef}>
+                  {this.state.blackCards.map(({ text }, index) => (
+                    <BlackCard key={text} id={index} text={text} cardDimensions={this.state.cardDimensions} />
+                  ))}
+                </CardWrap>
+                <CardWrap>
+                  {this.state.whiteCards.map((text, index) => (
+                    <PickUpPile key={text} id={index} text={text} />
+                  ))}
+                </CardWrap>
               </Piles>
               <PlayerDecks className="Table-playerDecks">
                 <PlayerDrop />
@@ -121,12 +84,59 @@ class App extends React.Component {
                 <GeneratePreview width={this.state.cardDimensions?.width} height={this.state.cardDimensions?.height} />
               </Preview>
             </CardsWrap>
-            <MyCardsDropZone />
+            <MyCardsDropZone addCardToMyCards={this.addCardToMyCards} cardCount={this.state.myCards.length} />
           </Table>
         </DndProvider>
       </div>
     );
   }
 }
+
+const Table = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+`;
+
+const Piles = styled.div`
+  display: flex;
+  width: calc(50% - .25em);
+  justify-content: space-between;
+  align-items: center;
+  @media (max-width: 500px) and (orientation: portrait) {
+    width: 100%;
+  }
+`;
+
+const PlayerDecks = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  width: calc(50% - .25em);
+  justify-content: space-between;
+  align-content: center;
+  margin-right: -.5em;
+  overflow: hidden;
+
+  @media (max-width: 500px) and (orientation: portrait) {
+    width: calc(100% + 1em);
+    height: calc(50vh - 1em);
+    margin: .5em -.5em;
+  }
+`;
+
+const CardsWrap = styled.div`
+  display: flex; 
+  flex-grow: 1; 
+  padding: 1em; 
+  justify-content: space-between;
+  max-height: calc(100vh - 50px);
+
+  @media (max-width: 500px) and (orientation: portrait) {
+    max-height: none;
+    flex-direction: column;
+    width: 100%;
+    justify-content: center;
+  }
+`;
 
 export default App;

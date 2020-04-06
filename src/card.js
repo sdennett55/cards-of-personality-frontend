@@ -1,5 +1,6 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {useState} from 'react';
+import PropTypes from 'prop-types';
+import Logo from './logo';
 import styled from 'styled-components';
 import { useDrag } from 'react-dnd';
 
@@ -16,14 +17,14 @@ const CardElement = styled.div`
   padding: 1em;
 `;
 
-const Wrap = styled.div`
-  position: relative; 
-  padding-bottom: 140%;
-  background: white;
-  color: black;
-`;
+const getOpacity = ({ isDragging, opaqueOnPickup }) => {
+  const opacity = opaqueOnPickup ? 0 : .5;
 
-const Card = ({bgColor, color, innerRef, text, type}) => {
+  return isDragging ? opacity : 1;
+}
+
+const Card = ({ bgColor, color, opaqueOnPickup, text, type }) => {
+  const [isFlipped, setFlipped] = useState(false);
   const [{ isDragging }, drag] = useDrag({
     item: {
       type,
@@ -31,6 +32,7 @@ const Card = ({bgColor, color, innerRef, text, type}) => {
       text,
       bgColor,
       color,
+      isFlipped,
     },
     collect: monitor => ({
       isDragging: !!monitor.isDragging()
@@ -38,14 +40,19 @@ const Card = ({bgColor, color, innerRef, text, type}) => {
   })
 
   return (
-    <div style={{width: 'calc(50% - .5em)', position: 'relative', zIndex: '1'}}>
-    <Wrap ref={innerRef}>
-      <CardElement ref={drag} src={logo} style={{ backgroundColor: bgColor, color, opacity: (isDragging ? '.5' : '1') }}>
-        {text}
-      </CardElement>
-    </Wrap>
-    </div>
+    <CardElement onClick={()=> setFlipped(isFlipped => !isFlipped)} ref={drag} style={{ backgroundColor: bgColor, color, opacity: getOpacity({ isDragging, opaqueOnPickup }) }}>
+      {isFlipped ? text : (
+        <Logo />
+      )}
+    </CardElement>
+
   )
+}
+Card.propTypes = {
+  opaqueOnPickup: PropTypes.bool,
+}
+Card.defaultProps = {
+  opaqueOnPickup: true,
 }
 
 export default Card;

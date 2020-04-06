@@ -3,6 +3,8 @@
 }
 .App {
   text-align: center;
+  max-width: 1600px;
+  margin: 0 auto;
 }
 body {
   background: #e5e5e5;

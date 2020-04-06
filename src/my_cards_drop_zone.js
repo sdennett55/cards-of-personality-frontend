@@ -11,17 +11,19 @@ const Card = styled.div`
   border-radius: 8px 8px 0 0;
 `;
 
-const MyCardsDropZone = () => {
+const MyCardsDropZone = ({addCardToMyCards, cardCount}) => {
   const [{ isOver }, drop] = useDrop({
     accept: 'whiteCard',
-    drop: (item, monitor) => console.log(item),
+    drop: (item, monitor) => {
+      addCardToMyCards(item)
+    },
     collect: monitor => ({
       isOver: !!monitor.isOver(),
     }),
   })
   return (
     <Card ref={drop} style={{background: isOver ? '#2cce9f' : null}}>
-      {isOver ? 'DROP HERE' : 'MY CARDS (0)'}
+      {isOver ? 'DROP HERE' : `MY CARDS (${cardCount})`}
     </Card>
   )
 }

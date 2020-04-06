@@ -22,7 +22,7 @@ const Wrap = styled.div`
   padding-bottom: 140%;
 `;
 
-const PlayerDrop = () => {
+const PlayerDrop = React.memo(() => {
   const [{ isOver }, drop] = useDrop({
     accept: 'blackCard',
     drop: (item, monitor) => console.log(item),
@@ -31,7 +31,7 @@ const PlayerDrop = () => {
     }),
   })
   return (
-    <div style={{width: 'calc(33.33% - .5em)'}}>
+    <div style={{width: 'calc(33.33% - 1em)', 'margin': '0.5em'}}>
       <Wrap ref={drop}>
         <CardElement style={{ background: isOver ? '#2cce9f' : null }}>      
           <p style={{margin: 0}}>Player</p>
@@ -39,6 +39,6 @@ const PlayerDrop = () => {
       </Wrap>
     </div>
   )
-}
+})
 
 export default PlayerDrop;
