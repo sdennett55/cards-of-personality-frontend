@@ -1,6 +1,6 @@
 import React from 'react';
 // import PropTypes from 'prop-types';
-import Card from './card';
+import DraggableCard from './draggable_card';
 import MultiBackend, { Preview } from 'react-dnd-multi-backend';
 import HTML5toTouch from 'react-dnd-multi-backend/dist/esm/HTML5toTouch';
 import { DndProvider } from 'react-dnd';
@@ -15,13 +15,13 @@ import './App.css';
 
 const BlackCard = React.memo(({ innerRef, text }) => {
   return (
-    <Card innerRef={innerRef} type="blackCard" bgColor="#000" color="#fff" text={text} />
+    <DraggableCard innerRef={innerRef} type="blackCard" bgColor="#000" color="#fff" text={text} />
   )
 })
 
 const PickUpPile = React.memo(({ id, text }) => {
   return (
-    <Card id={id} type="whiteCard" bgColor="#fff" color="#000" text={text} />
+    <DraggableCard id={id} type="whiteCard" bgColor="#fff" color="#000" text={text} />
   )
 })
 
@@ -50,7 +50,14 @@ class App extends React.PureComponent {
     }
 
     this.setState(prevState => {
-      return { myCards: [...prevState.myCards, passedInCard] };
+      const indexOfPassedInCard = prevState.whiteCards.findIndex(whiteCard => whiteCard === passedInCard.text);
+      console.log(prevState.whiteCards.length);
+      const newWhiteCards = [...prevState.whiteCards.splice(indexOfPassedInCard, 1)];
+      console.log(prevState.whiteCards.length)
+      return { 
+        myCards: [...prevState.myCards, passedInCard],
+        whiteCards: [...prevState.whiteCards],
+      };
     });
   }
 
@@ -84,7 +91,7 @@ class App extends React.PureComponent {
                 <GeneratePreview width={this.state.cardDimensions?.width} height={this.state.cardDimensions?.height} />
               </Preview>
             </CardsWrap>
-            <MyCardsDropZone addCardToMyCards={this.addCardToMyCards} cardCount={this.state.myCards.length} />
+            <MyCardsDropZone addCardToMyCards={this.addCardToMyCards} myCards={this.state.myCards} />
           </Table>
         </DndProvider>
       </div>
@@ -105,6 +112,7 @@ const Piles = styled.div`
   align-items: center;
   @media (max-width: 500px) and (orientation: portrait) {
     width: 100%;
+    order: 1;
   }
 `;
 

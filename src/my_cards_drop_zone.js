@@ -1,8 +1,10 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styled from 'styled-components';
+import cx from 'classnames';
 import {useDrop} from 'react-dnd';
+import Card from './card';
 
-const Card = styled.div`
+const MyCards = styled.button`
   width: 100%;
   height: 50px;
   line-height: 50px;
@@ -11,7 +13,39 @@ const Card = styled.div`
   border-radius: 8px 8px 0 0;
 `;
 
-const MyCardsDropZone = ({addCardToMyCards, cardCount}) => {
+const Wrapper = styled.div`
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  display: flex;
+  align-items: center;
+`;
+
+const Scrolling = styled.div`
+  display: flex;
+  position: absolute;
+  padding-right: 1.5em;
+`;
+
+const BackToTableButton = styled.button`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  background: #fff;
+  color: #000;
+  height: 50px;
+  appearance: none;
+  border: 0;
+  padding: 0;
+  margin: 0;
+`;
+
+const MyCardsDropZone = ({addCardToMyCards, myCards}) => {
+  const [isOpen, setOpen] = useState(false);
   const [{ isOver }, drop] = useDrop({
     accept: 'whiteCard',
     drop: (item, monitor) => {
@@ -21,10 +55,24 @@ const MyCardsDropZone = ({addCardToMyCards, cardCount}) => {
       isOver: !!monitor.isOver(),
     }),
   })
+
+  // const MyCardsContainer = isOpen ? ContainerOpen : ContainerClosed; 
   return (
-    <Card ref={drop} style={{background: isOver ? '#2cce9f' : null}}>
-      {isOver ? 'DROP HERE' : `MY CARDS (${cardCount})`}
-    </Card>
+    <>
+      <MyCards onClick={() => setOpen(isOpen => !isOpen)} ref={drop} style={{background: isOver ? '#2cce9f' : null}}>
+        {isOver ? 'DROP HERE' : `MY CARDS (${myCards.length})`}
+      </MyCards>
+      <div className={cx('MyCardsContainer', {'is-open': isOpen})}>
+        <BackToTableButton onClick={() => setOpen(isOpen => !isOpen)}>Back to Game</BackToTableButton>
+        <Wrapper>
+          <Scrolling>
+            {myCards.map(card => (
+              <Card {...card} />
+            ))}
+          </Scrolling>
+        </Wrapper>
+      </div>
+    </>
   )
 }
 
