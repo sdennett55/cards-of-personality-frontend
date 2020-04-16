@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import cx from 'classnames';
 import {useDrop} from 'react-dnd';
 import Card from './card';
+import BlankCard from './blank_card';
 
 const MyCards = styled.button`
   width: 100%;
@@ -11,6 +12,8 @@ const MyCards = styled.button`
   background-color: #000;
   color: #fff;
   border-radius: 8px 8px 0 0;
+  border: 0;
+  padding: 0;
 `;
 
 const Wrapper = styled.div`
@@ -22,6 +25,7 @@ const Wrapper = styled.div`
   -webkit-overflow-scrolling: touch;
   display: flex;
   align-items: center;
+  padding-left: 2em;
 `;
 
 const Scrolling = styled.div`
@@ -43,6 +47,13 @@ const BackToTableButton = styled.button`
   padding: 0;
   margin: 0;
 `;
+
+function getBlankCards(myCards) {
+  const length = 7 - myCards.length;
+  const arr = Array.from({length}, (_, i) => i);
+
+  return arr;
+}
 
 const MyCardsDropZone = ({addCardToMyCards, myCards}) => {
   const [isOpen, setOpen] = useState(false);
@@ -67,7 +78,10 @@ const MyCardsDropZone = ({addCardToMyCards, myCards}) => {
         <Wrapper>
           <Scrolling>
             {myCards.map(card => (
-              <Card {...card} />
+              <Card key={card.text} {...card} />
+            ))}
+            {getBlankCards(myCards).map(num => (
+              <BlankCard key={num} />
             ))}
           </Scrolling>
         </Wrapper>

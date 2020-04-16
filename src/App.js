@@ -10,18 +10,20 @@ import CardWrap from './card_wrap';
 import GeneratePreview from './generate_preview';
 import { blackCards, whiteCards } from './data';
 import styled from 'styled-components';
-
+import io from 'socket.io-client';
 import './App.css';
 
-const BlackCard = React.memo(({ innerRef, text }) => {
+var socket = io('http://127.0.0.1:3001');
+
+const BlackCard = React.memo(({ innerRef, updateRoundStarted, text }) => {
   return (
-    <DraggableCard innerRef={innerRef} type="blackCard" bgColor="#000" color="#fff" text={text} />
+    <DraggableCard socket={socket} updateRoundStarted={updateRoundStarted} innerRef={innerRef} type="blackCard" bgColor="#000" color="#fff" text={text} />
   )
 })
 
 const PickUpPile = React.memo(({ id, text }) => {
   return (
-    <DraggableCard id={id} type="whiteCard" bgColor="#fff" color="#000" text={text} />
+    <DraggableCard socket={socket} id={id} type="whiteCard" bgColor="#fff" color="#000" text={text} />
   )
 })
 
@@ -35,14 +37,47 @@ class App extends React.PureComponent {
     });
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (!prevState.roundStarted && this.state.roundStarted) {
+      console.log('round started!!!');
+    }
+  }
+
   state = {
     blackCardWidth: null,
     blackCards,
     whiteCards,
     myCards: [],
+    players: [],
+    roundStarted: false,
+    currentHost: 0,
   }
 
   blackCardRef = React.createRef();
+
+  getTheCurrentHost = index => this.setState({currentHost: index});
+
+  updateRoundStarted = hasStarted => this.setState({roundStarted: hasStarted});
+
+  addCardToPlayer = passedInCard => {
+    if (this.state.roundStarted) {
+      return;
+    }
+
+    // get the players state, the player index, and give that the passedInCard (players[index].blackCards.push(passedInCard))
+    // remove blackcard from blackcards
+
+    // this.setState(prevState => {
+    //   const indexOfPassedInCard = prevState.blackCards.findIndex(blackCard => blackCard === passedInCard.text);
+    //   const newblackCards = [...prevState.blackCards];
+    //   newblackCards.splice(indexOfPassedInCard, 1);
+
+    //   return { 
+    //     players: [...prevState.players, passedInCard],
+    //     blackCards: newblackCards,
+    //   };
+    // });
+  }
 
   addCardToMyCards = passedInCard => {
     if (this.state.myCards.length === 7) {
@@ -51,12 +86,12 @@ class App extends React.PureComponent {
 
     this.setState(prevState => {
       const indexOfPassedInCard = prevState.whiteCards.findIndex(whiteCard => whiteCard === passedInCard.text);
-      console.log(prevState.whiteCards.length);
-      const newWhiteCards = [...prevState.whiteCards.splice(indexOfPassedInCard, 1)];
-      console.log(prevState.whiteCards.length)
+      const newWhiteCards = [...prevState.whiteCards];
+      newWhiteCards.splice(indexOfPassedInCard, 1);
+
       return { 
         myCards: [...prevState.myCards, passedInCard],
-        whiteCards: [...prevState.whiteCards],
+        whiteCards: newWhiteCards,
       };
     });
   }
@@ -69,27 +104,22 @@ class App extends React.PureComponent {
             <CardsWrap>
               <Piles>
                 <CardWrap innerRef={this.blackCardRef}>
-                  {this.state.blackCards.map(({ text }, index) => (
-                    <BlackCard key={text} id={index} text={text} cardDimensions={this.state.cardDimensions} />
+                  {this.state.blackCards.slice(Math.max(this.state.blackCards.length - 7, 0)).map(({ text }, index) => (
+                    <BlackCard updateRoundStarted={this.updateRoundStarted} key={text} id={index} text={text} cardDimensions={this.state.cardDimensions} />
                   ))}
                 </CardWrap>
                 <CardWrap>
-                  {this.state.whiteCards.map((text, index) => (
+                  {this.state.whiteCards.slice(Math.max(this.state.whiteCards.length - 7, 0)).map((text, index) => (
                     <PickUpPile key={text} id={index} text={text} />
                   ))}
                 </CardWrap>
               </Piles>
               <PlayerDecks className="Table-playerDecks">
-                <PlayerDrop />
-                <PlayerDrop />
-                <PlayerDrop />
-                <PlayerDrop />
-                <PlayerDrop />
-                <PlayerDrop />
+                {Array.from({length: 6}, (_, i) => i).map(index => (
+                  <PlayerDrop index={index} roundStarted={this.state.roundStarted} addCardToPlayer={this.addCardToPlayer} />
+                ))}
               </PlayerDecks>
-              <Preview>
-                <GeneratePreview width={this.state.cardDimensions?.width} height={this.state.cardDimensions?.height} />
-              </Preview>
+             
             </CardsWrap>
             <MyCardsDropZone addCardToMyCards={this.addCardToMyCards} myCards={this.state.myCards} />
           </Table>
@@ -112,6 +142,7 @@ const Piles = styled.div`
   align-items: center;
   @media (max-width: 500px) and (orientation: portrait) {
     width: 100%;
+    margin: .5em 0;
     order: 1;
   }
 `;
@@ -128,7 +159,7 @@ const PlayerDecks = styled.div`
   @media (max-width: 500px) and (orientation: portrait) {
     width: calc(100% + 1em);
     height: calc(50vh - 1em);
-    margin: .5em -.5em;
+    margin: .5em -.5em .5em;
   }
 `;
 

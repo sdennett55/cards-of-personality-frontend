@@ -13,6 +13,8 @@ const CardElement = styled.div`
   justify-content: center;
   align-items: center;
   padding: 1em;
+  border: 2px dashed #fff;
+  color: #fff;
 `;
 
 const Wrapper = styled.div`
@@ -20,24 +22,24 @@ const Wrapper = styled.div`
   padding-bottom: 140%;
 `;
 
-const Card = ({ bgColor, color, text }) => {
+const BlankCard = () => {
 
   return (
     <div style={{width: '150px', margin: '.5em'}}>
       <Wrapper>
-        <CardElement style={{ backgroundColor: bgColor, color, }}>
-          {text}
+        <CardElement>
+          Draw a card
         </CardElement>
       </Wrapper>
     </div>
 
   )
 }
-// Card.propTypes = {
+// BlankCard.propTypes = {
 //   opaqueOnPickup: PropTypes.bool,
 // }
-// Card.defaultProps = {
+// BlankCard.defaultProps = {
 //   opaqueOnPickup: true,
 // }
 
-export default Card;
+export default BlankCard;

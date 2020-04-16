@@ -22,23 +22,28 @@ const Wrap = styled.div`
   padding-bottom: 140%;
 `;
 
-const PlayerDrop = React.memo(() => {
+const PlayerDrop = ({ index, roundStarted }) => {
   const [{ isOver }, drop] = useDrop({
     accept: 'blackCard',
-    drop: (item, monitor) => console.log(item),
+    drop: (item, monitor) => {
+      if (!roundStarted) {
+        return;
+      }
+      console.log(item);
+    },
     collect: monitor => ({
       isOver: !!monitor.isOver(),
     }),
   })
   return (
-    <div style={{width: 'calc(33.33% - 1em)', 'margin': '0.5em'}}>
+    <div style={{ position: 'relative', width: 'calc(33.33% - 1em)', 'margin': '0.5em' }}>
       <Wrap ref={drop}>
-        <CardElement style={{ background: isOver ? '#2cce9f' : null }}>      
-          <p style={{margin: 0}}>Player</p>
+        <CardElement style={{ background: isOver ? '#2cce9f' : null }}>
+          <p style={{ margin: 0 }}>Player {index + 1}</p>
         </CardElement>
       </Wrap>
     </div>
   )
-})
+}
 
 export default PlayerDrop;
