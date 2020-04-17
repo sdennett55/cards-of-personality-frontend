@@ -24,8 +24,7 @@ const getOpacity = ({ isDragging, opaqueOnPickup }) => {
 }
 
 const DraggableCard = ({ bgColor, color, opaqueOnPickup, socket, text, type, updateRoundStarted, whiteCards }) => {
-  const [ghostText, setGhostText] = useState('');
-  const [ghostDimensions, setGhostDimensions] = useState({x: 0, y: 0,});
+  const [ghostCards, setGhostCards] = useState([]);
   const [isFlipped, setFlipped] = useState(false);
   const [{ isDragging, getDifferenceFromInitialOffset, getItem }, drag] = useDrag({
     item: {
@@ -44,40 +43,63 @@ const DraggableCard = ({ bgColor, color, opaqueOnPickup, socket, text, type, upd
   })
 
   if (isDragging) {
-    const {x, y} = getDifferenceFromInitialOffset;
-    
+    const { x, y } = getDifferenceFromInitialOffset;
 
     // send dragged card to server
-    socket.emit('dragged card', {drag, type, text, x, y});
-
-    // console.log(getItem, getDifferenceFromInitialOffset);
+    socket.emit('dragged card', { type, text, x, y });
   }
 
   useEffect(() => {
-    // on everyones client, show the card being dragged
-    socket.on('dragged card', ({type: otherType, text: otherText, x, y}) => {
+    if (!isDragging) {
+      console.log('not dragging');
+      // send card that was let go to server
+      socket.emit('let go card', { ghostDragging: false, type, text });
+    }
+  }, [isDragging])
+
+  useEffect(() => {
+    // on everyones client but the sender, show the card being returned to deck if let go prematurely
+    socket.on('let go card', ({ type: otherType, text: otherText, }) => {
       if (otherType === 'whiteCard') {
         if (text === otherText) {
-          setGhostDimensions({x, y});
-          setGhostText(otherText);
+          // find the card from ghostCards
+          // remove from array
+          const ghostCardIndex = ghostCards.findIndex(ghostCard => ghostCard.text === otherText);
+          const newGhostCards = [...ghostCards].splice(ghostCardIndex, 1);
+          setGhostCards(newGhostCards);
         }
-      } else {
-        // const selectedCard = this.state.blackCards.find(blackCard => blackCard.text === text);
       }
     });
+
+    // on everyones client but the sender, show the card being dragged
+    socket.on('dragged card', ({ type: otherType, text: otherText, x, y }) => {
+      if (otherType === 'whiteCard') {
+        if (text === otherText) {
+          setGhostCards([...ghostCards, { isDragging: true, type: otherType, text: otherText, x, y }]);
+        }
+      }
+    });
+
   }, []);
 
   const getTransform = () => {
-    if (ghostText === text) {
-      return `translate3d(${ghostDimensions.x}px, ${ghostDimensions.y}px, 0)`;
+    if (ghostCards.length) {
+
+        if (ghostCards[0].text === text) {
+          return {pointerEvents: 'none', opacity: '.5', transform: `translate3d(${ghostCards[0].x}px, ${ghostCards[0].y}px, 0)`};
+        }
+        if (ghostCards[1] && ghostCards[1].text === text) {
+          return {pointerEvents: 'none', opacity: '.5', transform: `translate3d(${ghostCards[1].x}px, ${ghostCards[1].y}px, 0)`};
+        } else {
+          return {pointerEvents: 'none', transform: 'none'};
+        }
     }
     if (isDragging && getDifferenceFromInitialOffset) {
-      return `translate3d(${getDifferenceFromInitialOffset.x}px, ${getDifferenceFromInitialOffset.y}px, 0)`;
+      return {pointerEvents: 'none', transform: `translate3d(${getDifferenceFromInitialOffset.x}px, ${getDifferenceFromInitialOffset.y}px, 0)`};
     }
 
-    return 'none';
+    return {transform: 'none'};
   }
-
 
   return (
     <CardElement onClick={() => {
@@ -88,7 +110,7 @@ const DraggableCard = ({ bgColor, color, opaqueOnPickup, socket, text, type, upd
         return setFlipped(true);
       }
       setFlipped(isFlipped => !isFlipped)
-    }} ref={drag} style={{ zIndex: (isDragging ? 999 : 'auto'), transform: getTransform(), pointerEvents: (isDragging ? 'none' : 'auto'), backgroundColor: bgColor, color, opacity: 1 }}>
+    }} ref={drag} style={{ zIndex: (isDragging ? 999 : 'auto'), ...getTransform(), backgroundColor: bgColor, color}}>
 
       {isFlipped ? text : (
         <Logo />

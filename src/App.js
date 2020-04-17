@@ -13,7 +13,7 @@ import styled from 'styled-components';
 import io from 'socket.io-client';
 import './App.css';
 
-var socket = io('http://127.0.0.1:3001');
+var socket = io('http://10.0.0.208:3001');
 
 const BlackCard = React.memo(({ innerRef, updateRoundStarted, text }) => {
   return (
