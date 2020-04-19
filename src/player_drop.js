@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useDrop } from 'react-dnd';
+import DraggableCard from './draggable_card';
 
 const CardElement = styled.div`
   position: absolute;
@@ -22,13 +23,26 @@ const Wrap = styled.div`
   padding-bottom: 140%;
 `;
 
-const PlayerDrop = ({ index, roundStarted }) => {
+const getPlayerName = ({index, myName, players, socket}) => {
+  if (players[index].id === socket.id) {
+    return myName;
+  }
+  if (players[index].name) {
+    return players[index].name;
+  }
+
+  return `Player ${index + 1}`;
+}
+
+const PlayerDrop = ({ index, roundStarted, myName, players, socket, addCardToPlayer }) => {
   const [{ isOver }, drop] = useDrop({
     accept: 'blackCard',
     drop: (item, monitor) => {
       if (!roundStarted) {
         return;
       }
+
+      addCardToPlayer(item);
       console.log(item);
     },
     collect: monitor => ({
@@ -39,9 +53,12 @@ const PlayerDrop = ({ index, roundStarted }) => {
     <div style={{ position: 'relative', width: 'calc(33.33% - 1em)', 'margin': '0.5em' }}>
       <Wrap ref={drop}>
         <CardElement style={{ background: isOver ? '#2cce9f' : null }}>
-          <p style={{ margin: 0 }}>Player {index + 1}</p>
+  <p style={{ margin: 0 }}>{getPlayerName({myName, players, index, socket})}</p>
         </CardElement>
       </Wrap>
+      {players && players[index] && players[index].blackCards &&  players[index].blackCards.map(blackCard => (
+        <DraggableCard key={blackCard.text} {...blackCard} />
+      ))}
     </div>
   )
 }

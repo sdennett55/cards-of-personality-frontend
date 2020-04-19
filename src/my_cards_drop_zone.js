@@ -55,7 +55,7 @@ function getBlankCards(myCards) {
   return arr;
 }
 
-const MyCardsDropZone = ({addCardToMyCards, myCards}) => {
+const MyCardsDropZone = ({addCardToMyCards, myCards, myName}) => {
   const [isOpen, setOpen] = useState(false);
   const [{ isOver }, drop] = useDrop({
     accept: 'whiteCard',
@@ -67,11 +67,10 @@ const MyCardsDropZone = ({addCardToMyCards, myCards}) => {
     }),
   })
 
-  // const MyCardsContainer = isOpen ? ContainerOpen : ContainerClosed; 
   return (
     <>
       <MyCards onClick={() => setOpen(isOpen => !isOpen)} ref={drop} style={{background: isOver ? '#2cce9f' : null}}>
-        {isOver ? 'DROP HERE' : `MY CARDS (${myCards.length})`}
+        {isOver ? 'DROP HERE' : `${myName}'S CARDS (${myCards.length})`}
       </MyCards>
       <div className={cx('MyCardsContainer', {'is-open': isOpen})}>
         <BackToTableButton onClick={() => setOpen(isOpen => !isOpen)}>Back to Game</BackToTableButton>

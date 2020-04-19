@@ -17,16 +17,10 @@ const CardElement = styled.div`
   padding: 1em;
 `;
 
-const getOpacity = ({ isDragging, opaqueOnPickup }) => {
-  const opacity = opaqueOnPickup ? 0 : .5;
-
-  return isDragging ? opacity : 1;
-}
-
-const DraggableCard = ({ bgColor, color, opaqueOnPickup, socket, text, type, updateRoundStarted, whiteCards }) => {
+const DraggableCard = ({ bgColor, color, socket, text, type, updateRoundStarted }) => {
   const [ghostCards, setGhostCards] = useState([]);
   const [isFlipped, setFlipped] = useState(false);
-  const [{ isDragging, getDifferenceFromInitialOffset, getItem }, drag] = useDrag({
+  const [{ isDragging, getDifferenceFromInitialOffset }, drag] = useDrag({
     item: {
       type,
       id: 0,
@@ -38,11 +32,10 @@ const DraggableCard = ({ bgColor, color, opaqueOnPickup, socket, text, type, upd
     collect: monitor => ({
       isDragging: !!monitor.isDragging(),
       getDifferenceFromInitialOffset: !!monitor.isDragging() && monitor.getDifferenceFromInitialOffset(),
-      getItem: monitor.getItem(),
     })
   })
 
-  if (isDragging) {
+  if (isDragging && getDifferenceFromInitialOffset) {
     const { x, y } = getDifferenceFromInitialOffset;
 
     // send dragged card to server
@@ -85,20 +78,20 @@ const DraggableCard = ({ bgColor, color, opaqueOnPickup, socket, text, type, upd
   const getTransform = () => {
     if (ghostCards.length) {
 
-        if (ghostCards[0].text === text) {
-          return {pointerEvents: 'none', opacity: '.5', transform: `translate3d(${ghostCards[0].x}px, ${ghostCards[0].y}px, 0)`};
-        }
-        if (ghostCards[1] && ghostCards[1].text === text) {
-          return {pointerEvents: 'none', opacity: '.5', transform: `translate3d(${ghostCards[1].x}px, ${ghostCards[1].y}px, 0)`};
-        } else {
-          return {pointerEvents: 'none', transform: 'none'};
-        }
+      if (ghostCards[0].text === text) {
+        return { pointerEvents: 'none', opacity: '.5', transform: `translate3d(${ghostCards[0].x}px, ${ghostCards[0].y}px, 0)` };
+      }
+      if (ghostCards[1] && ghostCards[1].text === text) {
+        return { pointerEvents: 'none', opacity: '.5', transform: `translate3d(${ghostCards[1].x}px, ${ghostCards[1].y}px, 0)` };
+      } else {
+        return { pointerEvents: 'none', transform: 'none' };
+      }
     }
     if (isDragging && getDifferenceFromInitialOffset) {
-      return {pointerEvents: 'none', transform: `translate3d(${getDifferenceFromInitialOffset.x}px, ${getDifferenceFromInitialOffset.y}px, 0)`};
+      return { pointerEvents: 'none', transform: `translate3d(${getDifferenceFromInitialOffset.x}px, ${getDifferenceFromInitialOffset.y}px, 0)` };
     }
 
-    return {transform: 'none'};
+    return { transform: 'none' };
   }
 
   return (
@@ -110,7 +103,7 @@ const DraggableCard = ({ bgColor, color, opaqueOnPickup, socket, text, type, upd
         return setFlipped(true);
       }
       setFlipped(isFlipped => !isFlipped)
-    }} ref={drag} style={{ zIndex: (isDragging ? 999 : 'auto'), ...getTransform(), backgroundColor: bgColor, color}}>
+    }} ref={drag} style={{ zIndex: (isDragging ? 999 : 'auto'), ...getTransform(), backgroundColor: bgColor, color }}>
 
       {isFlipped ? text : (
         <Logo />
@@ -119,11 +112,11 @@ const DraggableCard = ({ bgColor, color, opaqueOnPickup, socket, text, type, upd
 
   )
 }
-DraggableCard.propTypes = {
-  opaqueOnPickup: PropTypes.bool,
-}
-DraggableCard.defaultProps = {
-  opaqueOnPickup: true,
-}
+// DraggableCard.propTypes = {
+//   opaqueOnPickup: PropTypes.bool,
+// }
+// DraggableCard.defaultProps = {
+//   opaqueOnPickup: true,
+// }
 
 export default DraggableCard;

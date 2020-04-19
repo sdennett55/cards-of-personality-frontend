@@ -7,6 +7,7 @@ import { DndProvider } from 'react-dnd';
 import MyCardsDropZone from './my_cards_drop_zone';
 import PlayerDrop from './player_drop';
 import CardWrap from './card_wrap';
+import BlankPlayerCard from './blank_player_card';
 import GeneratePreview from './generate_preview';
 import { blackCards, whiteCards } from './data';
 import styled from 'styled-components';
@@ -29,11 +30,75 @@ const PickUpPile = React.memo(({ id, text }) => {
 
 class App extends React.PureComponent {
   componentDidMount() {
+    if (localStorage.getItem('cardsAgainstSteve-name')) {
+      this.setState({
+        myName: localStorage.getItem('cardsAgainstSteve-name'),
+        showNamePopup: false,
+      });
+
+      // can't reliably access the "socket" variable until it connects
+      socket.on('connect', () => {
+        const players = [...this.state.players].map(player => {
+          if (player.id === socket.id) {
+            return { ...player, name: localStorage.getItem('cardsAgainstSteve-name') }
+          }
+          return player;
+        });
+        this.setState({
+          players,
+        });
+
+        socket.emit('name change', { id: socket.id, name: localStorage.getItem('cardsAgainstSteve-name'), poop: 'poop' });
+
+      });
+    }
+
+    const newPlayers = [...this.state.players, { socket: socket.io }];
+
     this.setState({
       cardDimensions: {
         width: this.blackCardRef.current.offsetWidth,
         height: this.blackCardRef.current.offsetHeight
+      },
+      players: newPlayers,
+    });
+
+    // when a player changes their name, update players state with new name
+    socket.on('name change', players => {
+      this.setState({ players });
+    });
+
+    // when a player disconnects from the server, remove them from state
+    socket.on('user disconnected', players => {
+      console.log('user disconnected');
+      this.setState({ players });
+    });
+
+    // when a new user connects
+    // send that specific user the latest server states
+    socket.on('new connection', ({ players, whiteCards }) => {
+      if (whiteCards && whiteCards.length > 0) {
+        this.setState({ whiteCards });
       }
+
+      console.log('neww userrr connectedddd', players)
+      this.setState(() => ({ players }));
+    });
+
+    // when a new user connects, let every client know.
+    socket.on('user connected', players => {
+      this.setState({ players });
+    });
+
+    socket.on('dropped in my cards', ({ text }) => {
+      const droppedCardIndex = this.state.whiteCards.findIndex(whiteCard => whiteCard === text);
+      const newWhiteCards = [...this.state.whiteCards];
+      newWhiteCards.splice(droppedCardIndex, 1);
+
+      // send the server the new whiteCards
+      socket.emit('update whiteCards', newWhiteCards);
+
+      this.setState({ whiteCards: newWhiteCards });
     });
   }
 
@@ -48,35 +113,46 @@ class App extends React.PureComponent {
     blackCards,
     whiteCards,
     myCards: [],
+    myName: '',
     players: [],
     roundStarted: false,
     currentHost: 0,
+    showNamePopup: true,
   }
 
   blackCardRef = React.createRef();
 
-  getTheCurrentHost = index => this.setState({currentHost: index});
+  getTheCurrentHost = index => this.setState({ currentHost: index });
 
-  updateRoundStarted = hasStarted => this.setState({roundStarted: hasStarted});
+  updateRoundStarted = hasStarted => this.setState({ roundStarted: hasStarted });
 
   addCardToPlayer = passedInCard => {
-    if (this.state.roundStarted) {
-      return;
-    }
+    // if (this.state.roundStarted) {
+    //   return;
+    // }
 
     // get the players state, the player index, and give that the passedInCard (players[index].blackCards.push(passedInCard))
     // remove blackcard from blackcards
+    this.setState(prevState => {
+      const indexOfPassedInCard = prevState.blackCards.findIndex(blackCard => blackCard === passedInCard.text);
+      const newBlackCards = [...prevState.blackCards];
+      newBlackCards.splice(indexOfPassedInCard, 1);
 
-    // this.setState(prevState => {
-    //   const indexOfPassedInCard = prevState.blackCards.findIndex(blackCard => blackCard === passedInCard.text);
-    //   const newblackCards = [...prevState.blackCards];
-    //   newblackCards.splice(indexOfPassedInCard, 1);
+      // update player card property with new card
+      const newPlayers = [...prevState.players].map(player => {
+        if (player.id === socket.id) {
+          const existingBlackCards = player.blackCards || [];
+          return { ...player, blackCards: [...existingBlackCards, { ...passedInCard }] }
+        }
+        return player;
+      });
+      console.log({ newBlackCards });
 
-    //   return { 
-    //     players: [...prevState.players, passedInCard],
-    //     blackCards: newblackCards,
-    //   };
-    // });
+      return {
+        players: newPlayers,
+        blackCards: newBlackCards,
+      };
+    });
   }
 
   addCardToMyCards = passedInCard => {
@@ -84,21 +160,54 @@ class App extends React.PureComponent {
       return;
     }
 
+    // send event that a card was moved to someones deck to the server
+    socket.emit('dropped in my cards', passedInCard);
+
     this.setState(prevState => {
       const indexOfPassedInCard = prevState.whiteCards.findIndex(whiteCard => whiteCard === passedInCard.text);
       const newWhiteCards = [...prevState.whiteCards];
       newWhiteCards.splice(indexOfPassedInCard, 1);
 
-      return { 
+      return {
         myCards: [...prevState.myCards, passedInCard],
         whiteCards: newWhiteCards,
       };
     });
   }
 
+  getBlankPlayerCards(players) {
+    const length = 6 - players.length;
+    const arr = Array.from({ length }, (_, i) => i);
+
+    return arr;
+  }
+
+  updateMyName = e => {
+    const myName = e.target.value.toUpperCase().trim();
+    this.setState({ myName });
+    console.log('NAME CHANGE!', socket.id);
+    // send event that a user just changed their name
+    socket.emit('name change', { id: socket.id, name: myName });
+  };
+
+  handleSubmit = e => {
+    e.preventDefault();
+    localStorage.setItem('cardsAgainstSteve-name', this.state.myName);
+    this.setState({ showNamePopup: false });
+  }
+
   render() {
     return (
       <div className="App">
+        {this.state.showNamePopup && (
+          <form className="App-namePopup" onSubmit={e => this.handleSubmit(e)}>
+
+            <label htmlFor="name">Enter your name:</label>
+
+            <input type="text" id="name" onChange={e => this.updateMyName(e)} />
+            <button type="submit">Submit</button>
+          </form>
+        )}
         <DndProvider backend={MultiBackend} options={HTML5toTouch}>
           <Table>
             <CardsWrap>
@@ -115,13 +224,16 @@ class App extends React.PureComponent {
                 </CardWrap>
               </Piles>
               <PlayerDecks className="Table-playerDecks">
-                {Array.from({length: 6}, (_, i) => i).map(index => (
-                  <PlayerDrop index={index} roundStarted={this.state.roundStarted} addCardToPlayer={this.addCardToPlayer} />
+                {this.state.players && this.state.players.map(({ name }, index) => (
+                  <PlayerDrop index={index} socket={socket} roundStarted={this.state.roundStarted} addCardToPlayer={this.addCardToPlayer} players={this.state.players} myName={this.state.myName} />
+                ))}
+                {this.getBlankPlayerCards(this.state.players).map((num, index) => (
+                  <BlankPlayerCard key={num} index={index} count={this.state.players.length} />
                 ))}
               </PlayerDecks>
-             
+
             </CardsWrap>
-            <MyCardsDropZone addCardToMyCards={this.addCardToMyCards} myCards={this.state.myCards} />
+            <MyCardsDropZone addCardToMyCards={this.addCardToMyCards} myCards={this.state.myCards} myName={this.state.myName} />
           </Table>
         </DndProvider>
       </div>
