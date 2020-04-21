@@ -16,9 +16,9 @@ import './App.css';
 
 var socket = io('http://10.0.0.208:3001');
 
-export const BlackCard = React.memo(({ updateRoundStarted, text, setUserIsDragging }) => {
+export const BlackCard = React.memo(({ text, setUserIsDragging }) => {
   return (
-    <DraggableCard setUserIsDragging={setUserIsDragging} socket={socket} updateRoundStarted={updateRoundStarted} type="blackCard" bgColor="#000" color="#fff" text={text} />
+    <DraggableCard setUserIsDragging={setUserIsDragging} socket={socket} type="blackCard" bgColor="#000" color="#fff" text={text} />
   )
 })
 
@@ -48,7 +48,7 @@ class App extends React.PureComponent {
           players,
         });
 
-        socket.emit('name change', { id: socket.id, name: localStorage.getItem('cardsAgainstSteve-name'), poop: 'poop' });
+        socket.emit('name change', { id: socket.id, name: localStorage.getItem('cardsAgainstSteve-name') });
 
       });
     }
@@ -112,12 +112,6 @@ class App extends React.PureComponent {
     });
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (!prevState.roundStarted && this.state.roundStarted) {
-      console.log('round started!!!');
-    }
-  }
-
   state = {
     blackCardWidth: null,
     blackCards,
@@ -125,7 +119,6 @@ class App extends React.PureComponent {
     myCards: [],
     myName: '',
     players: [],
-    roundStarted: false,
     currentHost: 0,
     showNamePopup: true,
     userIsDragging: false,
@@ -135,13 +128,14 @@ class App extends React.PureComponent {
 
   getTheCurrentHost = index => this.setState({ currentHost: index });
 
-  updateRoundStarted = hasStarted => this.setState({ roundStarted: hasStarted });
-
   addCardToPlayer = (passedInCard, playerDroppedOn) => {
-    // if (this.state.roundStarted) {
-    //   return;
-    // }
     console.log({ passedInCard, playerDroppedOn });
+
+    console.log('playerDroppedOn.name: ', playerDroppedOn.name, this.state.myName);
+
+    if (playerDroppedOn.name === this.state.myName) {
+      console.log('DROPPED ON ME!!!')
+    }
 
     // get the players state, the player index, and give that the passedInCard (players[index].blackCards.push(passedInCard))
     // remove blackcard from blackcards
@@ -249,18 +243,38 @@ class App extends React.PureComponent {
               <Piles>
                 <CardWrap innerRef={this.blackCardRef}>
                   {this.state.blackCards.slice(Math.max(this.state.blackCards.length - 7, 0)).map(({ text }, index) => (
-                    <BlackCard setUserIsDragging={this.setUserIsDragging} updateRoundStarted={this.updateRoundStarted} key={text} id={index} text={text} cardDimensions={this.state.cardDimensions} />
+                    <BlackCard 
+                      setUserIsDragging={this.setUserIsDragging} 
+                      key={text} 
+                      id={index} 
+                      text={text} 
+                      cardDimensions={this.state.cardDimensions} 
+                    />
                   ))}
                 </CardWrap>
                 <CardWrap>
                   {this.state.whiteCards.slice(Math.max(this.state.whiteCards.length - 7, 0)).map((text, index) => (
-                    <PickUpPile setUserIsDragging={this.setUserIsDragging} key={text} id={index} text={text} />
+                    <PickUpPile 
+                      setUserIsDragging={this.setUserIsDragging} 
+                      key={text} 
+                      id={index} 
+                      text={text} 
+                    />
                   ))}
                 </CardWrap>
               </Piles>
               <PlayerDecks className="Table-playerDecks">
                 {this.state.players && this.state.players.map(({ name }, index) => (
-                  <PlayerDrop userIsDragging={this.state.userIsDragging} key={index} index={index} socket={socket} roundStarted={this.state.roundStarted} addCardToPlayer={this.addCardToPlayer} players={this.state.players} myName={this.state.myName} />
+                  <PlayerDrop 
+                    setUserIsDragging={this.setUserIsDragging} 
+                    userIsDragging={this.state.userIsDragging} 
+                    key={index} 
+                    index={index} 
+                    socket={socket} 
+                    addCardToPlayer={this.addCardToPlayer}
+                    players={this.state.players}
+                    myName={this.state.myName} 
+                  />
                 ))}
                 {this.getBlankPlayerCards(this.state.players).map((num, index) => (
                   <BlankPlayerCard key={num} index={index} count={this.state.players.length} />

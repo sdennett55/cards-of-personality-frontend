@@ -17,7 +17,7 @@ const CardElement = styled.div`
   padding: 1em;
 `;
 
-const DraggableCard = ({ bgColor, color, socket, text, type, updateRoundStarted, setUserIsDragging, }) => {
+const DraggableCard = ({ bgColor, color, socket, text, type, setUserIsDragging, }) => {
   const [ghostCard, setGhostCard] = useState({});
   const [isFlipped, setFlipped] = useState(false);
   const [{ isDragging, getDifferenceFromInitialOffset, draggedCard }, drag] = useDrag({
@@ -43,18 +43,15 @@ const DraggableCard = ({ bgColor, color, socket, text, type, updateRoundStarted,
   }
 
   useEffect(() => {
-    if (setUserIsDragging) {
-      setUserIsDragging(true);
-    }
+    setUserIsDragging(true);
     
     if (!isDragging) {
       console.log('not dragging');
       // send card that was let go to server
       socket.emit('let go card', { ghostDragging: false, type, text });
 
-      if (setUserIsDragging) {
-        setUserIsDragging(false);
-      }
+  
+      setUserIsDragging(false);
     }
   }, [isDragging])
 
@@ -101,12 +98,6 @@ const DraggableCard = ({ bgColor, color, socket, text, type, updateRoundStarted,
 
   return (
     <CardElement onClick={() => {
-      if (updateRoundStarted && type === 'blackCard') {
-        if (!isFlipped) {
-          updateRoundStarted(true);
-        }
-        return setFlipped(true);
-      }
       setFlipped(isFlipped => !isFlipped)
     }} ref={drag} style={{ zIndex: (isDragging ? 999 : 'auto'), ...getTransform(), backgroundColor: bgColor, color }}>
 
