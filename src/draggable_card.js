@@ -17,10 +17,10 @@ const CardElement = styled.div`
   padding: 1em;
 `;
 
-const DraggableCard = ({ bgColor, color, socket, text, type, updateRoundStarted }) => {
-  const [ghostCards, setGhostCards] = useState([]);
+const DraggableCard = ({ bgColor, color, socket, text, type, updateRoundStarted, setUserIsDragging, }) => {
+  const [ghostCard, setGhostCard] = useState({});
   const [isFlipped, setFlipped] = useState(false);
-  const [{ isDragging, getDifferenceFromInitialOffset }, drag] = useDrag({
+  const [{ isDragging, getDifferenceFromInitialOffset, draggedCard }, drag] = useDrag({
     item: {
       type,
       id: 0,
@@ -43,50 +43,55 @@ const DraggableCard = ({ bgColor, color, socket, text, type, updateRoundStarted 
   }
 
   useEffect(() => {
+    if (setUserIsDragging) {
+      setUserIsDragging(true);
+    }
+    
     if (!isDragging) {
       console.log('not dragging');
       // send card that was let go to server
       socket.emit('let go card', { ghostDragging: false, type, text });
+
+      if (setUserIsDragging) {
+        setUserIsDragging(false);
+      }
     }
   }, [isDragging])
 
   useEffect(() => {
+    let isMounted = true;
     // on everyones client but the sender, show the card being returned to deck if let go prematurely
-    socket.on('let go card', ({ type: otherType, text: otherText, }) => {
-      if (otherType === 'whiteCard') {
-        if (text === otherText) {
-          // find the card from ghostCards
-          // remove from array
-          const ghostCardIndex = ghostCards.findIndex(ghostCard => ghostCard.text === otherText);
-          const newGhostCards = [...ghostCards].splice(ghostCardIndex, 1);
-          setGhostCards(newGhostCards);
-        }
+    socket.on('let go card', ({ type, text: otherText, }) => {
+      if (isMounted && text === otherText) {
+        setGhostCard({});
       }
     });
 
     // on everyones client but the sender, show the card being dragged
-    socket.on('dragged card', ({ type: otherType, text: otherText, x, y }) => {
-      if (otherType === 'whiteCard') {
-        if (text === otherText) {
-          setGhostCards([...ghostCards, { isDragging: true, type: otherType, text: otherText, x, y }]);
-        }
-      }
+    socket.on('dragged card', ({ type, text: otherText, x, y }) => {
+      if (isMounted && text === otherText) {
+        setGhostCard({x, y, text});
+      }   
     });
+
+    return () => {
+      isMounted = false;
+    }
 
   }, []);
 
   const getTransform = () => {
-    if (ghostCards.length) {
 
-      if (ghostCards[0].text === text) {
-        return { pointerEvents: 'none', opacity: '.5', transform: `translate3d(${ghostCards[0].x}px, ${ghostCards[0].y}px, 0)` };
-      }
-      if (ghostCards[1] && ghostCards[1].text === text) {
-        return { pointerEvents: 'none', opacity: '.5', transform: `translate3d(${ghostCards[1].x}px, ${ghostCards[1].y}px, 0)` };
+    // any cards being dragged by someone else
+    if (Object.keys(ghostCard).length) {
+      if (ghostCard.text === text) {
+        return { pointerEvents: 'none', opacity: '.5', transform: `translate3d(${ghostCard.x}px, ${ghostCard.y}px, 0)` };
       } else {
         return { pointerEvents: 'none', transform: 'none' };
       }
     }
+
+    // on the client that's actually dragging the card
     if (isDragging && getDifferenceFromInitialOffset) {
       return { pointerEvents: 'none', transform: `translate3d(${getDifferenceFromInitialOffset.x}px, ${getDifferenceFromInitialOffset.y}px, 0)` };
     }
@@ -96,7 +101,7 @@ const DraggableCard = ({ bgColor, color, socket, text, type, updateRoundStarted 
 
   return (
     <CardElement onClick={() => {
-      if (type === 'blackCard') {
+      if (updateRoundStarted && type === 'blackCard') {
         if (!isFlipped) {
           updateRoundStarted(true);
         }

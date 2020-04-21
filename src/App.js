@@ -16,15 +16,15 @@ import './App.css';
 
 var socket = io('http://10.0.0.208:3001');
 
-const BlackCard = React.memo(({ innerRef, updateRoundStarted, text }) => {
+export const BlackCard = React.memo(({ updateRoundStarted, text, setUserIsDragging }) => {
   return (
-    <DraggableCard socket={socket} updateRoundStarted={updateRoundStarted} innerRef={innerRef} type="blackCard" bgColor="#000" color="#fff" text={text} />
+    <DraggableCard setUserIsDragging={setUserIsDragging} socket={socket} updateRoundStarted={updateRoundStarted} type="blackCard" bgColor="#000" color="#fff" text={text} />
   )
 })
 
-const PickUpPile = React.memo(({ id, text }) => {
+const PickUpPile = React.memo(({ id, text, setUserIsDragging }) => {
   return (
-    <DraggableCard socket={socket} id={id} type="whiteCard" bgColor="#fff" color="#000" text={text} />
+    <DraggableCard setUserIsDragging={setUserIsDragging} socket={socket} id={id} type="whiteCard" bgColor="#fff" color="#000" text={text} />
   )
 })
 
@@ -76,9 +76,14 @@ class App extends React.PureComponent {
 
     // when a new user connects
     // send that specific user the latest server states
-    socket.on('new connection', ({ players, whiteCards }) => {
+    socket.on('new connection', ({ players, blackCards, whiteCards }) => {
       if (whiteCards && whiteCards.length > 0) {
         this.setState({ whiteCards });
+      }
+
+      console.log({players});
+      if (blackCards && blackCards.length > 0) {
+        this.setState({ blackCards });
       }
 
       console.log('neww userrr connectedddd', players)
@@ -100,6 +105,11 @@ class App extends React.PureComponent {
 
       this.setState({ whiteCards: newWhiteCards });
     });
+
+    socket.on('dropped in player drop', ({ players, blackCards }) => {
+      // socket.emit('update players and blackCards', newWhiteCards);
+      this.setState({ players, blackCards });
+    });
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -118,6 +128,7 @@ class App extends React.PureComponent {
     roundStarted: false,
     currentHost: 0,
     showNamePopup: true,
+    userIsDragging: false,
   }
 
   blackCardRef = React.createRef();
@@ -126,10 +137,11 @@ class App extends React.PureComponent {
 
   updateRoundStarted = hasStarted => this.setState({ roundStarted: hasStarted });
 
-  addCardToPlayer = passedInCard => {
+  addCardToPlayer = (passedInCard, playerDroppedOn) => {
     // if (this.state.roundStarted) {
     //   return;
     // }
+    console.log({ passedInCard, playerDroppedOn });
 
     // get the players state, the player index, and give that the passedInCard (players[index].blackCards.push(passedInCard))
     // remove blackcard from blackcards
@@ -140,19 +152,38 @@ class App extends React.PureComponent {
 
       // update player card property with new card
       const newPlayers = [...prevState.players].map(player => {
-        if (player.id === socket.id) {
-          const existingBlackCards = player.blackCards || [];
-          return { ...player, blackCards: [...existingBlackCards, { ...passedInCard }] }
+        if (player.id === playerDroppedOn.id) {
+          if (playerDroppedOn.blackCards && playerDroppedOn.blackCards.length) {
+            // check if blackCard already exists with player
+            if (!player.blackCards.some(blackCard => blackCard.text === passedInCard.text)) {
+              player.blackCards = [...player.blackCards, { ...passedInCard }];
+            }
+
+          } else {
+            player.blackCards = [{ ...passedInCard }];
+          }
+        } else {
+          if (player.blackCards) {
+            // if another player already has the blackCard, remove it from them
+            player.blackCards = player.blackCards.filter(blackCard => {
+              if (blackCard.text !== passedInCard.text) {
+                return blackCard;
+              }
+            });
+          }
         }
         return player;
       });
-      console.log({ newBlackCards });
+      console.log({ newPlayers });
 
       return {
         players: newPlayers,
         blackCards: newBlackCards,
       };
     });
+
+    // send event that a card was moved to someones deck to the server
+    socket.emit('dropped in player drop', {players: this.state.players, blackCards: this.state.blackCards});
   }
 
   addCardToMyCards = passedInCard => {
@@ -196,6 +227,10 @@ class App extends React.PureComponent {
     this.setState({ showNamePopup: false });
   }
 
+  setUserIsDragging = bool => {
+    this.setState({userIsDragging: bool});
+  };
+
   render() {
     return (
       <div className="App">
@@ -214,18 +249,18 @@ class App extends React.PureComponent {
               <Piles>
                 <CardWrap innerRef={this.blackCardRef}>
                   {this.state.blackCards.slice(Math.max(this.state.blackCards.length - 7, 0)).map(({ text }, index) => (
-                    <BlackCard updateRoundStarted={this.updateRoundStarted} key={text} id={index} text={text} cardDimensions={this.state.cardDimensions} />
+                    <BlackCard setUserIsDragging={this.setUserIsDragging} updateRoundStarted={this.updateRoundStarted} key={text} id={index} text={text} cardDimensions={this.state.cardDimensions} />
                   ))}
                 </CardWrap>
                 <CardWrap>
                   {this.state.whiteCards.slice(Math.max(this.state.whiteCards.length - 7, 0)).map((text, index) => (
-                    <PickUpPile key={text} id={index} text={text} />
+                    <PickUpPile setUserIsDragging={this.setUserIsDragging} key={text} id={index} text={text} />
                   ))}
                 </CardWrap>
               </Piles>
               <PlayerDecks className="Table-playerDecks">
                 {this.state.players && this.state.players.map(({ name }, index) => (
-                  <PlayerDrop index={index} socket={socket} roundStarted={this.state.roundStarted} addCardToPlayer={this.addCardToPlayer} players={this.state.players} myName={this.state.myName} />
+                  <PlayerDrop userIsDragging={this.state.userIsDragging} key={index} index={index} socket={socket} roundStarted={this.state.roundStarted} addCardToPlayer={this.addCardToPlayer} players={this.state.players} myName={this.state.myName} />
                 ))}
                 {this.getBlankPlayerCards(this.state.players).map((num, index) => (
                   <BlankPlayerCard key={num} index={index} count={this.state.players.length} />

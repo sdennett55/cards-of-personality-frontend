@@ -34,7 +34,7 @@ const getPlayerName = ({index, myName, players, socket}) => {
   return `Player ${index + 1}`;
 }
 
-const PlayerDrop = ({ index, roundStarted, myName, players, socket, addCardToPlayer }) => {
+const PlayerDrop = ({ index, roundStarted, myName, players, socket, addCardToPlayer, userIsDragging }) => {
   const [{ isOver }, drop] = useDrop({
     accept: 'blackCard',
     drop: (item, monitor) => {
@@ -42,7 +42,7 @@ const PlayerDrop = ({ index, roundStarted, myName, players, socket, addCardToPla
         return;
       }
 
-      addCardToPlayer(item);
+      addCardToPlayer(item, players[index]);
       console.log(item);
     },
     collect: monitor => ({
@@ -57,7 +57,9 @@ const PlayerDrop = ({ index, roundStarted, myName, players, socket, addCardToPla
         </CardElement>
       </Wrap>
       {players && players[index] && players[index].blackCards &&  players[index].blackCards.map(blackCard => (
-        <DraggableCard key={blackCard.text} {...blackCard} />
+        <div style={{pointerEvents: userIsDragging ? 'none' : null}}>
+          <DraggableCard key={blackCard.text} socket={socket} {...blackCard} />
+        </div> 
       ))}
     </div>
   )
