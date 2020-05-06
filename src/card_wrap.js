@@ -9,8 +9,8 @@ const Wrap = styled.div`
   border-radius: 8px;
 `;
 
-const CardWrap = React.memo(({ children, innerRef }) => (
-  <div style={{ width: 'calc(50% - .5em)', position: 'relative', zIndex: '1' }}>
+const CardWrap = React.memo(({ children, innerRef, width, ...rest }) => (
+  <div style={{ width: width || 'calc(50% - .5em)', position: 'relative', zIndex: '1', ...rest }}>
     <Wrap ref={innerRef || null}>
       {children}
     </Wrap>

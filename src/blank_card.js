@@ -22,13 +22,13 @@ const Wrapper = styled.div`
   padding-bottom: 140%;
 `;
 
-const BlankCard = () => {
+const BlankCard = ({children}) => {
 
   return (
     <div style={{width: '150px', margin: '.5em'}}>
       <Wrapper>
         <CardElement>
-          Draw a card
+          {children}
         </CardElement>
       </Wrapper>
     </div>

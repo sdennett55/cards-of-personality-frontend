@@ -30,28 +30,6 @@ const PickUpPile = React.memo(({ id, text, setUserIsDragging }) => {
 
 class App extends React.PureComponent {
   componentDidMount() {
-    if (localStorage.getItem('cardsAgainstSteve-name')) {
-      this.setState({
-        myName: localStorage.getItem('cardsAgainstSteve-name'),
-        showNamePopup: false,
-      });
-
-      // can't reliably access the "socket" variable until it connects
-      socket.on('connect', () => {
-        const players = [...this.state.players].map(player => {
-          if (player.id === socket.id) {
-            return { ...player, name: localStorage.getItem('cardsAgainstSteve-name') }
-          }
-          return player;
-        });
-        this.setState({
-          players,
-        });
-
-        socket.emit('name change', { id: socket.id, name: localStorage.getItem('cardsAgainstSteve-name') });
-
-      });
-    }
 
     const newPlayers = [...this.state.players, { socket: socket.io }];
 
@@ -68,6 +46,23 @@ class App extends React.PureComponent {
       this.setState({ players });
     });
 
+    socket.on('returning player', returningPlayer => {
+
+      this.setState(prevState => {
+        // once we update our name, let's update our player in players
+        const newPlayers = prevState.players.map(player => {
+          if (player.id === socket.id) {
+            return { ...returningPlayer };
+          }
+          return player;
+        });
+
+        return {
+          players: newPlayers,
+        }
+      });
+    });
+
     // when a player disconnects from the server, remove them from state
     socket.on('user disconnected', players => {
       console.log('user disconnected');
@@ -76,14 +71,18 @@ class App extends React.PureComponent {
 
     // when a new user connects
     // send that specific user the latest server states
-    socket.on('new connection', ({ players, blackCards, whiteCards }) => {
+    socket.on('new connection', ({ players, blackCards, whiteCards, submittedCards }) => {
       if (whiteCards && whiteCards.length > 0) {
         this.setState({ whiteCards });
       }
 
-      console.log({players});
+      console.log({ players });
       if (blackCards && blackCards.length > 0) {
         this.setState({ blackCards });
+      }
+
+      if (submittedCards && submittedCards.length > 0) {
+        this.setState({ submittedCards });
       }
 
       console.log('neww userrr connectedddd', players)
@@ -95,16 +94,35 @@ class App extends React.PureComponent {
       this.setState({ players });
     });
 
-    socket.on('dropped in my cards', ({ text }) => {
+    socket.on('dropped in my cards', ({ whiteCard: { text }, players }) => {
+      console.log('somebody dropped some shit', { players });
       const droppedCardIndex = this.state.whiteCards.findIndex(whiteCard => whiteCard === text);
       const newWhiteCards = [...this.state.whiteCards];
       newWhiteCards.splice(droppedCardIndex, 1);
 
       // send the server the new whiteCards
-      socket.emit('update whiteCards', newWhiteCards);
+      socket.emit('update whiteCards', { whiteCards: newWhiteCards, players });
 
-      this.setState({ whiteCards: newWhiteCards });
+      this.setState({ whiteCards: newWhiteCards, players, });
     });
+
+    socket.on('update players', players => {
+      this.setState({ players });
+    });
+
+    socket.on('update submittedCards', submittedCards => {
+      console.log('someone submitted a card!!!', submittedCards);
+      this.setState({ submittedCards });
+    });
+
+    socket.on('player rejoins', players => {
+      const playerWithWhiteCards = players.find(player => socket.id === player.id);
+      if (playerWithWhiteCards.whiteCards) {
+        this.setState({ myCards: playerWithWhiteCards.whiteCards })
+      }
+
+      this.setState({ players });
+    })
 
     socket.on('dropped in player drop', ({ players, blackCards }) => {
       // socket.emit('update players and blackCards', newWhiteCards);
@@ -117,8 +135,9 @@ class App extends React.PureComponent {
     blackCards,
     whiteCards,
     myCards: [],
-    myName: '',
+    myName: localStorage.getItem('cas-name') || '',
     players: [],
+    submittedCards: [],
     currentHost: 0,
     showNamePopup: true,
     userIsDragging: false,
@@ -177,7 +196,7 @@ class App extends React.PureComponent {
     });
 
     // send event that a card was moved to someones deck to the server
-    socket.emit('dropped in player drop', {players: this.state.players, blackCards: this.state.blackCards});
+    socket.emit('dropped in player drop', { players: this.state.players, blackCards: this.state.blackCards });
   }
 
   addCardToMyCards = passedInCard => {
@@ -185,19 +204,78 @@ class App extends React.PureComponent {
       return;
     }
 
-    // send event that a card was moved to someones deck to the server
-    socket.emit('dropped in my cards', passedInCard);
-
     this.setState(prevState => {
       const indexOfPassedInCard = prevState.whiteCards.findIndex(whiteCard => whiteCard === passedInCard.text);
       const newWhiteCards = [...prevState.whiteCards];
       newWhiteCards.splice(indexOfPassedInCard, 1);
 
+      // update player whiteCards property
+      const newPlayers = [...prevState.players].map(player => {
+        if (player.id === socket.id) {
+          const newPlayer = { ...player };
+          newPlayer.whiteCards = [...(newPlayer.whiteCards ? newPlayer.whiteCards : []), passedInCard];
+          return newPlayer;
+        }
+        return player;
+      });
+
       return {
         myCards: [...prevState.myCards, passedInCard],
         whiteCards: newWhiteCards,
+        players: newPlayers,
       };
     });
+
+    // send event that a card was moved to someones deck to the server
+    socket.emit('dropped in my cards', { passedInCard, players: this.state.players });
+
+  }
+
+  submitACard = passedInCard => {
+    if (this.state.submittedCards.length === 6) {
+      return;
+    }
+
+    console.log('this.state.myCards: ', this.state.myCards);
+
+    // remove passedInCard from myCards
+    const passedInCardIndex = this.state.myCards.findIndex(card => card.text === passedInCard.text);
+    console.log('this.state.myCards[passedInCardIndex]: ', this.state.myCards[passedInCardIndex]);
+    const newMyCards = [...this.state.myCards];
+    newMyCards.splice(passedInCardIndex, 1);
+
+    console.log({passedInCardIndex, newMyCards});
+
+
+    // find current player from players and update whiteCards property to be newMyCards
+    const myPlayerIndex = this.state.players.findIndex(player => player.id === socket.id);
+    const newPlayers = [...this.state.players];
+    newPlayers[myPlayerIndex].whiteCards = newMyCards;
+
+    const newSubmittedCards = [...this.state.submittedCards, passedInCard];
+
+    // update players and myCards
+    this.setState(() => ({
+      myCards: newMyCards,
+      players: newPlayers,
+      submittedCards: newSubmittedCards,
+    }));
+
+    socket.emit('update submittedCards', this.state.submittedCards);
+  };
+
+  discardACard = passedInCard => {
+    // remove passedInCard from submittedCards
+    const passedInCardIndex = this.state.submittedCards.findIndex(card => card.text === passedInCard.text);
+    const newSubmittedCards = [...this.state.submittedCards];
+    newSubmittedCards.splice(passedInCardIndex, 1);
+
+    // update submittedCards
+    this.setState(() => ({
+      submittedCards: newSubmittedCards,
+    }));
+
+    socket.emit('update submittedCards', this.state.submittedCards);
   }
 
   getBlankPlayerCards(players) {
@@ -210,19 +288,39 @@ class App extends React.PureComponent {
   updateMyName = e => {
     const myName = e.target.value.toUpperCase().trim();
     this.setState({ myName });
-    console.log('NAME CHANGE!', socket.id);
+
     // send event that a user just changed their name
     socket.emit('name change', { id: socket.id, name: myName });
   };
 
   handleSubmit = e => {
     e.preventDefault();
-    localStorage.setItem('cardsAgainstSteve-name', this.state.myName);
-    this.setState({ showNamePopup: false });
+    localStorage.setItem('cas-name', this.state.myName);
+    this.setState(prevState => {
+      // once we update our name, let's update our player in players
+      const newPlayers = prevState.players.map(player => {
+        if (player.id === socket.id) {
+
+          const newPlayer = { ...player };
+          newPlayer.name = this.state.myName;
+          return newPlayer;
+        }
+        return player;
+      });
+
+      // and then let the other clients know
+      socket.emit('name submit', { players: newPlayers, myName: this.state.myName, id: socket.id });
+
+      return {
+        showNamePopup: false,
+        players: newPlayers,
+      }
+    });
+
   }
 
   setUserIsDragging = bool => {
-    this.setState({userIsDragging: bool});
+    this.setState({ userIsDragging: bool });
   };
 
   render() {
@@ -233,7 +331,7 @@ class App extends React.PureComponent {
 
             <label htmlFor="name">Enter your name:</label>
 
-            <input type="text" id="name" onChange={e => this.updateMyName(e)} />
+            <input type="text" id="name" onChange={e => this.updateMyName(e)} defaultValue={this.state.myName} />
             <button type="submit">Submit</button>
           </form>
         )}
@@ -243,37 +341,37 @@ class App extends React.PureComponent {
               <Piles>
                 <CardWrap innerRef={this.blackCardRef}>
                   {this.state.blackCards.slice(Math.max(this.state.blackCards.length - 7, 0)).map(({ text }, index) => (
-                    <BlackCard 
-                      setUserIsDragging={this.setUserIsDragging} 
-                      key={text} 
-                      id={index} 
-                      text={text} 
-                      cardDimensions={this.state.cardDimensions} 
+                    <BlackCard
+                      setUserIsDragging={this.setUserIsDragging}
+                      key={text}
+                      id={index}
+                      text={text}
+                      cardDimensions={this.state.cardDimensions}
                     />
                   ))}
                 </CardWrap>
                 <CardWrap>
                   {this.state.whiteCards.slice(Math.max(this.state.whiteCards.length - 7, 0)).map((text, index) => (
-                    <PickUpPile 
-                      setUserIsDragging={this.setUserIsDragging} 
-                      key={text} 
-                      id={index} 
-                      text={text} 
+                    <PickUpPile
+                      setUserIsDragging={this.setUserIsDragging}
+                      key={text}
+                      id={index}
+                      text={text}
                     />
                   ))}
                 </CardWrap>
               </Piles>
               <PlayerDecks className="Table-playerDecks">
                 {this.state.players && this.state.players.map(({ name }, index) => (
-                  <PlayerDrop 
-                    setUserIsDragging={this.setUserIsDragging} 
-                    userIsDragging={this.state.userIsDragging} 
-                    key={index} 
-                    index={index} 
-                    socket={socket} 
+                  <PlayerDrop
+                    setUserIsDragging={this.setUserIsDragging}
+                    userIsDragging={this.state.userIsDragging}
+                    key={index}
+                    index={index}
+                    socket={socket}
                     addCardToPlayer={this.addCardToPlayer}
                     players={this.state.players}
-                    myName={this.state.myName} 
+                    myName={this.state.myName}
                   />
                 ))}
                 {this.getBlankPlayerCards(this.state.players).map((num, index) => (
@@ -282,7 +380,7 @@ class App extends React.PureComponent {
               </PlayerDecks>
 
             </CardsWrap>
-            <MyCardsDropZone addCardToMyCards={this.addCardToMyCards} myCards={this.state.myCards} myName={this.state.myName} />
+            <MyCardsDropZone setUserIsDragging={this.setUserIsDragging} socket={socket} discardACard={this.discardACard} addCardToMyCards={this.addCardToMyCards} submitACard={this.submitACard} submittedCards={this.state.submittedCards} myCards={this.state.myCards} myName={this.state.myName} />
           </Table>
         </DndProvider>
       </div>

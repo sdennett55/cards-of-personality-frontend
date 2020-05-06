@@ -21,15 +21,16 @@ body {
   position: relative;
 }
 
-.MyCardsContainer {
+.MyCardsContainer,
+.SubmittedCardsTable {
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  align-content: space-between;
   position: absolute;
   top: 0;
   left: 0;
   min-width: 100%;
   height: 100%;
-  padding: calc(2em + 50px) 0 2em;
   background: rgba(0, 0, 0, 1);
   transition: transform .5s;
   transform: translateY(100%);
@@ -37,17 +38,21 @@ body {
   z-index: 1;
 }
 @media (max-width: 500px) and (orientation: portrait) {
-  .MyCardsContainer {
+  .MyCardsContainer,
+  .SubmittedCardsTable {
     flex-wrap: wrap;
     justify-content: center;
   }
 }
-.MyCardsContainer.is-open {
+.MyCardsContainer.is-open,
+.SubmittedCardsTable.is-open {
   transform: translateY(0);
 }
 
 .App-namePopup {
   position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   background: red;
