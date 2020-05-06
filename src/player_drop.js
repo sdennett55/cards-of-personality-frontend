@@ -3,6 +3,22 @@ import styled from 'styled-components';
 import { useDrop } from 'react-dnd';
 import DraggableCard from './draggable_card';
 
+const PlayerName = styled.p`
+  margin: 0px;
+  position: absolute;
+  top: 0;
+  text-align: left;
+  transform: translateY(-100%);
+  color: black;
+  font-weight: bold;
+  width: 100%;
+  padding: 0 .5em .1em;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  z-index: 1;
+`;
+
 const CardElement = styled.div`
   position: absolute;
   top: 0;
@@ -23,7 +39,20 @@ const Wrap = styled.div`
   padding-bottom: 140%;
 `;
 
-const getPlayerName = ({index, myName, players, socket}) => {
+const PlayerDropWrap = styled.div`
+  position: relative;
+  width: calc(33.33% - 1em); 
+  margin: 0.5em;
+
+  &:nth-child(1n + 4) ${PlayerName} {
+    transform: translateY(100%);
+    bottom: 0;
+    top: auto;
+  }
+`;
+
+
+const getPlayerName = ({ index, myName, players, socket }) => {
   if (players[index].id === socket.id) {
     return myName;
   }
@@ -46,18 +75,18 @@ const PlayerDrop = ({ index, myName, players, socket, addCardToPlayer, userIsDra
     }),
   })
   return (
-    <div style={{ position: 'relative', width: 'calc(33.33% - 1em)', 'margin': '0.5em' }}>
+    <PlayerDropWrap>
       <Wrap ref={drop}>
         <CardElement style={{ background: isOver ? '#2cce9f' : null }}>
-  <p style={{ margin: 0 }}>{getPlayerName({myName, players, index, socket})}</p>
+          <PlayerName style={{ margin: 0 }}>{getPlayerName({ myName, players, index, socket })}</PlayerName>
         </CardElement>
       </Wrap>
-      {players && players[index] && players[index].blackCards &&  players[index].blackCards.map(blackCard => (
-        <div style={{pointerEvents: userIsDragging ? 'none' : null}}>
+      {players && players[index] && players[index].blackCards && players[index].blackCards.map(blackCard => (
+        <div style={{ pointerEvents: userIsDragging ? 'none' : null }}>
           <DraggableCard key={blackCard.text} socket={socket} setUserIsDragging={setUserIsDragging} {...blackCard} />
-        </div> 
+        </div>
       ))}
-    </div>
+    </PlayerDropWrap>
   )
 }
 

@@ -14,7 +14,10 @@ import styled from 'styled-components';
 import io from 'socket.io-client';
 import './App.css';
 
-var socket = io('http://10.0.0.208:3001');
+var socketIP = process.env.NODE_ENV === 'development'
+  ? 'http://10.0.0.208:3001'
+  : 'https://cards-against-steve.herokuapp.com';
+var socket = io(socketIP);
 
 export const BlackCard = React.memo(({ text, setUserIsDragging }) => {
   return (
@@ -227,7 +230,7 @@ class App extends React.PureComponent {
     });
 
     // send event that a card was moved to someones deck to the server
-    socket.emit('dropped in my cards', { passedInCard, players: this.state.players });
+    socket.emit('dropped in my cards', { passedInCard, players: this.state.players, whiteCards: this.state.whiteCards });
 
   }
 
@@ -244,7 +247,7 @@ class App extends React.PureComponent {
     const newMyCards = [...this.state.myCards];
     newMyCards.splice(passedInCardIndex, 1);
 
-    console.log({passedInCardIndex, newMyCards});
+    console.log({ passedInCardIndex, newMyCards });
 
 
     // find current player from players and update whiteCards property to be newMyCards
@@ -328,11 +331,11 @@ class App extends React.PureComponent {
       <div className="App">
         {this.state.showNamePopup && (
           <form className="App-namePopup" onSubmit={e => this.handleSubmit(e)}>
-
-            <label htmlFor="name">Enter your name:</label>
-
-            <input type="text" id="name" onChange={e => this.updateMyName(e)} defaultValue={this.state.myName} />
-            <button type="submit">Submit</button>
+            <div className="App-namePopup-innerWrap">
+              <label htmlFor="name">Enter your name:</label>
+              <input type="text" id="name" onChange={e => this.updateMyName(e)} defaultValue={this.state.myName} />
+              <button type="submit">Submit</button>
+            </div>
           </form>
         )}
         <DndProvider backend={MultiBackend} options={HTML5toTouch}>
@@ -413,7 +416,7 @@ const PlayerDecks = styled.div`
   justify-content: space-between;
   align-content: center;
   margin-right: -.5em;
-  overflow: hidden;
+  font-size: .7rem;
 
   @media (max-width: 500px) and (orientation: portrait) {
     width: calc(100% + 1em);

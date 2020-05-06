@@ -26,7 +26,9 @@ const Wrapper = styled.div`
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
   display: flex;
+  flex-direction: column;
   align-items: center;
+  justify-content: center;
   padding-left: 2em;
   padding-bottom: 50px;
 `;
@@ -39,9 +41,12 @@ const WrapperCentered = styled.div`
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
   display: flex;
+  flex-direction: column;
   align-items: center;
+  justify-content: center;
   padding-left: 2em;
   padding-bottom: 50px;
+  background-color: rgba(35, 139, 179, .34);
 `;
 
 const Scrolling = styled.div`
@@ -87,6 +92,24 @@ const DiscardButton = styled.button`
   border: 0;
   padding: 0;
   margin: 0;
+`;
+
+const MenuTitle = styled.h2`
+  color: #fff;
+  font-size: 2.5rem;
+  opacity: .5;
+  text-transform: uppercase;
+  text-align: left;
+  margin: 0;
+  line-height: 1;
+  width: 100%;
+  padding-left: .25em;
+`;
+
+const ScrollingWrap = styled.div`
+  position: relative;
+  height: 226px;
+  width: 100%;
 `;
 
 function getBlankCards(myCards) {
@@ -142,6 +165,8 @@ const MyCardsDropZone = ({ addCardToMyCards, submittedCards, discardACard, myCar
       <div className={cx('MyCardsContainer', { 'is-open': isOpen })}>
         <BackToTableButton onClick={() => setOpen(isOpen => !isOpen)}>Back to Game</BackToTableButton>
         <Wrapper>
+          <MenuTitle>{`${myName}'s Cards`}</MenuTitle>
+          <ScrollingWrap>
           <Scrolling>
             {myCards.map(card => (
               <CardWrap width="150px" margin=".5em">
@@ -153,15 +178,17 @@ const MyCardsDropZone = ({ addCardToMyCards, submittedCards, discardACard, myCar
               <BlankCard key={num}>Draw a card</BlankCard>
             ))}
           </Scrolling>
+          </ScrollingWrap>
         </Wrapper>
         <SubmittedCardsButton ref={submitDropRef} onClick={() => setSubmittedTableOpen(isSubmittedTableOpen => !isSubmittedTableOpen)} style={{ background: submitIsOver ? '#2cce9f' : null, color: submitIsOver ? '#fff' : null }}>{submitIsOver ? 'DROP TO SUBMIT CARD' : 'See Submitted Cards'}</SubmittedCardsButton>
       </div>
       <div className={cx('SubmittedCardsTable', { 'is-open': isSubmittedTableOpen })}>
         <BackToTableButton onClick={() => {
-          setOpen(isOpen => !isOpen)
           setSubmittedTableOpen(isOpen => !isOpen)
-        }}>Back to Game</BackToTableButton>
+        }}>{`Back to ${myName}'s Cards`}</BackToTableButton>
         <WrapperCentered>
+          <MenuTitle>SUBMITTED CARDS</MenuTitle>
+          <ScrollingWrap>
           <Scrolling>
             {submittedCards.map(card => (
               <CardWrap width="150px" margin=".5em">
@@ -172,8 +199,9 @@ const MyCardsDropZone = ({ addCardToMyCards, submittedCards, discardACard, myCar
               <BlankCard key={num}>Submitted Card Slot</BlankCard>
             ))}
           </Scrolling>
+          </ScrollingWrap>
         </WrapperCentered>
-        <DiscardButton ref={discardDropRef} onClick={() => setSubmittedTableOpen(isSubmittedTableOpen => !isSubmittedTableOpen)} style={{ background: discardIsOver ? '#2cce9f' : null, color: discardIsOver ? '#fff' : null }}>{discardIsOver ? 'DROP TO DISCARD' : 'DISCARD HERE'}</DiscardButton>
+        <DiscardButton ref={discardDropRef} onClick={() => setSubmittedTableOpen(isSubmittedTableOpen => !isSubmittedTableOpen)} style={{ background: discardIsOver ? '#2cce9f' : null, color: discardIsOver ? '#fff' : null }}>DROP TO DISCARD</DiscardButton>
       </div>
     </>
   )

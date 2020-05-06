@@ -19,7 +19,11 @@ body {
   height: 100%;
   width: 100%;
   position: relative;
+  font-size: 16px;
 }
+
+::-moz-selection { background: #2cce9f; color: #000;}
+::selection { background: #2cce9f; color: #000; }
 
 .MyCardsContainer,
 .SubmittedCardsTable {
@@ -37,13 +41,13 @@ body {
   overflow: hidden;
   z-index: 1;
 }
-@media (max-width: 500px) and (orientation: portrait) {
+/* @media (max-width: 500px) and (orientation: portrait) {
   .MyCardsContainer,
   .SubmittedCardsTable {
     flex-wrap: wrap;
     justify-content: center;
   }
-}
+} */
 .MyCardsContainer.is-open,
 .SubmittedCardsTable.is-open {
   transform: translateY(0);
@@ -55,10 +59,55 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background: red;
+  background: rgba(0,0,0,.8);
+  color: #fff;
   z-index: 9999;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+.App-namePopup-innerWrap {
+  display: flex;
+  flex-direction: column;
+}
+.App-namePopup input {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  font-size: 1em;
+  border: 0;
+  margin: 0 0 1em;
+  padding: .25em 0 .5em;
+  background: transparent;
+  border-bottom: 1px solid white;
+  color: #fff;
+  transition: border-color .25s;
+}
+.App-namePopup input:focus,
+.App-namePopup button:focus {
+  outline: 0;
+  border-color:#2cce9f;
+}
+.App-namePopup label {
+ text-align: left;
+ text-transform: uppercase;
+ font-size: .813em;
+ color: #c1bdbd;
+}
+.App-namePopup button {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  background: #2cce9f;
+  color: #000;
+  font-size: 1em;
+  border: 0;
+  padding: .7em 1em;
+  border-radius: 8px;
+  margin: 0 auto;
+}
+.App-namePopup button:hover,
+.App-namePopup button:focus {
+  opacity: .5;
 }

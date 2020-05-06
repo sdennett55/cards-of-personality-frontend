@@ -10,7 +10,7 @@ const Wrap = styled.div`
 `;
 
 const CardWrap = React.memo(({ children, innerRef, width, ...rest }) => (
-  <div style={{ width: width || 'calc(50% - .5em)', position: 'relative', zIndex: '1', ...rest }}>
+  <div style={{ width: width || 'calc(50% - .5em)', position: 'relative', ...rest }}>
     <Wrap ref={innerRef || null}>
       {children}
     </Wrap>
