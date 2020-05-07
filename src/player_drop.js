@@ -26,12 +26,12 @@ const CardElement = styled.div`
   right: 0;
   bottom: 0;
   border-radius: 8px;
-  background: white;
   color: black;
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 1em;
+  border: 2px dashed #000;
 `;
 
 const Wrap = styled.div`

@@ -364,7 +364,7 @@ class App extends React.PureComponent {
                     />
                   ))}
                 </CardWrap>
-                <CardWrap>
+                <CardWrap isPickUpPile>
                   {this.state.whiteCards.slice(Math.max(this.state.whiteCards.length - 7, 0)).map((text, index) => (
                     <PickUpPile
                       setUserIsDragging={this.setUserIsDragging}
