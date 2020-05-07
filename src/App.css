@@ -8,6 +8,13 @@
   font-family: 'Roboto Condensed', Arial, sans-serif;
 }
 
+svg {
+  fill: currentColor;
+  width: 22px;
+  pointer-events: none;
+  transform: rotate(-180deg);
+}
+
 html,
 body,
 #root,
@@ -29,6 +36,7 @@ body {
 }
 button {
   cursor: pointer;
+  font-size: 16px;
 }
 button, input {
   font-family: 'Roboto Condensed', Arial, sans-serif;
@@ -41,15 +49,15 @@ button, input {
 .SubmittedCardsTable {
   display: flex;
   flex-direction: column;
-  align-content: space-between;
+  justify-content: space-between;
   position: absolute;
   top: 0;
   left: 0;
   min-width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, 1);
-  transition: transform .5s;
-  transform: translateY(100%);
+  transition: transform .4s;
+  transform: translateX(100%);
   overflow: hidden;
   z-index: 1;
 }
@@ -62,7 +70,7 @@ button, input {
 } */
 .MyCardsContainer.is-open,
 .SubmittedCardsTable.is-open {
-  transform: translateY(0);
+  transform: translateX(0);
 }
 
 .App-namePopup {

@@ -343,7 +343,7 @@ class App extends React.PureComponent {
           <form className="App-namePopup" onSubmit={e => this.handleSubmit(e)}>
             <div className="App-namePopup-innerWrap">
               <label htmlFor="name">Enter your name:</label>
-              <input type="text" id="name" onChange={e => this.updateMyName(e)} defaultValue={this.state.myName} />
+              <input type="text" id="name" maxLength="16" onChange={e => this.updateMyName(e)} defaultValue={this.state.myName} />
               {this.state.nameError && <p class="App-namePopup-errorMsg">{this.state.nameError}</p>}
               <button type="submit">Submit</button>
             </div>

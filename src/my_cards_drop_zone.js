@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import cx from 'classnames';
 import { useDrop } from 'react-dnd';
 import Card from './card';
+import { BackIcon } from './icons';
 import DraggableCard from './draggable_card';
 import BlankCard from './blank_card';
 import CardWrap from './card_wrap';
@@ -13,7 +14,6 @@ const MyCards = styled.button`
   line-height: 50px;
   background-color: #000;
   color: #fff;
-  border-radius: 8px 8px 0 0;
   border: 0;
   padding: 0;
 `;
@@ -22,7 +22,7 @@ const Wrapper = styled.div`
   width: 100%;
   position: relative;
   overflow: hidden;
-  height: 100%;
+  flex-grow: 1;
   overflow-x: auto;
   display: flex;
   flex-direction: column;
@@ -30,13 +30,14 @@ const Wrapper = styled.div`
   justify-content: center;
   padding-left: 2em;
   padding-bottom: 50px;
+  background-color: #000;
 `;
 
 const WrapperCentered = styled.div`
   width: 100%;
   position: relative;
   overflow: hidden;
-  height: 100%;
+  flex-grow: 1;
   overflow-x: auto;
   display: flex;
   flex-direction: column;
@@ -54,21 +55,20 @@ const Scrolling = styled.div`
 `;
 
 const BackToTableButton = styled.button`
-  width: 100vw;
-  background: #fff;
-  color: #000;
+  width: 100px;
+  background: #000;
+  color: #fff;
   height: 50px;
   appearance: none;
   border: 0;
   padding: 0;
   margin: 0;
+  border-top: 1px solid #fff;
 `;
 
 const SubmittedCardsButton = styled.button`
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100vw;
+  width: calc(100% - 100px);
+  text-transform: uppercase;
   background: #fff;
   color: #000;
   height: 50px;
@@ -76,20 +76,21 @@ const SubmittedCardsButton = styled.button`
   border: 0;
   padding: 0;
   margin: 0;
+  font-size: 16px;
+    font-weight: bold;
 `;
 
 const DiscardButton = styled.div`
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100vw;
+  width: calc(100% - 100px);
+  text-transform: uppercase;
   background: #fff;
   color: #000;
   height: 50px;
   border: 0;
   padding: 0;
   margin: 0;
-  font-size: 13.3333px;
+  font-size: 16px;
+  font-weight: bold;
   line-height: 50px;
 `;
 
@@ -110,6 +111,15 @@ const ScrollingWrap = styled.div`
   position: relative;
   height: 226px;
   width: 100%;
+`;
+
+const ButtonWrapper = styled.div`
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
 `;
 
 function getBlankCards(myCards) {
@@ -163,44 +173,49 @@ const MyCardsDropZone = ({ addCardToMyCards, submittedCards, discardACard, myCar
         {isOver ? 'DROP HERE' : `${myName}'S CARDS (${myCards.length})`}
       </MyCards>
       <div className={cx('MyCardsContainer', { 'is-open': isOpen })}>
-        <BackToTableButton onClick={() => setOpen(isOpen => !isOpen)}>Back to Game</BackToTableButton>
         <Wrapper>
           <MenuTitle>{`${myName}'s Cards`}</MenuTitle>
           <ScrollingWrap>
-          <Scrolling>
-            {myCards.map(card => (
-              <CardWrap width="150px" margin=".5em">
-                <DraggableCard flippedByDefault key={card.text} setUserIsDragging={setUserIsDragging} socket={socket} {...card} />
-              </CardWrap>
-            ))}
-            {getBlankCards(myCards).map(num => (
-              <BlankCard key={num}>Draw a card</BlankCard>
-            ))}
-          </Scrolling>
+            <Scrolling>
+              {myCards.map(card => (
+                <CardWrap key={card.text} width="150px" margin=".5em">
+                  <DraggableCard flippedByDefault key={card.text} setUserIsDragging={setUserIsDragging} socket={socket} {...card} />
+                </CardWrap>
+              ))}
+              {getBlankCards(myCards).map(num => (
+                <BlankCard key={num}>Draw a card</BlankCard>
+              ))}
+            </Scrolling>
           </ScrollingWrap>
         </Wrapper>
-        <SubmittedCardsButton ref={submitDropRef} onClick={() => setSubmittedTableOpen(isSubmittedTableOpen => !isSubmittedTableOpen)} style={{ background: submitIsOver ? '#2cce9f' : null, color: submitIsOver ? '#fff' : null }}>{submitIsOver ? 'DROP TO SUBMIT CARD' : 'See Submitted Cards'}</SubmittedCardsButton>
+        <ButtonWrapper>
+          <BackToTableButton onClick={() => setOpen(isOpen => !isOpen)}><BackIcon /></BackToTableButton>
+          <SubmittedCardsButton ref={submitDropRef} onClick={() => setSubmittedTableOpen(isSubmittedTableOpen => !isSubmittedTableOpen)} style={{ background: submitIsOver ? '#2cce9f' : null, color: submitIsOver ? '#fff' : null }}>{submitIsOver ? 'DROP TO SUBMIT CARD' : 'Submitted Cards'}</SubmittedCardsButton>
+        </ButtonWrapper>
       </div>
       <div className={cx('SubmittedCardsTable', { 'is-open': isSubmittedTableOpen })}>
-        <BackToTableButton onClick={() => {
-          setSubmittedTableOpen(isOpen => !isOpen)
-        }}>{`Back to ${myName}'s Cards`}</BackToTableButton>
         <WrapperCentered>
           <MenuTitle>SUBMITTED CARDS</MenuTitle>
           <ScrollingWrap>
-          <Scrolling>
-            {submittedCards.map(card => (
-              <CardWrap width="150px" margin=".5em">
-                <DraggableCard key={card.text} setUserIsDragging={setUserIsDragging} socket={socket} {...card} />
-              </CardWrap>
-            ))}
-            {getBlankSubmittedCards(submittedCards).map(num => (
-              <BlankCard key={num}></BlankCard>
-            ))}
-          </Scrolling>
+            <Scrolling>
+              {submittedCards.map(card => (
+                <CardWrap key={card.text} width="150px" margin=".5em">
+                  <DraggableCard key={card.text} setUserIsDragging={setUserIsDragging} socket={socket} {...card} />
+                </CardWrap>
+              ))}
+              {getBlankSubmittedCards(submittedCards).map(num => (
+                <BlankCard key={num}></BlankCard>
+              ))}
+            </Scrolling>
           </ScrollingWrap>
         </WrapperCentered>
-        <DiscardButton ref={discardDropRef} style={{ background: discardIsOver ? '#2cce9f' : null, color: discardIsOver ? '#fff' : null }}>DROP TO DISCARD</DiscardButton>
+        <ButtonWrapper>
+          <BackToTableButton onClick={() => {
+            setSubmittedTableOpen(isOpen => !isOpen)
+          }}><BackIcon /></BackToTableButton>
+
+          <DiscardButton ref={discardDropRef} style={{ background: discardIsOver ? '#2cce9f' : null, color: discardIsOver ? '#fff' : null }}>DROP TO DISCARD</DiscardButton>
+        </ButtonWrapper>
       </div>
     </>
   )

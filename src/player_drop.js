@@ -48,6 +48,7 @@ const PlayerDropWrap = styled.div`
     transform: translateY(100%);
     bottom: 0;
     top: auto;
+    padding-top: .1em;
   }
 `;
 
