@@ -8,16 +8,21 @@
   font-family: 'Roboto Condensed', Arial, sans-serif;
 }
 
+html,
+body,
+#root,
+.App {
+  height: 100%;
+}
+
 html {
   overflow: hidden;
-  height: 100%;
   position: fixed;
   width: 100%;
 }
 
 body {
   background: #e5e5e5;
-  height: 100%;
   width: 100%;
   position: relative;
   font-size: 16px;
