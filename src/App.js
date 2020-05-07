@@ -101,6 +101,10 @@ class App extends React.PureComponent {
       this.setState({ submittedCards });
     });
 
+    socket.on('submitted a card', ({submittedCards, players}) => {
+      this.setState({ submittedCards, players });
+    });
+
     socket.on('player rejoins', players => {
       const playerWithWhiteCards = players.find(player => socket.id === player.id);
       if (playerWithWhiteCards.whiteCards) {
@@ -265,7 +269,7 @@ class App extends React.PureComponent {
       submittedCards: newSubmittedCards,
     }));
 
-    socket.emit('update submittedCards', this.state.submittedCards);
+    socket.emit('submitted a card', {submittedCards: newSubmittedCards, players: newPlayers});
   };
 
   discardACard = passedInCard => {
@@ -279,7 +283,7 @@ class App extends React.PureComponent {
       submittedCards: newSubmittedCards,
     }));
 
-    socket.emit('update submittedCards', this.state.submittedCards);
+    socket.emit('update submittedCards', newSubmittedCards);
   }
 
   getBlankPlayerCards(players) {
