@@ -353,7 +353,7 @@ class App extends React.PureComponent {
           <Table>
             <CardsWrap>
               <Piles>
-                <CardWrap innerRef={this.blackCardRef}>
+                <CardWrap isPickUpPile innerRef={this.blackCardRef}>
                   {this.state.blackCards.slice(Math.max(this.state.blackCards.length - 7, 0)).map(({ text }, index) => (
                     <BlackCard
                       setUserIsDragging={this.setUserIsDragging}

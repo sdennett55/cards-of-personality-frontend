@@ -17,9 +17,9 @@ const CardElement = styled.div`
   padding: 1em;
 `;
 
-const DraggableCard = ({ bgColor, color, socket, text, type, setUserIsDragging, }) => {
+const DraggableCard = ({ bgColor, color, socket, text, type, setUserIsDragging, flippedByDefault = false}) => {
   const [ghostCard, setGhostCard] = useState({});
-  const [isFlipped, setFlipped] = useState(false);
+  const [isFlipped, setFlipped] = useState(flippedByDefault);
   const [{ isDragging, getDifferenceFromInitialOffset, draggedCard }, drag] = useDrag({
     item: {
       type,
@@ -82,7 +82,7 @@ const DraggableCard = ({ bgColor, color, socket, text, type, setUserIsDragging, 
     // any cards being dragged by someone else
     if (Object.keys(ghostCard).length) {
       if (ghostCard.text === text) {
-        return { pointerEvents: 'none', opacity: '.5', transform: `translate3d(${ghostCard.x}px, ${ghostCard.y}px, 0)` };
+        return { pointerEvents: 'none', opacity: '.5', transform: `translate3d(${ghostCard.x}px, ${ghostCard.y}px, 0)`, zIndex: '1' };
       } else {
         return { pointerEvents: 'none', transform: 'none' };
       }

@@ -15,7 +15,8 @@
     "react-dom": "^16.13.1",
     "react-scripts": "3.4.1",
     "socket.io-client": "^2.3.0",
-    "styled-components": "^5.0.1"
+    "styled-components": "^5.0.1",
+    "typeface-roboto-condensed": "^0.0.75"
   },
   "scripts": {
     "start": "react-scripts start",

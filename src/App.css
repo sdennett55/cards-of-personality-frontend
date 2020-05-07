@@ -5,6 +5,7 @@
   text-align: center;
   max-width: 1600px;
   margin: 0 auto;
+  font-family: 'Roboto Condensed', Arial, sans-serif;
 }
 
 html {
@@ -23,6 +24,9 @@ body {
 }
 button {
   cursor: pointer;
+}
+button, input {
+  font-family: 'Roboto Condensed', Arial, sans-serif;
 }
 
 ::-moz-selection { background: #2cce9f; color: #000;}
@@ -86,6 +90,7 @@ button {
   border-bottom: 1px solid white;
   color: #fff;
   transition: border-color .25s;
+  border-radius: 0;
 }
 .App-namePopup input:focus,
 .App-namePopup button:focus {

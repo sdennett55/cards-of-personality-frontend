@@ -83,7 +83,7 @@ const PlayerDrop = ({ index, myName, players, socket, addCardToPlayer, userIsDra
       </Wrap>
       {players && players[index] && players[index].blackCards && players[index].blackCards.map(blackCard => (
         <div style={{ pointerEvents: userIsDragging ? 'none' : null }}>
-          <DraggableCard key={blackCard.text} socket={socket} setUserIsDragging={setUserIsDragging} {...blackCard} />
+          <DraggableCard flippedByDefault key={blackCard.text} socket={socket} setUserIsDragging={setUserIsDragging} {...blackCard} />
         </div>
       ))}
     </PlayerDropWrap>

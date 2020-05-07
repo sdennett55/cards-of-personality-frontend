@@ -80,7 +80,7 @@ const SubmittedCardsButton = styled.button`
   margin: 0;
 `;
 
-const DiscardButton = styled.button`
+const DiscardButton = styled.div`
   position: absolute;
   bottom: 0;
   left: 0;
@@ -88,10 +88,11 @@ const DiscardButton = styled.button`
   background: #fff;
   color: #000;
   height: 50px;
-  appearance: none;
   border: 0;
   padding: 0;
   margin: 0;
+  font-size: 13.3333px;
+  line-height: 50px;
 `;
 
 const MenuTitle = styled.h2`
@@ -104,6 +105,7 @@ const MenuTitle = styled.h2`
   line-height: 1;
   width: 100%;
   padding-left: .25em;
+  font-style: italic;
 `;
 
 const ScrollingWrap = styled.div`
@@ -170,8 +172,7 @@ const MyCardsDropZone = ({ addCardToMyCards, submittedCards, discardACard, myCar
           <Scrolling>
             {myCards.map(card => (
               <CardWrap width="150px" margin=".5em">
-
-                <DraggableCard key={card.text} setUserIsDragging={setUserIsDragging} socket={socket} {...card} />
+                <DraggableCard flippedByDefault key={card.text} setUserIsDragging={setUserIsDragging} socket={socket} {...card} />
               </CardWrap>
             ))}
             {getBlankCards(myCards).map(num => (
@@ -196,12 +197,12 @@ const MyCardsDropZone = ({ addCardToMyCards, submittedCards, discardACard, myCar
               </CardWrap>
             ))}
             {getBlankSubmittedCards(submittedCards).map(num => (
-              <BlankCard key={num}>Submitted Card Slot</BlankCard>
+              <BlankCard key={num}>Empty Slot</BlankCard>
             ))}
           </Scrolling>
           </ScrollingWrap>
         </WrapperCentered>
-        <DiscardButton ref={discardDropRef} onClick={() => setSubmittedTableOpen(isSubmittedTableOpen => !isSubmittedTableOpen)} style={{ background: discardIsOver ? '#2cce9f' : null, color: discardIsOver ? '#fff' : null }}>DROP TO DISCARD</DiscardButton>
+        <DiscardButton ref={discardDropRef} style={{ background: discardIsOver ? '#2cce9f' : null, color: discardIsOver ? '#fff' : null }}>DROP TO DISCARD</DiscardButton>
       </div>
     </>
   )
