@@ -24,7 +24,6 @@ const Wrapper = styled.div`
   overflow: hidden;
   height: 100%;
   overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -39,7 +38,6 @@ const WrapperCentered = styled.div`
   overflow: hidden;
   height: 100%;
   overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -197,7 +195,7 @@ const MyCardsDropZone = ({ addCardToMyCards, submittedCards, discardACard, myCar
               </CardWrap>
             ))}
             {getBlankSubmittedCards(submittedCards).map(num => (
-              <BlankCard key={num}>Empty Slot</BlankCard>
+              <BlankCard key={num}></BlankCard>
             ))}
           </Scrolling>
           </ScrollingWrap>
