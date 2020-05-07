@@ -114,6 +114,23 @@ class App extends React.PureComponent {
       // socket.emit('update players and blackCards', newWhiteCards);
       this.setState({ players, blackCards });
     });
+
+    socket.on('restart game', (_) => {
+      console.log('game restarted!!!!');
+      const newPlayers = this.state.players.map(player => {
+        const newPlayer = {...player};
+        if (player.whiteCards && player.whiteCards.length) {
+          delete newPlayer.whiteCards;
+        }
+        if (player.blackCards && player.blackCards.length) {
+          delete newPlayer.blackCards;
+        }
+        
+        return newPlayer;
+      });
+      this.setState({ whiteCards, blackCards, submittedCards: [], myCards: [], players: newPlayers });
+      socket.emit('restart game', {whiteCards, blackCards, players: newPlayers});
+    });
   }
 
   state = {
