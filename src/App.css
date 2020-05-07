@@ -21,6 +21,9 @@ body {
   position: relative;
   font-size: 16px;
 }
+button {
+  cursor: pointer;
+}
 
 ::-moz-selection { background: #2cce9f; color: #000;}
 ::selection { background: #2cce9f; color: #000; }
@@ -110,4 +113,8 @@ body {
 .App-namePopup button:hover,
 .App-namePopup button:focus {
   opacity: .5;
+}
+.App-namePopup-errorMsg {
+  margin-top: 0;
+  color: #cc2e2e;
 }

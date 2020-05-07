@@ -144,6 +144,7 @@ class App extends React.PureComponent {
     currentHost: 0,
     showNamePopup: true,
     userIsDragging: false,
+    nameError: '',
   }
 
   blackCardRef = React.createRef();
@@ -298,6 +299,10 @@ class App extends React.PureComponent {
 
   handleSubmit = e => {
     e.preventDefault();
+    if (this.state.players.find(player => player.name === this.state.myName)) {
+      this.setState({nameError: 'Name taken. Please choose another name.'});
+      return;
+    }
     localStorage.setItem('cas-name', this.state.myName);
     this.setState(prevState => {
       // once we update our name, let's update our player in players
@@ -317,6 +322,7 @@ class App extends React.PureComponent {
       return {
         showNamePopup: false,
         players: newPlayers,
+        nameError: '',
       }
     });
 
@@ -334,6 +340,7 @@ class App extends React.PureComponent {
             <div className="App-namePopup-innerWrap">
               <label htmlFor="name">Enter your name:</label>
               <input type="text" id="name" onChange={e => this.updateMyName(e)} defaultValue={this.state.myName} />
+              {this.state.nameError && <p class="App-namePopup-errorMsg">{this.state.nameError}</p>}
               <button type="submit">Submit</button>
             </div>
           </form>
