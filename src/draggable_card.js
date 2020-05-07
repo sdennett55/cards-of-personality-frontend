@@ -17,7 +17,7 @@ const CardElement = styled.div`
   padding: 1em;
 `;
 
-const DraggableCard = ({ bgColor, isFlipBroadcasted, color, socket, text, type, setUserIsDragging, flippedByDefault = false }) => {
+const DraggableCard = ({ bgColor, isBroadcastingDrag = true, isFlipBroadcasted, color, socket, text, type, setUserIsDragging, flippedByDefault = false }) => {
   const [ghostCard, setGhostCard] = useState({});
   const [isFlipped, setFlipped] = useState(flippedByDefault);
   const [{ isDragging, getDifferenceFromInitialOffset, draggedCard }, drag] = useDrag({
@@ -43,15 +43,17 @@ const DraggableCard = ({ bgColor, isFlipBroadcasted, color, socket, text, type, 
   }
 
   useEffect(() => {
-    setUserIsDragging(true);
+    if (isBroadcastingDrag) {
+      setUserIsDragging(true);
 
-    if (!isDragging) {
-      console.log('not dragging');
-      // send card that was let go to server
-      socket.emit('let go card', { ghostDragging: false, type, text });
+      if (!isDragging) {
+        console.log('not dragging');
+        // send card that was let go to server
+        socket.emit('let go card', { ghostDragging: false, type, text });
 
 
-      setUserIsDragging(false);
+        setUserIsDragging(false);
+      }
     }
   }, [isDragging])
 
