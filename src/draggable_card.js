@@ -17,7 +17,7 @@ const CardElement = styled.div`
   padding: 1em;
 `;
 
-const DraggableCard = ({ bgColor, color, socket, text, type, setUserIsDragging, flippedByDefault = false}) => {
+const DraggableCard = ({ bgColor, isFlipBroadcasted, color, socket, text, type, setUserIsDragging, flippedByDefault = false }) => {
   const [ghostCard, setGhostCard] = useState({});
   const [isFlipped, setFlipped] = useState(flippedByDefault);
   const [{ isDragging, getDifferenceFromInitialOffset, draggedCard }, drag] = useDrag({
@@ -44,13 +44,13 @@ const DraggableCard = ({ bgColor, color, socket, text, type, setUserIsDragging, 
 
   useEffect(() => {
     setUserIsDragging(true);
-    
+
     if (!isDragging) {
       console.log('not dragging');
       // send card that was let go to server
       socket.emit('let go card', { ghostDragging: false, type, text });
 
-  
+
       setUserIsDragging(false);
     }
   }, [isDragging])
@@ -67,13 +67,19 @@ const DraggableCard = ({ bgColor, color, socket, text, type, setUserIsDragging, 
     // on everyones client but the sender, show the card being dragged
     socket.on('dragged card', ({ type, text: otherText, x, y }) => {
       if (isMounted && text === otherText) {
-        setGhostCard({x, y, text});
-      }   
+        setGhostCard({ x, y, text });
+      }
     });
 
+    if (isFlipBroadcasted) {
+      socket.on('card is flipped', function (isFlipped) {
+        setFlipped(isFlipped);
+      });
+    }
+
     return () => {
-      socket.off('let go card');
-      socket.off('dragged cards');
+      // socket.off('let go card');
+      // socket.off('dragged cards');
       isMounted = false;
     }
 
@@ -100,7 +106,10 @@ const DraggableCard = ({ bgColor, color, socket, text, type, setUserIsDragging, 
 
   return (
     <CardElement onClick={() => {
-      setFlipped(isFlipped => !isFlipped)
+      setFlipped(isFlipped => {
+        socket.emit('card is flipped', !isFlipped);
+        return !isFlipped
+      });
     }} ref={drag} style={{ zIndex: (isDragging ? 999 : 'auto'), ...getTransform(), backgroundColor: bgColor, color }}>
 
       {isFlipped ? text : (

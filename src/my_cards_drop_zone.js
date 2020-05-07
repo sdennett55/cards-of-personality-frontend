@@ -200,7 +200,7 @@ const MyCardsDropZone = ({ addCardToMyCards, submittedCards, discardACard, myCar
             <Scrolling>
               {submittedCards.map(card => (
                 <CardWrap key={card.text} width="150px" margin=".5em">
-                  <DraggableCard key={card.text} setUserIsDragging={setUserIsDragging} socket={socket} {...card} />
+                  <DraggableCard isFlipBroadcasted key={card.text} setUserIsDragging={setUserIsDragging} socket={socket} {...card} />
                 </CardWrap>
               ))}
               {getBlankSubmittedCards(submittedCards).map(num => (
