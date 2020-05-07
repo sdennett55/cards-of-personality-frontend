@@ -137,6 +137,20 @@ class App extends React.PureComponent {
     });
   }
 
+  componentWillUnmount() {
+    socket.off('name change');
+    socket.off('user disconnected');
+    socket.off('new connection');
+    socket.off('user connected');
+    socket.off('dropped in my cards');
+    socket.off('update players');
+    socket.off('update submittedCards');
+    socket.off('submitted a card');
+    socket.off('player rejoins');
+    socket.off('dropped in player drop');
+    socket.off('restart game');
+  }
+
   state = {
     blackCardWidth: null,
     blackCards,

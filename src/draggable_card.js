@@ -72,6 +72,8 @@ const DraggableCard = ({ bgColor, color, socket, text, type, setUserIsDragging, 
     });
 
     return () => {
+      socket.off('let go card');
+      socket.off('dragged cards');
       isMounted = false;
     }
 
