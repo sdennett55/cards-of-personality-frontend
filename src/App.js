@@ -49,23 +49,6 @@ class App extends React.PureComponent {
       this.setState({ players });
     });
 
-    socket.on('returning player', returningPlayer => {
-
-      this.setState(prevState => {
-        // once we update our name, let's update our player in players
-        const newPlayers = prevState.players.map(player => {
-          if (player.id === socket.id) {
-            return { ...returningPlayer };
-          }
-          return player;
-        });
-
-        return {
-          players: newPlayers,
-        }
-      });
-    });
-
     // when a player disconnects from the server, remove them from state
     socket.on('user disconnected', players => {
       console.log('user disconnected');
