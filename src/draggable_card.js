@@ -60,22 +60,24 @@ const DraggableCard = ({ bgColor, isBroadcastingDrag = true, isFlipBroadcasted, 
   useEffect(() => {
     let isMounted = true;
     // on everyones client but the sender, show the card being returned to deck if let go prematurely
-    socket.on('let go card', ({ type, text: otherText, }) => {
+    socket.on('let go card', ({ text: otherText, }) => {
       if (isMounted && text === otherText) {
         setGhostCard({});
       }
     });
 
     // on everyones client but the sender, show the card being dragged
-    socket.on('dragged card', ({ type, text: otherText, x, y }) => {
+    socket.on('dragged card', ({ text: otherText, x, y }) => {
       if (isMounted && text === otherText) {
         setGhostCard({ x, y, text });
       }
     });
 
     if (isFlipBroadcasted) {
-      socket.on('card is flipped', function (isFlipped) {
-        setFlipped(isFlipped);
+      socket.on('card is flipped', function ({isFlipped, text: otherText,}) {
+        if (isMounted && text === otherText) {
+          setFlipped(isFlipped);
+        }
       });
     }
 
@@ -109,7 +111,7 @@ const DraggableCard = ({ bgColor, isBroadcastingDrag = true, isFlipBroadcasted, 
   return (
     <CardElement onClick={() => {
       setFlipped(isFlipped => {
-        socket.emit('card is flipped', !isFlipped);
+        socket.emit('card is flipped', {isFlipped: !isFlipped, text });
         return !isFlipped
       });
     }} ref={drag} style={{ zIndex: (isDragging ? 999 : 'auto'), ...getTransform(), backgroundColor: bgColor, color }}>
