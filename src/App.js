@@ -316,6 +316,11 @@ class App extends React.PureComponent {
 
   handleSubmit = e => {
     e.preventDefault();
+    if (!socket.connected) {
+      this.setState({nameError: 'Cannot connect to server. Try again.'})
+      return;
+    }
+
     if (this.state.players.find(player => player.name === this.state.myName)) {
       this.setState({nameError: 'Name taken. Please choose another name.'});
       return;
@@ -357,7 +362,7 @@ class App extends React.PureComponent {
             <div className="App-namePopup-innerWrap">
               <label htmlFor="name">Enter your name:</label>
               <input type="text" id="name" maxLength="16" onChange={e => this.updateMyName(e)} defaultValue={this.state.myName} />
-              {this.state.nameError && <p class="App-namePopup-errorMsg">{this.state.nameError}</p>}
+              {this.state.nameError && <p className="App-namePopup-errorMsg">{this.state.nameError}</p>}
               <button type="submit">Submit</button>
             </div>
           </form>
