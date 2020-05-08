@@ -45,7 +45,7 @@ class App extends React.PureComponent {
     });
 
     socket.on('disconnect', () => {
-      this.setState({ showNamePopup: true });
+      this.setState({ showNamePopup: true, nameError: 'You were disconnected. Please rejoin.' });
     });
 
     // when a player changes their name, update players state with new name
@@ -320,11 +320,7 @@ class App extends React.PureComponent {
 
   handleSubmit = e => {
     e.preventDefault();
-    if (!socket.connected) {
-      this.setState({nameError: 'Cannot connect to server. Try again.'})
-      return;
-    }
-
+ 
     if (this.state.players.find(player => player.name === this.state.myName)) {
       this.setState({nameError: 'Name taken. Please choose another name.'});
       return;
@@ -367,7 +363,7 @@ class App extends React.PureComponent {
               <label htmlFor="name">Enter your name:</label>
               <input type="text" id="name" maxLength="16" onChange={e => this.updateMyName(e)} defaultValue={this.state.myName} />
               {this.state.nameError && <p className="App-namePopup-errorMsg">{this.state.nameError}</p>}
-              <button type="submit">Submit</button>
+              <button type="submit">JOIN GAME</button>
             </div>
           </form>
         )}
