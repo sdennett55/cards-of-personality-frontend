@@ -320,10 +320,14 @@ class App extends React.PureComponent {
 
   handleSubmit = e => {
     e.preventDefault();
-      if (!socket.connected) {
-        this.setState({ nameError: 'Cannot connect to server. Try again.' });
-        return;
-      }
+    if (!socket.connected) {
+      this.setState({ nameError: 'Cannot connect to server. Try again.' });
+      return;
+    }
+    if (this.state.myName.trim().length < 2) {
+      this.setState({ nameError: 'Please submit a name at least 2 characters long.' });
+      return;
+    }
 
     if (this.state.players.find(player => player.name === this.state.myName)) {
       this.setState({ nameError: 'Name taken. Please choose another name.' });
