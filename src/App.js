@@ -51,7 +51,6 @@ class App extends React.PureComponent {
 
     // when a player disconnects from the server, remove them from state
     socket.on('user disconnected', players => {
-      console.log('user disconnected');
       this.setState({ players });
     });
 
@@ -72,7 +71,7 @@ class App extends React.PureComponent {
       }
 
       console.log('neww userrr connectedddd', players)
-      this.setState(() => ({ players }));
+      this.setState(() => ({ players, showNamePopup: true }));
     });
 
     // when a new user connects, let every client know.
