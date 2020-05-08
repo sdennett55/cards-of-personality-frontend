@@ -44,6 +44,10 @@ class App extends React.PureComponent {
       players: newPlayers,
     });
 
+    socket.on('disconnect', () => {
+      this.setState({ showNamePopup: true });
+    });
+
     // when a player changes their name, update players state with new name
     socket.on('name change', players => {
       this.setState({ players });
