@@ -104,7 +104,7 @@ class App extends React.PureComponent {
       this.setState({ submittedCards });
     });
 
-    socket.on('submitted a card', ({submittedCards, players}) => {
+    socket.on('submitted a card', ({ submittedCards, players }) => {
       this.setState({ submittedCards, players });
     });
 
@@ -125,18 +125,18 @@ class App extends React.PureComponent {
     socket.on('restart game', (_) => {
       console.log('game restarted!!!!');
       const newPlayers = this.state.players.map(player => {
-        const newPlayer = {...player};
+        const newPlayer = { ...player };
         if (player.whiteCards && player.whiteCards.length) {
           delete newPlayer.whiteCards;
         }
         if (player.blackCards && player.blackCards.length) {
           delete newPlayer.blackCards;
         }
-        
+
         return newPlayer;
       });
       this.setState({ whiteCards, blackCards, submittedCards: [], myCards: [], players: newPlayers });
-      socket.emit('restart game', {whiteCards, blackCards, players: newPlayers});
+      socket.emit('restart game', { whiteCards, blackCards, players: newPlayers });
     });
   }
 
@@ -286,7 +286,7 @@ class App extends React.PureComponent {
       submittedCards: newSubmittedCards,
     }));
 
-    socket.emit('submitted a card', {submittedCards: newSubmittedCards, players: newPlayers});
+    socket.emit('submitted a card', { submittedCards: newSubmittedCards, players: newPlayers });
   };
 
   discardACard = passedInCard => {
@@ -320,9 +320,13 @@ class App extends React.PureComponent {
 
   handleSubmit = e => {
     e.preventDefault();
- 
+      if (!socket.connected) {
+        this.setState({ nameError: 'Cannot connect to server. Try again.' });
+        return;
+      }
+
     if (this.state.players.find(player => player.name === this.state.myName)) {
-      this.setState({nameError: 'Name taken. Please choose another name.'});
+      this.setState({ nameError: 'Name taken. Please choose another name.' });
       return;
     }
     localStorage.setItem('cas-name', this.state.myName);
