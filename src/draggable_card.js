@@ -30,7 +30,7 @@ const DraggableCard = ({ bgColor, isBroadcastingDrag = true, isFlipBroadcasted, 
       isFlipped,
     },
     collect: monitor => ({
-      isDragging: !!monitor.isDragging(),
+      isDragging: !!monitor.isDragging() && !Object.keys(ghostCard).length,
       getDifferenceFromInitialOffset: !!monitor.isDragging() && monitor.getDifferenceFromInitialOffset(),
     })
   })
@@ -38,8 +38,10 @@ const DraggableCard = ({ bgColor, isBroadcastingDrag = true, isFlipBroadcasted, 
   if (isDragging && getDifferenceFromInitialOffset) {
     const { x, y } = getDifferenceFromInitialOffset;
 
-    // send dragged card to server
-    socket.emit('dragged card', { type, text, x, y });
+    if (isBroadcastingDrag) {
+      // send dragged card to server
+      socket.emit('dragged card', { type, text, x, y });
+    }
   }
 
   useEffect(() => {
@@ -59,22 +61,24 @@ const DraggableCard = ({ bgColor, isBroadcastingDrag = true, isFlipBroadcasted, 
 
   useEffect(() => {
     let isMounted = true;
-    // on everyones client but the sender, show the card being returned to deck if let go prematurely
-    socket.on('let go card', ({ text: otherText, }) => {
-      if (isMounted && text === otherText) {
-        setGhostCard({});
-      }
-    });
+    if (isBroadcastingDrag) {
+      // on everyones client but the sender, show the card being returned to deck if let go prematurely
+      socket.on('let go card', ({ text: otherText, }) => {
+        if (isMounted && text === otherText) {
+          setGhostCard({});
+        }
+      });
 
-    // on everyones client but the sender, show the card being dragged
-    socket.on('dragged card', ({ text: otherText, x, y }) => {
-      if (isMounted && text === otherText) {
-        setGhostCard({ x, y, text });
-      }
-    });
+      // on everyones client but the sender, show the card being dragged
+      socket.on('dragged card', ({ text: otherText, x, y }) => {
+        if (isMounted && text === otherText) {
+          setGhostCard({ x, y, text });
+        }
+      });
+    }
 
     if (isFlipBroadcasted) {
-      socket.on('card is flipped', function ({isFlipped, text: otherText,}) {
+      socket.on('card is flipped', function ({ isFlipped, text: otherText, }) {
         if (isMounted && text === otherText) {
           setFlipped(isFlipped);
         }
@@ -90,13 +94,14 @@ const DraggableCard = ({ bgColor, isBroadcastingDrag = true, isFlipBroadcasted, 
   }, []);
 
   const getTransform = () => {
-
-    // any cards being dragged by someone else
-    if (Object.keys(ghostCard).length) {
-      if (ghostCard.text === text) {
-        return { pointerEvents: 'none', opacity: '.5', transform: `translate3d(${ghostCard.x}px, ${ghostCard.y}px, 0)`, zIndex: '1' };
-      } else {
-        return { pointerEvents: 'none', transform: 'none' };
+    if (isBroadcastingDrag) {
+      // any cards being dragged by someone else
+      if (Object.keys(ghostCard).length) {
+        if (ghostCard.text === text) {
+          return { pointerEvents: 'none', opacity: '.5', transform: `translate3d(${ghostCard.x}px, ${ghostCard.y}px, 0)`, zIndex: '1' };
+        } else {
+          return { pointerEvents: 'none', transform: 'none' };
+        }
       }
     }
 
@@ -111,7 +116,7 @@ const DraggableCard = ({ bgColor, isBroadcastingDrag = true, isFlipBroadcasted, 
   return (
     <CardElement onClick={() => {
       setFlipped(isFlipped => {
-        socket.emit('card is flipped', {isFlipped: !isFlipped, text });
+        socket.emit('card is flipped', { isFlipped: !isFlipped, text });
         return !isFlipped
       });
     }} ref={drag} style={{ zIndex: (isDragging ? 999 : 'auto'), ...getTransform(), backgroundColor: bgColor, color }}>

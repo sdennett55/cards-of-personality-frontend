@@ -21,7 +21,7 @@ var socket = io(socketIP);
 
 export const BlackCard = React.memo(({ text, setUserIsDragging }) => {
   return (
-    <DraggableCard setUserIsDragging={setUserIsDragging} socket={socket} type="blackCard" bgColor="#000" color="#fff" text={text} />
+    <DraggableCard isFlipBroadcasted setUserIsDragging={setUserIsDragging} socket={socket} type="blackCard" bgColor="#000" color="#fff" text={text} />
   )
 })
 

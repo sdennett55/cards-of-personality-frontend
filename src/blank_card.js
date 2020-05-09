@@ -20,6 +20,7 @@ const CardElement = styled.div`
 const Wrapper = styled.div`
   position: relative;
   padding-bottom: 140%;
+  border: 2px solid transparent;
 `;
 
 const BlankCard = ({children}) => {
