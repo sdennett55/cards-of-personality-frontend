@@ -7,6 +7,7 @@ import { BackIcon } from './icons';
 import DraggableCard from './draggable_card';
 import BlankCard from './blank_card';
 import CardWrap from './card_wrap';
+import { MAX_PLAYERS } from "./data";
 
 const MyCards = styled.button`
   width: 100%;
@@ -130,7 +131,7 @@ function getBlankCards(myCards) {
 }
 
 function getBlankSubmittedCards(cards) {
-  const length = 6 - cards.length;
+  const length = (MAX_PLAYERS - 1) - cards.length;
   const arr = Array.from({ length }, (_, i) => i);
 
   return arr;

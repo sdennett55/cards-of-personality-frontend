@@ -10,7 +10,7 @@ import CardWrap from './card_wrap';
 import BlankPlayerCard from './blank_player_card';
 import BlackCardDrop from './black_card_drop';
 import GeneratePreview from './generate_preview';
-import { blackCards, whiteCards } from './data';
+import { blackCards, whiteCards, MAX_PLAYERS } from './data';
 import styled from 'styled-components';
 import io from 'socket.io-client';
 import './App.css';
@@ -66,7 +66,6 @@ class App extends React.PureComponent {
         this.setState({ whiteCards });
       }
 
-      console.log({ players });
       if (blackCards && blackCards.length > 0) {
         this.setState({ blackCards });
       }
@@ -75,7 +74,6 @@ class App extends React.PureComponent {
         this.setState({ submittedCards });
       }
 
-      console.log('neww userrr connectedddd', players)
       this.setState(() => ({ players, showNamePopup: true }));
     });
 
@@ -85,7 +83,6 @@ class App extends React.PureComponent {
     });
 
     socket.on('dropped in my cards', ({ whiteCard: { text }, players }) => {
-      console.log('somebody dropped some shit', { players });
       const droppedCardIndex = this.state.whiteCards.findIndex(whiteCard => whiteCard === text);
       const newWhiteCards = [...this.state.whiteCards];
       newWhiteCards.splice(droppedCardIndex, 1);
@@ -101,7 +98,6 @@ class App extends React.PureComponent {
     });
 
     socket.on('update submittedCards', submittedCards => {
-      console.log('someone submitted a card!!!', submittedCards);
       this.setState({ submittedCards });
     });
 
@@ -124,7 +120,6 @@ class App extends React.PureComponent {
     });
 
     socket.on('restart game', (_) => {
-      console.log('game restarted!!!!');
       const newPlayers = this.state.players.map(player => {
         const newPlayer = { ...player };
         if (player.whiteCards && player.whiteCards.length) {
@@ -174,13 +169,6 @@ class App extends React.PureComponent {
   getTheCurrentHost = index => this.setState({ currentHost: index });
 
   addCardToPlayer = (passedInCard, playerDroppedOn) => {
-    console.log({ passedInCard, playerDroppedOn });
-
-    console.log('playerDroppedOn.name: ', playerDroppedOn.name, this.state.myName);
-
-    if (playerDroppedOn.name === this.state.myName) {
-      console.log('DROPPED ON ME!!!')
-    }
 
     // get the players state, the player index, and give that the passedInCard (players[index].blackCards.push(passedInCard))
     // remove blackcard from blackcards
@@ -213,7 +201,6 @@ class App extends React.PureComponent {
         }
         return player;
       });
-      console.log({ newPlayers });
 
       return {
         players: newPlayers,
@@ -266,7 +253,7 @@ class App extends React.PureComponent {
 
     // find player with blackCard and remove from their blackCards array
     const newPlayers = this.state.players.map(player => {
-      if (player.blackCards.length) {
+      if (player.blackCards && player.blackCards.length) {
         const newPlayerBlackCards = player.blackCards.filter(blackCard => {
           return blackCard.text !== passedInCard.text
         });
@@ -288,20 +275,14 @@ class App extends React.PureComponent {
   };
 
   submitACard = passedInCard => {
-    if (this.state.submittedCards.length === 6) {
+    if (this.state.submittedCards.length === MAX_PLAYERS - 1) {
       return;
     }
 
-    console.log('this.state.myCards: ', this.state.myCards);
-
     // remove passedInCard from myCards
     const passedInCardIndex = this.state.myCards.findIndex(card => card.text === passedInCard.text);
-    console.log('this.state.myCards[passedInCardIndex]: ', this.state.myCards[passedInCardIndex]);
     const newMyCards = [...this.state.myCards];
     newMyCards.splice(passedInCardIndex, 1);
-
-    console.log({ passedInCardIndex, newMyCards });
-
 
     // find current player from players and update whiteCards property to be newMyCards
     const myPlayerIndex = this.state.players.findIndex(player => player.id === socket.id);
@@ -336,7 +317,7 @@ class App extends React.PureComponent {
   }
 
   getBlankPlayerCards(players) {
-    const length = 6 - players.length;
+    const length = MAX_PLAYERS - players.length;
     const arr = Array.from({ length }, (_, i) => i);
 
     return arr;
@@ -413,7 +394,7 @@ class App extends React.PureComponent {
               <Piles>
                 <CardWrap isPickUpPile innerRef={this.blackCardRef}>
                   <BlackCardDrop addBlackCardBackToPile={this.addBlackCardBackToPile}>
-                    {this.state.blackCards.slice(Math.max(this.state.blackCards.length - 7, 0)).map(({ text }, index) => (
+                    {this.state.blackCards.slice(Math.max(this.state.blackCards.length - MAX_PLAYERS + 1, 0)).map(({ text }, index) => (
                       <BlackCard
                         setUserIsDragging={this.setUserIsDragging}
                         key={text}
@@ -425,7 +406,7 @@ class App extends React.PureComponent {
                   </BlackCardDrop>
                 </CardWrap>
                 <CardWrap isPickUpPile>
-                  {this.state.whiteCards.slice(Math.max(this.state.whiteCards.length - 7, 0)).map((text, index) => (
+                  {this.state.whiteCards.slice(Math.max(this.state.whiteCards.length - MAX_PLAYERS + 1, 0)).map((text, index) => (
                     <PickUpPile
                       setUserIsDragging={this.setUserIsDragging}
                       key={text}
@@ -470,7 +451,7 @@ const Table = styled.div`
 
 const Piles = styled.div`
   display: flex;
-  width: calc(50% - .25em);
+  width: calc(40% - .25em);
   justify-content: space-between;
   align-items: center;
   @media (max-width: 500px) and (orientation: portrait) {
@@ -483,7 +464,7 @@ const Piles = styled.div`
 const PlayerDecks = styled.div`
   display: flex;
   flex-wrap: wrap;
-  width: calc(50% - .25em);
+  width: calc(60% - .25em);
   justify-content: space-between;
   align-content: center;
   margin-right: -.5em;

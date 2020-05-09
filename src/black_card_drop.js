@@ -11,7 +11,7 @@ const BlackCardDropElem = styled.div`
 
 const BlackCardDrop = ({addBlackCardBackToPile, children}) => {
   const [{ isOver }, drop] = useDrop({
-    accept: 'blackCard',
+    accept: 'blackCardFromPlayer',
     drop: (item, monitor) => {
       addBlackCardBackToPile(item)
     },

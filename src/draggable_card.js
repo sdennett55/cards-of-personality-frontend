@@ -49,7 +49,6 @@ const DraggableCard = ({ bgColor, isBroadcastingDrag = true, isFlipBroadcasted, 
       setUserIsDragging(true);
 
       if (!isDragging) {
-        console.log('not dragging');
         // send card that was let go to server
         socket.emit('let go card', { ghostDragging: false, type, text });
 

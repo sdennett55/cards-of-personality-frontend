@@ -15,6 +15,7 @@ const Wrap = styled.div`
   color: black;
   border-radius: 8px;
   background: #fff;
+  font-size: 13px;
 `;
 
 const CardWrap = React.memo(({ children, innerRef, width, isPickUpPile, ...rest }) => {

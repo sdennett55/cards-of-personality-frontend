@@ -41,7 +41,7 @@ const Wrap = styled.div`
 
 const PlayerDropWrap = styled.div`
   position: relative;
-  width: calc(33.33% - 1em); 
+  width: calc(25% - 1em); 
   margin: 0.5em;
 
   &:nth-child(1n + 4) ${PlayerName} {
@@ -77,7 +77,6 @@ const PlayerDrop = ({ index, myName, players, socket, addCardToPlayer, userIsDra
     accept: 'blackCard',
     drop: (item, monitor) => {
       addCardToPlayer(item, players[index]);
-      console.log(item);
     },
     collect: monitor => ({
       isOver: !!monitor.isOver(),
@@ -92,7 +91,7 @@ const PlayerDrop = ({ index, myName, players, socket, addCardToPlayer, userIsDra
       </Wrap>
       {players && players[index] && players[index].blackCards && players[index].blackCards.map(blackCard => (
         <div key={blackCard.text} style={{ pointerEvents: userIsDragging ? 'none' : null }}>
-          <DraggableCard flippedByDefault socket={socket} setUserIsDragging={setUserIsDragging} {...blackCard} />
+          <DraggableCard flippedByDefault socket={socket} setUserIsDragging={setUserIsDragging} {...blackCard} type="blackCardFromPlayer" />
         </div>
       ))}
     </PlayerDropWrap>
