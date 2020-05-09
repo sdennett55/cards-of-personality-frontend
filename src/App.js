@@ -8,6 +8,7 @@ import MyCardsDropZone from './my_cards_drop_zone';
 import PlayerDrop from './player_drop';
 import CardWrap from './card_wrap';
 import BlankPlayerCard from './blank_player_card';
+import BlackCardDrop from './black_card_drop';
 import GeneratePreview from './generate_preview';
 import { blackCards, whiteCards } from './data';
 import styled from 'styled-components';
@@ -218,10 +219,11 @@ class App extends React.PureComponent {
         players: newPlayers,
         blackCards: newBlackCards,
       };
+    }, () => {
+      // send event that a card was moved to someones deck to the server
+      socket.emit('dropped in player drop', { players: this.state.players, blackCards: this.state.blackCards });
     });
 
-    // send event that a card was moved to someones deck to the server
-    socket.emit('dropped in player drop', { players: this.state.players, blackCards: this.state.blackCards });
   }
 
   addCardToMyCards = passedInCard => {
@@ -249,12 +251,41 @@ class App extends React.PureComponent {
         whiteCards: newWhiteCards,
         players: newPlayers,
       };
+    }, () => {
+      // send event that a card was moved to someones deck to the server
+      socket.emit('dropped in my cards', { passedInCard, players: this.state.players, whiteCards: this.state.whiteCards });
     });
 
-    // send event that a card was moved to someones deck to the server
-    socket.emit('dropped in my cards', { passedInCard, players: this.state.players, whiteCards: this.state.whiteCards });
 
   }
+
+  addBlackCardBackToPile = passedInCard => {
+    // add passedInCard to the front of the blackCards array
+    const newBlackCards = [...this.state.blackCards];
+    newBlackCards.unshift(passedInCard);
+
+    // find player with blackCard and remove from their blackCards array
+    const newPlayers = this.state.players.map(player => {
+      if (player.blackCards.length) {
+        const newPlayerBlackCards = player.blackCards.filter(blackCard => {
+          return blackCard.text !== passedInCard.text
+        });
+
+        return {...player, blackCards: newPlayerBlackCards};
+      }
+
+      return player;
+    });
+
+    this.setState({
+      blackCards: newBlackCards,
+      players: newPlayers,
+    });
+
+    // update blackCards for everyone
+    socket.emit('dropped in player drop', { blackCards: newBlackCards, players: newPlayers });
+
+  };
 
   submitACard = passedInCard => {
     if (this.state.submittedCards.length === 6) {
@@ -280,11 +311,11 @@ class App extends React.PureComponent {
     const newSubmittedCards = [...this.state.submittedCards, passedInCard];
 
     // update players and myCards
-    this.setState(() => ({
+    this.setState({
       myCards: newMyCards,
       players: newPlayers,
       submittedCards: newSubmittedCards,
-    }));
+    });
 
     socket.emit('submitted a card', { submittedCards: newSubmittedCards, players: newPlayers });
   };
@@ -296,11 +327,12 @@ class App extends React.PureComponent {
     newSubmittedCards.splice(passedInCardIndex, 1);
 
     // update submittedCards
-    this.setState(() => ({
+    this.setState({
       submittedCards: newSubmittedCards,
-    }));
-
+    });
+    
     socket.emit('update submittedCards', newSubmittedCards);
+
   }
 
   getBlankPlayerCards(players) {
@@ -380,15 +412,17 @@ class App extends React.PureComponent {
             <CardsWrap>
               <Piles>
                 <CardWrap isPickUpPile innerRef={this.blackCardRef}>
-                  {this.state.blackCards.slice(Math.max(this.state.blackCards.length - 7, 0)).map(({ text }, index) => (
-                    <BlackCard
-                      setUserIsDragging={this.setUserIsDragging}
-                      key={text}
-                      id={index}
-                      text={text}
-                      cardDimensions={this.state.cardDimensions}
-                    />
-                  ))}
+                  <BlackCardDrop addBlackCardBackToPile={this.addBlackCardBackToPile}>
+                    {this.state.blackCards.slice(Math.max(this.state.blackCards.length - 7, 0)).map(({ text }, index) => (
+                      <BlackCard
+                        setUserIsDragging={this.setUserIsDragging}
+                        key={text}
+                        id={index}
+                        text={text}
+                        cardDimensions={this.state.cardDimensions}
+                      />
+                    ))}
+                  </BlackCardDrop>
                 </CardWrap>
                 <CardWrap isPickUpPile>
                   {this.state.whiteCards.slice(Math.max(this.state.whiteCards.length - 7, 0)).map((text, index) => (
