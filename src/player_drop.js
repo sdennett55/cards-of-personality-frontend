@@ -66,10 +66,10 @@ const getPlayerName = ({ index, myName, players, socket }) => {
 
 const getBlackCardLength = ({ players, index }) => {
   if (players[index].blackCards) {
-    return players[index].blackCards.length;
+    return `(${players[index].blackCards.length})`;
   }
 
-  return 0;
+  return '';
 }
 
 const PlayerDrop = ({ index, myName, players, socket, addCardToPlayer, userIsDragging, setUserIsDragging }) => {
@@ -86,7 +86,7 @@ const PlayerDrop = ({ index, myName, players, socket, addCardToPlayer, userIsDra
     <PlayerDropWrap>
       <Wrap ref={drop}>
         <CardElement style={{ background: isOver ? '#2cce9f' : null }}>
-          <PlayerName style={{ margin: 0 }}>{`${getPlayerName({ myName, players, index, socket })} (${getBlackCardLength({players, index})})`}</PlayerName>
+          <PlayerName style={{ margin: 0 }}>{`${getBlackCardLength({players, index})} ${getPlayerName({ myName, players, index, socket })}`}</PlayerName>
         </CardElement>
       </Wrap>
       {players && players[index] && players[index].blackCards && players[index].blackCards.map(blackCard => (
