@@ -52,9 +52,12 @@ const DraggableCard = ({ bgColor, isBroadcastingDrag = true, isFlipBroadcasted, 
         // send card that was let go to server
         socket.emit('let go card', { ghostDragging: false, type, text });
 
-
         setUserIsDragging(false);
       }
+    }
+
+    return () => {
+      setUserIsDragging(false);
     }
   }, [isDragging])
 

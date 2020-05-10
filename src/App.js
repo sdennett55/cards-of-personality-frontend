@@ -394,7 +394,7 @@ class App extends React.PureComponent {
               <Piles>
                 <CardWrap isPickUpPile innerRef={this.blackCardRef}>
                   <BlackCardDrop addBlackCardBackToPile={this.addBlackCardBackToPile}>
-                    {this.state.blackCards.slice(Math.max(this.state.blackCards.length - MAX_PLAYERS + 1, 0)).map(({ text }, index) => (
+                    {this.state.blackCards.slice(Math.max(this.state.blackCards.length - (MAX_PLAYERS + 1), 0)).map(({ text }, index) => (
                       <BlackCard
                         setUserIsDragging={this.setUserIsDragging}
                         key={text}
@@ -406,7 +406,7 @@ class App extends React.PureComponent {
                   </BlackCardDrop>
                 </CardWrap>
                 <CardWrap isPickUpPile>
-                  {this.state.whiteCards.slice(Math.max(this.state.whiteCards.length - MAX_PLAYERS + 1, 0)).map((text, index) => (
+                  {this.state.whiteCards.slice(Math.max(this.state.whiteCards.length - (MAX_PLAYERS + 1), 0)).map((text, index) => (
                     <PickUpPile
                       setUserIsDragging={this.setUserIsDragging}
                       key={text}

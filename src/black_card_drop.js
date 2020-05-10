@@ -13,7 +13,7 @@ const BlackCardDrop = ({addBlackCardBackToPile, children}) => {
   const [{ isOver }, drop] = useDrop({
     accept: 'blackCardFromPlayer',
     drop: (item, monitor) => {
-      addBlackCardBackToPile(item)
+      addBlackCardBackToPile(item);
     },
     // collect: monitor => ({
     //   isOver: !!monitor.isOver(),

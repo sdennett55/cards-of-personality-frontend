@@ -74,7 +74,7 @@ const getBlackCardLength = ({ players, index }) => {
 
 const PlayerDrop = ({ index, myName, players, socket, addCardToPlayer, userIsDragging, setUserIsDragging }) => {
   const [{ isOver }, drop] = useDrop({
-    accept: 'blackCard',
+    accept: ['blackCard', 'blackCardFromPlayer'],
     drop: (item, monitor) => {
       addCardToPlayer(item, players[index]);
     },
