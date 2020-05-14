@@ -20,7 +20,7 @@ const CardElement = styled.div`
 const DraggableCard = ({ bgColor, isBroadcastingDrag = true, isFlipBroadcasted, color, socket, text, type, setUserIsDragging, flippedByDefault = false }) => {
   const [ghostCard, setGhostCard] = useState({});
   const [isFlipped, setFlipped] = useState(flippedByDefault);
-  const [{ isDragging, getDifferenceFromInitialOffset, draggedCard }, drag] = useDrag({
+  const [{ isDragging, getDifferenceFromInitialOffset }, drag] = useDrag({
     item: {
       type,
       id: 0,
@@ -59,7 +59,7 @@ const DraggableCard = ({ bgColor, isBroadcastingDrag = true, isFlipBroadcasted, 
     return () => {
       setUserIsDragging(false);
     }
-  }, [isDragging])
+  }, [isBroadcastingDrag, setUserIsDragging, socket, text, type, isDragging])
 
   useEffect(() => {
     let isMounted = true;
@@ -93,7 +93,7 @@ const DraggableCard = ({ bgColor, isBroadcastingDrag = true, isFlipBroadcasted, 
       isMounted = false;
     }
 
-  }, []);
+  }, [isBroadcastingDrag, setUserIsDragging, socket, text, type, isFlipBroadcasted]);
 
   const getTransform = () => {
     if (isBroadcastingDrag) {
