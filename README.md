@@ -1,4 +1,5 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Cards Against Steve (frontend)
+A mobile web game inspired by the popular Cards Against Humanity card game.
 
 ## Available Scripts
 
