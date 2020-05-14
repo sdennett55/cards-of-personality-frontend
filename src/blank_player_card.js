@@ -16,6 +16,9 @@ const CardElement = styled.div`
   padding: 1em;
   border: 2px dashed #000;
   color: #000;
+  @media screen and (min-width: 1100px) {
+    font-size: 16px;
+  }
 `;
 
 const Wrapper = styled.div`

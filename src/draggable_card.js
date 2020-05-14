@@ -15,6 +15,9 @@ const CardElement = styled.div`
   justify-content: center;
   align-items: center;
   padding: 1em;
+  @media screen and (min-width: 1100px) {
+    font-size: 16px;
+  }
 `;
 
 const DraggableCard = ({ bgColor, isBroadcastingDrag = true, isFlipBroadcasted, color, socket, text, type, setUserIsDragging, flippedByDefault = false }) => {

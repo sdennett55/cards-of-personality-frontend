@@ -3,40 +3,40 @@ const MAX_PLAYERS = 8;
 const data = {
   "blackCards": [
     {
-      "text": "The latest SEV 1 was caused by _."
+      "text": "The latest SEV 1 was caused by ________."
     },
     {
-      "text": "I was flabbergasted when at the quarterly party I saw _."
+      "text": "I was flabbergasted when at the quarterly party I saw ________."
     },
     {
-      "text": "I couldn't book a single conference room because  _."
+      "text": "I couldn't book a single conference room because  ________."
     },
     {
-      "text": "Maybe she's born with it. Maybe it's _."
+      "text": "Maybe she's born with it. Maybe it's ________."
     },
     {
-      "text": "When I am a billionaire, I shall erect a 50-foot statue to commemorate _."
+      "text": "When I am a billionaire, I shall erect a 50-foot statue to commemorate ________."
     },
     {
-      "text": "It's a pity that kids these days are all getting involved with _."
+      "text": "It's a pity that kids these days are all getting involved with ________."
     },
     {
-      "text": "Next on ESPN2, the World Series of _."
+      "text": "Next on ESPN2, the World Series of ________."
     },
     {
       "text": "What will I bring back in time to convince people that I am a powerful wizard?"
     },
     {
-      "text": "Next from J.K. Rowling: Harry Potter and the Chamber of _."
+      "text": "Next from J.K. Rowling: Harry Potter and the Chamber of ________."
     },
     {
       "text": "Major League Baseball has banned _ for giving players an unfair advantage."
     },
     {
-      "text": "_. It's a trap!"
+      "text": "________. It's a trap!"
     },
     {
-      "text": "When I am the President of the United States, I will create the Department of _."
+      "text": "When I am the President of the United States, I will create the Department of ________."
     },
     {
       "text": "What's my secret power?"
@@ -51,13 +51,13 @@ const data = {
       "text": "What is Batman's guilty pleasure?"
     },
     {
-      "text": "Alternative medicine is now embracing the curative powers of _."
+      "text": "Alternative medicine is now embracing the curative powers of ________."
     },
     {
       "text": "Coming to Broadway this season, _: The Musical."
     },
     {
-      "text": "During his childhood, Salvador Dalí produced hundreds of paintings of _."
+      "text": "During his childhood, Salvador Dalí produced hundreds of paintings of ________."
     },
   ],
   "whiteCards": [

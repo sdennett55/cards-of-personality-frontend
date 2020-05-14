@@ -17,6 +17,9 @@ const PlayerName = styled.p`
   text-overflow: ellipsis;
   overflow: hidden;
   z-index: 1;
+  @media screen and (min-width: 1100px) {
+    font-size: 16px;
+  }
 `;
 
 const CardElement = styled.div`
