@@ -171,11 +171,7 @@ class App extends React.PureComponent {
   addCardToPlayer = (passedInCard, playerDroppedOn) => {
 
     // get the players state, the player index, and give that the passedInCard (players[index].blackCards.push(passedInCard))
-    // remove blackcard from blackcards
     this.setState(prevState => {
-      const indexOfPassedInCard = prevState.blackCards.findIndex(blackCard => blackCard === passedInCard.text);
-      const newBlackCards = [...prevState.blackCards];
-      newBlackCards.splice(indexOfPassedInCard, 1);
 
       // update player card property with new card
       const newPlayers = [...prevState.players].map(player => {
@@ -202,9 +198,21 @@ class App extends React.PureComponent {
         return player;
       });
 
+      // remove blackcard from blackcards if this is from the main deck
+      // and not from another player slot ('blackCardFromPlayer')
+      if (passedInCard.type === 'blackCard') {
+        const indexOfPassedInCard = prevState.blackCards.findIndex(blackCard => blackCard === passedInCard.text);
+        const newBlackCards = [...prevState.blackCards];
+        newBlackCards.splice(indexOfPassedInCard, 1);
+
+        return {
+          players: newPlayers,
+          blackCards: newBlackCards,
+        };
+      }
+
       return {
         players: newPlayers,
-        blackCards: newBlackCards,
       };
     }, () => {
       // send event that a card was moved to someones deck to the server

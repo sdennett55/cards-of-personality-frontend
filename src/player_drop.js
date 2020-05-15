@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useDrop } from 'react-dnd';
+import { MAX_PLAYERS } from './data';
 import DraggableCard from './draggable_card';
 
 const PlayerName = styled.p`
@@ -47,7 +48,7 @@ const PlayerDropWrap = styled.div`
   width: calc(25% - 1em); 
   margin: 0.5em;
 
-  &:nth-child(1n + 4) ${PlayerName} {
+  &:nth-child(1n + ${MAX_PLAYERS / 2 + 1}) ${PlayerName} {
     transform: translateY(100%);
     bottom: 0;
     top: auto;
