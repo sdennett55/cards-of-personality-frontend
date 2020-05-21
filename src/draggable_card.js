@@ -20,7 +20,7 @@ const CardElement = styled.div`
   }
 `;
 
-const DraggableCard = ({ bgColor, isBroadcastingDrag = true, isFlipBroadcasted, color, socket, text, type, setUserIsDragging, flippedByDefault = false }) => {
+const DraggableCard = ({ bgColor, isBroadcastingDrag = true, isFlipBroadcasted, color, socket, text, type, setUserIsDragging, flippedByDefault = false, isFlippable = true, }) => {
   const [ghostCard, setGhostCard] = useState({});
   const [isFlipped, setFlipped] = useState(flippedByDefault);
   const [{ isDragging, getDifferenceFromInitialOffset }, drag] = useDrag({
@@ -120,10 +120,12 @@ const DraggableCard = ({ bgColor, isBroadcastingDrag = true, isFlipBroadcasted, 
 
   return (
     <CardElement onClick={() => {
-      setFlipped(isFlipped => {
-        socket.emit('card is flipped', { isFlipped: !isFlipped, text });
-        return !isFlipped
-      });
+      if (isFlippable) {
+        setFlipped(isFlipped => {
+          socket.emit('card is flipped', { isFlipped: !isFlipped, text });
+          return !isFlipped
+        });
+      }
     }} ref={drag} style={{ zIndex: (isDragging ? 999 : 'auto'), ...getTransform(), backgroundColor: bgColor, color }}>
 
       {isFlipped ? text : (

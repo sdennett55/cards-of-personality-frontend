@@ -28,7 +28,7 @@ export const BlackCard = React.memo(({ text, setUserIsDragging }) => {
 
 const PickUpPile = React.memo(({ id, text, setUserIsDragging }) => {
   return (
-    <DraggableCard setUserIsDragging={setUserIsDragging} socket={socket} id={id} type="whiteCard" bgColor="#fff" color="#000" text={text} />
+    <DraggableCard isFlippable={false} setUserIsDragging={setUserIsDragging} socket={socket} id={id} type="whiteCard" bgColor="#fff" color="#000" text={text} />
   )
 })
 
