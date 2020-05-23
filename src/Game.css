@@ -1,11 +1,10 @@
 * {
   box-sizing: border-box;
 }
-.App {
+.Game {
   text-align: center;
   max-width: 1600px;
   margin: 0 auto;
-  font-family: 'Roboto Condensed', Arial, sans-serif;
 }
 
 svg {
@@ -18,7 +17,7 @@ svg {
 html,
 body,
 #root,
-.App {
+.Game {
   height: 100%;
 }
 
@@ -73,7 +72,7 @@ button, input {
   transform: translateX(0);
 }
 
-.App-namePopup {
+.Game-namePopup {
   position: absolute;
   top: 0;
   left: 0;
@@ -87,11 +86,11 @@ button, input {
   align-items: center;
   justify-content: center;
 }
-.App-namePopup-innerWrap {
+.Game-namePopup-innerWrap {
   display: flex;
   flex-direction: column;
 }
-.App-namePopup input {
+.Game-namePopup input {
   -moz-appearance: none;
   -webkit-appearance: none;
   appearance: none;
@@ -105,18 +104,18 @@ button, input {
   transition: border-color .25s;
   border-radius: 0;
 }
-.App-namePopup input:focus,
-.App-namePopup button:focus {
+.Game-namePopup input:focus,
+.Game-namePopup button:focus {
   outline: 0;
   border-color:#2cce9f;
 }
-.App-namePopup label {
+.Game-namePopup label {
  text-align: left;
  text-transform: uppercase;
  font-size: .813em;
  color: #c1bdbd;
 }
-.App-namePopup button {
+.Game-namePopup button {
   -moz-appearance: none;
   -webkit-appearance: none;
   appearance: none;
@@ -128,11 +127,11 @@ button, input {
   border-radius: 8px;
   margin: 0 auto;
 }
-.App-namePopup button:hover,
-.App-namePopup button:focus {
+.Game-namePopup button:hover,
+.Game-namePopup button:focus {
   opacity: .5;
 }
-.App-namePopup-errorMsg {
+.Game-namePopup-errorMsg {
   margin-top: 0;
   color: #cc2e2e;
 }

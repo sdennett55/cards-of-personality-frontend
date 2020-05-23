@@ -2,234 +2,82 @@ const MAX_PLAYERS = 8;
 
 const data = {
   "blackCards": [
-    {
-      "text": "This is the way the world ends / This is the way the world ends / Not with a bang but with _."
-    },
-    {
-      "text": "Why can't I sleep at night?"
-    },
-    {
-      "text": "In Michael Jackson's final moments, he thought about _."
-    },
-    {
-      "text": "The Smithsonian Museum of Natural History has just opened an exhibit on _."
-    },
-    {
-      "text": "I drink to forget _."
-    },
-    {
-      "text": "Maybe she's born with it. Maybe it's _."
-    },
-    {
-      "text": "What does Dick Cheney prefer?"
-    },
-    {
-      "text": "Daddy, why is Mommy crying?"
-    },
-    {
-      "text": "What's a girl's best friend?"
-    },
-    {
-      "text": "In 1,000 years, when paper money is a distant memory, how will we pay for goods and services?"
-    },
-    {
-      "text": "When I am a billionaire, I shall erect a 50-foot statue to commemorate _."
-    },
-    {
-      "text": "White people like _."
-    },
-    {
-      "text": "During sex, I like to think about _."
-    },
-    {
-      "text": "What did Vin Diesel eat for dinner?"
-    },
-    {
-      "text": "What did I bring back from Mexico?"
-    },
-    {
-      "text": "What's the most emo?"
-    },
-    {
-      "text": "It's a pity that kids these days are all getting involved with _."
-    },
-    {
-      "text": "Next on ESPN2, the World Series of _."
-    },
-    {
-      "text": "While the United States raced the Soviet Union to the moon, the Mexican government funneled millions of pesos into research on _."
-    },
-    {
-      "text": "What will I bring back in time to convince people that I am a powerful wizard?"
-    },
-    {
-      "text": "Next from J.K. Rowling: Harry Potter and the Chamber of _."
-    },
-    {
-      "text": "What are my parents hiding from me?"
-    },
-    {
-      "text": "War! What is it good for?"
-    },
-    {
-      "text": "I got 99 problems but _ ain't one."
-    },
-    {
-      "text": "But before I kill you, Mr. Bond, I must show you _."
-    },
-    {
-      "text": "What gives me uncontrollable gas?"
-    },
-    {
-      "text": "Major League Baseball has banned _ for giving players an unfair advantage."
-    },
-    {
-      "text": "BILLY MAYS HERE FOR _."
-    },
-    {
-      "text": "_. It's a trap!"
-    },
-    {
-      "text": "TSA guidelines now prohibit _ on airplanes."
-    },
-    {
-      "text": "What's my secret power?"
-    },
-    {
-      "text": "What's my anti-drug?"
-    },
-    {
-      "text": "I'm sorry, Professor, but I couldn't complete my homework because of _."
-    },
-    {
-      "text": "What's there a ton of in heaven?"
-    },
-    {
-      "text": "I do not know with which weapons World War III will be fought, but World War IV will be fought with _."
-    },
-    {
-      "text": "_: Good to the last drop."
-    },
-    {
-      "text": "Instead of coal, Santa now gives the bad children _."
-    },
-    {
-      "text": "Why do I hurt all over?"
-    },
-    {
-      "text": "What's that sound?"
-    },
-    {
-      "text": "What's Teach for America using to inspire inner city students to succeed?"
-    },
-    {
-      "text": "What am I giving up for Lent?"
-    },
-    {
-      "text": "What never fails to liven up the party?"
-    },
-    {
-      "text": "What did the U.S. airdrop to the children of Afghanistan?"
-    },
-    {
-      "text": "Studies show that lab rats navigate mazes 50% faster after being exposed to _."
-    },
-    {
-      "text": "In L.A. County Jail, word is you can trade 200 cigarettes for _."
-    },
-    {
-      "text": "_: kid-tested, mother-approved."
-    },
-    {
-      "text": "Why am I sticky?"
-    },
-    {
-      "text": "What is Batman's guilty pleasure?"
-    },
-    {
-      "text": "How am I maintaining my relationship status?"
-    },
-    {
-      "text": "_. Betcha can't have just one!"
-    },
-    {
-      "text": "Here is the church. Here is the steeple. Open the doors. And there is _."
-    },
-    {
-      "text": "What helps Obama unwind?"
-    },
-    {
-      "text": "Dear Abby, I'm having some trouble with _ and would like your advice."
-    },
-    {
-      "text": "What would grandma find disturbing, yet oddly charming?"
-    },
-    {
-      "text": "Alternative medicine is now embracing the curative powers of _."
-    },
-    {
-      "text": "What's the next Happy Meal® toy?"
-    },
-    {
-      "text": "_. High five, bro."
-    },
-    {
-      "text": "What's that smell?"
-    },
-    {
-      "text": "What gets better with age?"
-    },
-    {
-      "text": "What don't you want to find in your Kung Pao chicken?"
-    },
-    {
-      "text": "What ended my last relationship?"
-    },
-    {
-      "text": "What's the new fad diet?"
-    },
-    {
-      "text": "How did I lose my virginity?"
-    },
-    {
-      "text": "In the new Disney Channel Original Movie, Hannah Montana struggles with _ for the first time."
-    },
-    {
-      "text": "The class field trip was completely ruined by _."
-    },
-    {
-      "text": "Coming to Broadway this season, _: The Musical."
-    },
-    {
-      "text": "After the earthquake, Sean Penn brought _ to the people of Haiti."
-    },
-    {
-      "text": "During his childhood, Salvador Dalí produced hundreds of paintings of _."
-    },
-    {
-      "text": "A romantic, candlelit dinner would be incomplete without _."
-    },
-    {
-      "text": "When I am the President of the United States, I will create the Department of _."
-    },
-    {
-      "text": "MTV's new reality show features eight washed-up celebrities living with _."
-    },
-    {
-      "text": "Life for American Indians was forever changed when the White Man introduced them to _."
-    },
-    {
-      "text": "What do old people smell like? "
-    },
-    {
-      "text": "When Pharaoh remained unmoved, Moses called down a plague of _."
-    },
-    {
-      "text": "_. That's how I want to die."
-    },
-    {
-      "text": "What will always get you laid?"
-    }
+    "This is the way the world ends / This is the way the world ends / Not with a bang but with ______.",
+    "Why can't I sleep at night?",
+    "In Michael Jackson's final moments, he thought about ______.",
+    "The Smithsonian Museum of Natural History has just opened an exhibit on ______.",
+    "I drink to forget ______.",
+    "Maybe she's born with it. Maybe it's ______.",
+    "What does Dick Cheney prefer?",
+    "Daddy, why is Mommy crying?",
+    "What's a girl's best friend?",
+    "In 1,000 years, when paper money is a distant memory, how will we pay for goods and services?",
+    "When I am a billionaire, I shall erect a 50-foot statue to commemorate ______.",
+    "White people like ______.",
+    "During sex, I like to think about ______.",
+    "What did Vin Diesel eat for dinner?",
+    "What did I bring back from Mexico?",
+    "What's the most emo?",
+    "It's a pity that kids these days are all getting involved with ______.",
+    "Next on ESPN2, the World Series of ______.",
+    "While the United States raced the Soviet Union to the moon, the Mexican government funneled millions of pesos into research on ______.",
+    "What will I bring back in time to convince people that I am a powerful wizard?",
+    "Next from J.K. Rowling: Harry Potter and the Chamber of ______.",
+    "What are my parents hiding from me?",
+    "War! What is it good for?",
+    "I got 99 problems but ______ ain't one.",
+    "But before I kill you, Mr. Bond, I must show you ______.",
+    "What gives me uncontrollable gas?",
+    "Major League Baseball has banned ______ for giving players an unfair advantage.",
+    "BILLY MAYS HERE FOR ______.",
+    "______. It's a trap!",
+    "TSA guidelines now prohibit ______ on airplanes.",
+    "What's my secret power?",
+    "What's my anti-drug?",
+    "I'm sorry, Professor, but I couldn't complete my homework because of ______.",
+    "What's there a ton of in heaven?",
+    "I do not know with which weapons World War III will be fought, but World War IV will be fought with ______.",
+    "______: Good to the last drop.",
+    "Instead of coal, Santa now gives the bad children ______.",
+    "Why do I hurt all over?",
+    "What's that sound?",
+    "What's Teach for America using to inspire inner city students to succeed?",
+    "What am I giving up for Lent?",
+    "What never fails to liven up the party?",
+    "What did the U.S. airdrop to the children of Afghanistan?",
+    "Studies show that lab rats navigate mazes 50% faster after being exposed to ______.",
+    "In L.A. County Jail, word is you can trade 200 cigarettes for ______.",
+    "______: kid-tested, mother-approved.",
+    "Why am I sticky?",
+    "What is Batman's guilty pleasure?",
+    "How am I maintaining my relationship status?",
+    "______. Betcha can't have just one!",
+    "Here is the church. Here is the steeple. Open the doors. And there is ______.",
+    "What helps Obama unwind?",
+    "Dear Abby, I'm having some trouble with _ and would like your advice.",
+    "What would grandma find disturbing, yet oddly charming?",
+    "Alternative medicine is now embracing the curative powers of ______.",
+    "What's the next Happy Meal® toy?",
+    "______. High five, bro.",
+    "What's that smell?",
+    "What gets better with age?",
+    "What don't you want to find in your Kung Pao chicken?",
+    "What ended my last relationship?",
+    "What's the new fad diet?",
+    "How did I lose my virginity?",
+    "In the new Disney Channel Original Movie, Hannah Montana struggles with _ for the first time.",
+    "The class field trip was completely ruined by ______.",
+    "Coming to Broadway this season, ______: The Musical.",
+    "After the earthquake, Sean Penn brought ______ to the people of Haiti.",
+    "During his childhood, Salvador Dalí produced hundreds of paintings of ______.",
+    "A romantic, candlelit dinner would be incomplete without ______.",
+    "When I am the President of the United States, I will create the Department of ______.",
+    "MTV's new reality show features eight washed-up celebrities living with ______.",
+    "Life for American Indians was forever changed when the White Man introduced them to ______.",
+    "What do old people smell like? ",
+    "When Pharaoh remained unmoved, Moses called down a plague of ______.",
+    "______. That's how I want to die.",
+    "What will always get you laid?"
   ], "whiteCards": [
     "Spontaneous human combustion.",
     "Nickelback.",
