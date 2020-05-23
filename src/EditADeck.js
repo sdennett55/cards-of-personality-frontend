@@ -71,6 +71,18 @@ const addCard = ({ e, deckTable, type, text, setDeckTable, location, setError, s
     .catch(err => console.log(`There was an error broooo: ${err}`))
 };
 
+const Title = ({location}) => {
+  if (location && location !== '/') {
+    return (
+      <MainHeading>Add Cards to the <NameOfDeck>{location.replace(/\/|-/g, ' ')}</NameOfDeck> Deck</MainHeading>
+    )
+  } else {
+    return (
+      <MainHeading>Add Cards to a Deck</MainHeading>
+    )
+  }
+}
+
 const EditADeck = ({ title }) => {
   const [whiteCard, setWhiteCard] = useState('');
   const [blackCard, setBlackCard] = useState('');
@@ -107,19 +119,19 @@ const EditADeck = ({ title }) => {
       <Helmet>
         <title>{title}</title>
       </Helmet>
-      <h1>Add Cards To A Deck</h1>
+      <Title location={location} />
 
       {location && location !== '/' ? (
         <>
           {deckExists === 'result found' ? (
             <>
-              <p>The <strong>{location.replace(/\/|-/g, ' ')}</strong> deck has {getCardsLength({ type: 'white', deckTable })} and {getCardsLength({ type: 'black', deckTable })}.</p>
+              <p>This deck has {getCardsLength({ type: 'white', deckTable })} and {getCardsLength({ type: 'black', deckTable })}.</p>
 
               <form onSubmit={e => addCard({ e, deckTable, type: 'white', text: whiteCard, initialDecks, setFilteredDecks, setDeckTable, location, setError, setWhiteCard })}>
                 <InputWithLabel
                   type="white"
                   whiteCard={whiteCard}
-                  buttonText="Add"
+                  buttonText="ADD"
                   labelText="Add a White Card"
                   onChange={setWhiteCard}
                   placeholderText="e.g. Spontaneous combustion"
@@ -131,7 +143,7 @@ const EditADeck = ({ title }) => {
                 <InputWithLabel
                   type="black"
                   blackCard={blackCard}
-                  buttonText="Add"
+                  buttonText="ADD"
                   labelText="Add a Black Card"
                   onChange={setBlackCard}
                   placeholderText="e.g. Abraham Lincoln once said _______."
@@ -163,5 +175,15 @@ const EditADeck = ({ title }) => {
     </>
   )
 }
+
+const MainHeading = styled.h1`
+  text-transform: capitalize;
+`;
+const NameOfDeck = styled.em`
+  background: rgba(44, 206, 159, 1);
+  border-radius: 8px;
+  padding: 0 .25em 0;
+  text-shadow: 1px 1px 1px #fff;
+`
 
 export default EditADeck;

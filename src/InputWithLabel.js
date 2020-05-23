@@ -37,6 +37,7 @@ const Button = styled.button`
   padding: .7em 1em;
   border-radius: 8px;
   margin: 0 auto;
+  font-weight: bold;
 
   &:hover,
   &:focus {
