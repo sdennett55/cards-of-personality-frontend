@@ -184,6 +184,12 @@ const NameOfDeck = styled.em`
   border-radius: 8px;
   padding: 0 .25em 0;
   text-shadow: 1px 1px 1px #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  display: inline-block;
+  vertical-align: bottom;
 `
 
 export default EditADeck;
