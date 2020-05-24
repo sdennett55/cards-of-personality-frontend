@@ -65,6 +65,12 @@ const BackToTableButton = styled.button`
   padding: 0;
   margin: 0;
   border-top: 1px solid #fff;
+
+  &:hover,
+  &:focus {
+    color: #2cce9f;
+    outline: 0;
+  }
 `;
 
 const SubmittedCardsButton = styled.button`

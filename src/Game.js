@@ -10,7 +10,7 @@ import CardWrap from './card_wrap';
 import BlankPlayerCard from './blank_player_card';
 import BlackCardDrop from './black_card_drop';
 import GeneratePreview from './generate_preview';
-import { blackCards, whiteCards, MAX_PLAYERS } from './data';
+import { MAX_PLAYERS } from './data';
 import { withRouter } from 'react-router-dom'
 import styled from 'styled-components';
 import io from 'socket.io-client';
@@ -22,6 +22,10 @@ var socketIP = process.env.NODE_ENV === 'development'
   ? 'http://10.0.0.208:3001'
   : 'https://cards-against-steve.herokuapp.com';
 var socket = io(socketIP);
+
+var SERVER_URL = process.env.NODE_ENV === 'development'
+  ? 'http://10.0.0.208:3001'
+  : 'https://cards-against-steve.herokuapp.com';
 
 export const BlackCard = React.memo(({ text, setUserIsDragging }) => {
   return (
@@ -48,26 +52,21 @@ class Game extends React.PureComponent {
       players: newPlayers,
     });
 
-    // fetch for data given a deck query (e.g. ?deck=strange-dudes)
     const deckQueryString = queryString.parse(this.props.location.search).deck;
 
-    if (deckQueryString) {
-      axios.get(`http://localhost:3001/api/getTable/${deckQueryString}`)
-        .then(res => {
-          if (res.data === 'no result') {
-            return console.log('Deck not found');
-          }
+    axios.post(`${SERVER_URL}/api/getInitialCards`, { deckName: deckQueryString })
+      .then(res => {
+        const { blackCards: newBlackCards, whiteCards: newWhiteCards } = res.data;
 
-          const newWhiteCards = res.data.filter(({ type }) => type === 'white').map(({ text }) => text);
-          const newBlackCards = res.data.filter(({ type }) => type === 'black').map(({ text }) => text);
+        socket.emit('set initialCards for game', { whiteCards: newWhiteCards, blackCards: newBlackCards });
+      });
 
-          this.setState(prevState => ({ 
-            blackCards: [...prevState.blackCards, ...newBlackCards], 
-            whiteCards: [...prevState.blackCards, ...newWhiteCards] 
-          }));
-        });
-    }
-
+    socket.on('get initialCards for game', ({ whiteCards, blackCards }) => {
+      this.setState({
+        whiteCards,
+        blackCards
+      })
+    });
 
     socket.on('disconnect', () => {
       this.setState({ showNamePopup: true, nameError: 'You were disconnected. Please rejoin.' });
@@ -155,8 +154,8 @@ class Game extends React.PureComponent {
 
         return newPlayer;
       });
-      this.setState({ whiteCards, blackCards, submittedCards: [], myCards: [], players: newPlayers });
-      socket.emit('restart game', { whiteCards, blackCards, players: newPlayers });
+      this.setState({ whiteCards: [], blackCards: [], submittedCards: [], myCards: [], players: newPlayers });
+      socket.emit('restart game', { whiteCards: [], blackCards: [], players: newPlayers });
     });
   }
 
@@ -176,8 +175,8 @@ class Game extends React.PureComponent {
 
   state = {
     blackCardWidth: null,
-    blackCards,
-    whiteCards,
+    blackCards: [],
+    whiteCards: [],
     myCards: [],
     myName: localStorage.getItem('cas-name') || '',
     players: [],

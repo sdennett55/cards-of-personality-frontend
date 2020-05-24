@@ -40,8 +40,10 @@ const Button = styled.button`
   font-weight: bold;
 
   &:hover,
-  &:focus {
+  &:focus,
+  &:disabled {
     opacity: .5;
+    outline:0;
   }
 `;
 
@@ -54,7 +56,7 @@ const Wrapper = styled.div`
   margin: 2em auto;
 `;
 
-const InputWithLabel = ({ buttonText, labelText, onChange, type, placeholderText, blackCard, whiteCard }) => {
+const InputWithLabel = ({ buttonText, labelText, onChange, type, placeholderText, blackCard, whiteCard, isLoading }) => {
   const inputRef = React.useRef(null);
   const hasMounted = React.useRef(false);
 
@@ -72,7 +74,7 @@ const InputWithLabel = ({ buttonText, labelText, onChange, type, placeholderText
     <Wrapper>
       <Label htmlFor={labelText.replace(/\s/g, '')}>{labelText}</Label>
       <Input ref={inputRef} id={labelText.replace(/\s/g, '')} type="text" placeholder={placeholderText} onChange={e => onChange(e.target.value)} value={type === 'black' ? blackCard : whiteCard} />
-      <Button>{buttonText}</Button>
+      <Button disabled={isLoading}>{buttonText}</Button>
     </Wrapper>
   )
 }
