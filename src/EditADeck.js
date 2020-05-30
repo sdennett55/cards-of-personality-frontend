@@ -52,6 +52,10 @@ const getCardsLength = ({ type, deckTable }) => {
 const addCard = ({ e, setIsLoading, deckTable, type, text, setDeckTable, location, setError, setWhiteCard, setBlackCard }) => {
   e.preventDefault();
 
+  if (!text.trim().length) {
+    return setError('Please enter something, you know, more than 0 characters.');
+  }
+
   // if text already exists in the deck, return error
   if (deckTable.find(card => card.type === type && card.text.toLowerCase() === text.toLowerCase())) {
     return setError(`This same ${type} card has already been submitted. Please try again.`);
@@ -64,7 +68,10 @@ const addCard = ({ e, setIsLoading, deckTable, type, text, setDeckTable, locatio
       // if successful, update state
       // const data = cleanUpData(res.data);
       // setDeckTable(data);
-      console.log(res);
+      if (res.data.includes('Error')) {
+        return setError(res.data);
+      }
+
       setDeckTable(deckTable => [...deckTable, { type, text }])
       setError('');
 
@@ -74,7 +81,7 @@ const addCard = ({ e, setIsLoading, deckTable, type, text, setDeckTable, locatio
         setWhiteCard('');
       }
     })
-    .catch(err => console.log(`There was an error broooo: ${err}`))
+    .catch(err => setError(err))
     .finally(info => {
       setIsLoading(false);
       console.log('finally ', info);

@@ -104,7 +104,7 @@ const DraggableCard = ({ bgColor, isBroadcastingDrag = true, isFlipBroadcasted, 
       // any cards being dragged by someone else
       if (Object.keys(ghostCard).length) {
         if (ghostCard.text === text) {
-          return { pointerEvents: 'none', opacity: '.5', transform: `translate3d(${ghostCard.x}px, ${ghostCard.y}px, 0)`, zIndex: '1' };
+          return { pointerEvents: 'none', opacity: '1', transform: `translate3d(${ghostCard.x}px, ${ghostCard.y}px, 0)`, zIndex: '1' };
         } else {
           return { pointerEvents: 'none', transform: 'none' };
         }

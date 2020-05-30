@@ -8,15 +8,24 @@ const LogoElement = styled.p`
   margin: 1em;
   text-align: left;
   text-transform: uppercase;
-  font-weight: bold;
   line-height: 1;
+  font-size: 5vw;
+
+  @media (orientation: landscape) {
+    font-size: 2vw;
+  }
+`;
+const Graident = styled.span`
+  background: linear-gradient(to right, #40E0D0, #FF8C00, #FF0080);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: bold;
 `;
 
 const Logo = () => (
   <LogoElement>
-    Cards<br/>
-    Against<br/> 
-    Steve
+    Cards of<br/>
+    <Graident>Personality</Graident>
   </LogoElement>
 );
 

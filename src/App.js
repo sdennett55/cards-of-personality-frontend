@@ -12,10 +12,10 @@ const App = () => {
           <Game />
         </Route>
         <Route path="/create-deck">
-          <CreateADeck title="Cards Against Steve: Create Deck" />
+          <CreateADeck title="Cards of Personality: Create Deck" />
         </Route>
         <Route path="/edit-deck">
-          <EditADeck title="Cards Against Steve: Edit Deck" />
+          <EditADeck title="Cards of Personality: Edit Deck" />
         </Route>
       </Switch>
     </Router>
