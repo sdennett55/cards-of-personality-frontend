@@ -127,6 +127,7 @@ const ButtonWrapper = styled.div`
   width: 100%;
   display: flex;
   align-items: center;
+  transform: translateZ(0);
 `;
 
 function getBlankCards(myCards) {
@@ -143,7 +144,7 @@ function getBlankSubmittedCards(cards) {
   return arr;
 }
 
-const MyCardsDropZone = ({ addCardToMyCards, submittedCards, discardACard, myCards, myName, socket, setUserIsDragging, submitACard }) => {
+const MyCardsDropZone = ({ addCardToMyCards, submittedCards, discardACard, myCards, myName, socket, setUserIsDragging, userIsDragging, submitACard }) => {
   const [isOpen, setOpen] = useState(false);
   const [isSubmittedTableOpen, setSubmittedTableOpen] = useState(false);
   const [{ isOver }, drop] = useDrop({
@@ -152,7 +153,7 @@ const MyCardsDropZone = ({ addCardToMyCards, submittedCards, discardACard, myCar
       addCardToMyCards(item)
     },
     collect: monitor => ({
-      isOver: !!monitor.isOver(),
+      isOver: !!monitor.isOver() && userIsDragging,
     }),
   });
   const [{ submitIsOver }, submitDropRef] = useDrop({
@@ -161,6 +162,7 @@ const MyCardsDropZone = ({ addCardToMyCards, submittedCards, discardACard, myCar
       submitACard(item)
     },
     collect: monitor => ({
+      // we don't need to monitor if user is dragging, because these our each player's cards that no one else can drag.
       submitIsOver: !!monitor.isOver(),
     }),
   });
@@ -170,7 +172,7 @@ const MyCardsDropZone = ({ addCardToMyCards, submittedCards, discardACard, myCar
       discardACard(item)
     },
     collect: monitor => ({
-      discardIsOver: !!monitor.isOver(),
+      discardIsOver: !!monitor.isOver() && userIsDragging,
     }),
   });
 

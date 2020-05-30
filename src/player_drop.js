@@ -83,7 +83,7 @@ const PlayerDrop = ({ index, myName, players, socket, addCardToPlayer, userIsDra
       addCardToPlayer(item, players[index]);
     },
     collect: monitor => ({
-      isOver: !!monitor.isOver(),
+      isOver: !!monitor.isOver() && userIsDragging,
     }),
   })
   return (

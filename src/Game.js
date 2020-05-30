@@ -193,6 +193,10 @@ class Game extends React.PureComponent {
 
   addCardToPlayer = (passedInCard, playerDroppedOn) => {
 
+    if (!this.state.userIsDragging) {
+      return;
+    }
+
     // get the players state, the player index, and give that the passedInCard (players[index].blackCards.push(passedInCard))
     this.setState(prevState => {
 
@@ -245,7 +249,7 @@ class Game extends React.PureComponent {
   }
 
   addCardToMyCards = passedInCard => {
-    if (this.state.myCards.length === 7) {
+    if (this.state.myCards.length === 7 || !this.state.userIsDragging) {
       return;
     }
 
@@ -278,6 +282,9 @@ class Game extends React.PureComponent {
   }
 
   addBlackCardBackToPile = passedInCard => {
+    if (!this.state.userIsDragging) {
+      return;
+    }
     // add passedInCard to the front of the blackCards array
     const newBlackCards = [...this.state.blackCards];
     newBlackCards.unshift(passedInCard);
@@ -333,6 +340,10 @@ class Game extends React.PureComponent {
   };
 
   discardACard = passedInCard => {
+
+    if (!this.state.userIsDragging) {
+      return;
+    }
     // remove passedInCard from submittedCards
     const passedInCardIndex = this.state.submittedCards.findIndex(card => card.text === passedInCard.text);
     const newSubmittedCards = [...this.state.submittedCards];
@@ -466,7 +477,7 @@ class Game extends React.PureComponent {
               </PlayerDecks>
 
             </CardsWrap>
-            <MyCardsDropZone setUserIsDragging={this.setUserIsDragging} socket={socket} discardACard={this.discardACard} addCardToMyCards={this.addCardToMyCards} submitACard={this.submitACard} submittedCards={this.state.submittedCards} myCards={this.state.myCards} myName={this.state.myName} />
+            <MyCardsDropZone setUserIsDragging={this.setUserIsDragging} userIsDragging={this.state.userIsDragging} socket={socket} discardACard={this.discardACard} addCardToMyCards={this.addCardToMyCards} submitACard={this.submitACard} submittedCards={this.state.submittedCards} myCards={this.state.myCards} myName={this.state.myName} />
           </Table>
         </DndProvider>
       </div>
