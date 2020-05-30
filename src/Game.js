@@ -52,6 +52,14 @@ class Game extends React.PureComponent {
       players: newPlayers,
     });
 
+    // if (socket) {
+    //   socket.emit('join room');
+
+    //   socket.on('joined a room', theRoom => {
+    //     console.log({theRoom});
+    //   })
+    // }
+
     const deckQueryString = queryString.parse(this.props.location.search).deck;
 
     axios.post(`${SERVER_URL}/api/getInitialCards`, { deckName: deckQueryString })

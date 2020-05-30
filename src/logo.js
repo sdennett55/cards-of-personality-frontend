@@ -27,8 +27,8 @@ const Graident = styled.span`
 
 const Logo = () => (
   <LogoElement>
-    Cards of<br/>
-    <Graident>Personality</Graident>
+    Cards <br/>Against<br/>
+    <Graident>Strange Dudes</Graident>
   </LogoElement>
 );
 
