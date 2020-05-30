@@ -16,6 +16,7 @@ const CardElement = styled.div`
   align-items: center;
   padding: 1em;
   overflow: hidden;
+  user-select: none;
   @media screen and (min-width: 1100px) {
     font-size: 16px;
   }
