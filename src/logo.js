@@ -19,6 +19,7 @@ const LogoElement = styled.p`
   }
 `;
 const Graident = styled.span`
+  background: #40E0D0; // fallback for ancient browsers
   background: linear-gradient(to right, #40E0D0, #FF8C00, #FF0080);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -27,8 +28,10 @@ const Graident = styled.span`
 
 const Logo = () => (
   <LogoElement>
-    Cards <br/>Against<br/>
-    <Graident>Strange Dudes</Graident>
+    Cards <br/>
+    Against<br/>
+    <Graident>Strange</Graident><br/>
+    <Graident>Dudes</Graident>
   </LogoElement>
 );
 
