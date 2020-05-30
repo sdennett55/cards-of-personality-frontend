@@ -11,6 +11,9 @@ const LogoElement = styled.p`
   line-height: 1;
   font-size: 5vw;
 
+  @media (min-width: 501px) {
+    font-size: 2vw;
+  }
   @media (orientation: landscape) {
     font-size: 2vw;
   }
