@@ -3,11 +3,11 @@ A mobile-first multiplayer web game inspired by the popular Cards Against Humani
 
 ## How to Deploy Your Own Instance of the Game
 
-1. Deploy frontend to Netlify via the button below.
+1. Deploy frontend (this repo) to Netlify via the button below.
 
 [![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/sdennett55/cards-of-personality-frontend)
 
-2. Clone the [backend](https://github.com/sdennett55/cards-of-personality-backend) (this repo).
+2. Clone the [backend](https://github.com/sdennett55/cards-of-personality-backend).
 
 3. Duplicate this [Airtable template](https://airtable.com/shr9xPObtiWFRa3gU) which holds the cards and decks data by clicking "Copy Base" in the top right of the page.
 
