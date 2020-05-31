@@ -5,7 +5,7 @@ A mobile-first multiplayer web game inspired by the popular Cards Against Humani
 
 1. Clone the [backend](https://github.com/sdennett55/cards-of-personality-backend).
 
-2. Add the URL to your github repo to `app.json`, push the repo to github, and then deploy to Heroku with this link using your github repo URL: https://heroku.com/deploy?template=URL_TO_YOUR_BACKEND_GITHUB_REPO/tree/master
+2. Add the URL to your github repo to the `repository` field in `app.json`, push the repo to github, and then deploy to Heroku with this link using your github repo URL: https://heroku.com/deploy?template=URL_TO_YOUR_BACKEND_GITHUB_REPO/tree/master
 
 3. Duplicate this [Airtable template](https://airtable.com/shr9xPObtiWFRa3gU) which holds the cards and decks data by clicking "Copy Base" in the top right of the page.
 
