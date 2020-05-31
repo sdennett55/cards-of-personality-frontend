@@ -111,7 +111,7 @@ const DraggableCard = ({ bgColor, isBroadcastingDrag = true, isFlipBroadcasted, 
       // any cards being dragged by someone else
       if (Object.keys(ghostCard).length) {
         if (ghostCard.text === text) {
-          return { pointerEvents: 'none', opacity: '1', transform: `translate3d(${ghostCard.x}px, ${ghostCard.y}px, 0)`, zIndex: '1' };
+          return { pointerEvents: 'none', opacity: '1', transform: `translate3d(${ghostCard.x}px, ${ghostCard.y}px, 0)`, zIndex: '999' };
         } else {
           return { pointerEvents: 'none', transform: 'translate3d(0, 0, 0)' };
         }
@@ -126,8 +126,28 @@ const DraggableCard = ({ bgColor, isBroadcastingDrag = true, isFlipBroadcasted, 
     return { transform: 'translate3d(0, 0, 0)' };
   }
 
+  const getClassName = () => {
+    if (isBroadcastingDrag) {
+      // any cards being dragged by someone else
+      if (Object.keys(ghostCard).length) {
+        if (ghostCard.text === text) {
+          return 'is-dragging';
+        } else {
+          return null;
+        }
+      }
+    }
+
+    // on the client that's actually dragging the card
+    if (isDragging && getDifferenceFromInitialOffset) {
+      return 'is-dragging';
+    }
+
+    return null;
+  }
+
   return (
-    <CardElement className={isDragging ? 'is-dragging' : ''} onClick={() => {
+    <CardElement className={getClassName()} onClick={() => {
       if (isFlippable) {
         setFlipped(isFlipped => {
           socket.emit('card is flipped', { isFlipped: !isFlipped, text });
