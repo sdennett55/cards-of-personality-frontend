@@ -9,7 +9,7 @@ const Landing = ({ title }) => {
       <Helmet>
         <title>{title}</title>
       </Helmet>
-      <Heading>Cards Against Strange Dudes</Heading>
+      <Heading>Cards of Personality</Heading>
       <Button>Join Game</Button>
       <Button>Create Game</Button>
       <AltButton>Create Deck</AltButton>

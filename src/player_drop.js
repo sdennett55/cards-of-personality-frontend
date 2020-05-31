@@ -46,6 +46,7 @@ const Wrap = styled.div`
 const PlayerDropWrap = styled.div`
   position: relative;
   width: calc(25% - 1em); 
+  max-width: 25vh;
   margin: 0.5em;
 
   &:nth-child(1n + ${MAX_PLAYERS / 2 + 1}) ${PlayerName} {

@@ -1,4 +1,4 @@
-# Cards Against Strange Dudes (frontend)
+# Cards of Personality (frontend)
 A mobile web game inspired by the popular Cards Against Humanity card game.
 
 ## Available Scripts

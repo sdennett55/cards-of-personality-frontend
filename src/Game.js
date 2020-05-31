@@ -62,14 +62,21 @@ class Game extends React.PureComponent {
 
     const deckQueryString = queryString.parse(this.props.location.search).deck;
 
-    axios.post(`${SERVER_URL}/api/getInitialCards`, { deckName: deckQueryString })
-      .then(res => {
-        const { blackCards: newBlackCards, whiteCards: newWhiteCards } = res.data;
+    // If the whiteCards and blackCards are already set, don't bother hitting this endpoint.
+    if (!this.state.whiteCards.length && !this.state.blackCards.length) {
+      axios.post(`${SERVER_URL}/api/getInitialCards`, { deckName: deckQueryString })
+        .then(res => {
+          if (!res.data) {
+            return;
+          }
 
-        socket.emit('set initialCards for game', { whiteCards: newWhiteCards, blackCards: newBlackCards });
-      });
+          const { blackCards: newBlackCards, whiteCards: newWhiteCards } = res.data;
 
-    socket.on('get initialCards for game', ({ whiteCards, blackCards }) => {
+          socket.emit('set initialCards for game', { whiteCards: newWhiteCards, blackCards: newBlackCards });
+        });
+    }
+
+    socket.on('get initialCards for game', ({ whiteCards = [], blackCards = [] }) => {
       this.setState({
         whiteCards,
         blackCards
@@ -522,7 +529,6 @@ const PlayerDecks = styled.div`
 
   @media (max-width: 500px) and (orientation: portrait) {
     width: calc(100% + 1em);
-    height: calc(50vh - 1em);
     margin: .5em -.5em .5em;
   }
 `;

@@ -29,7 +29,7 @@ const Wrapper = styled.div`
 const BlankPlayerCard = ({count, index}) => {
 
   return (
-    <div style={{ position: 'relative', width: 'calc(25% - 1em)', 'margin': '0.5em' }}>
+    <div style={{ position: 'relative', width: 'calc(25% - 1em)', maxWidth: '25vh', 'margin': '0.5em' }}>
       <Wrapper>
         <CardElement>
           Player {count < MAX_PLAYERS ? count + index + 1 : index + 1}

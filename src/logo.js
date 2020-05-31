@@ -17,8 +17,11 @@ const LogoElement = styled.p`
   @media (orientation: landscape) {
     font-size: 2vw;
   }
+  @media (min-width: 1920px) {
+    font-size: 39px;
+  }
 `;
-const Graident = styled.span`
+const Gradient = styled.span`
   background: #40E0D0; // fallback for ancient browsers
   background: linear-gradient(to right, #40E0D0, #FF8C00, #FF0080);
   -webkit-background-clip: text;
@@ -28,10 +31,8 @@ const Graident = styled.span`
 
 const Logo = () => (
   <LogoElement>
-    Cards <br/>
-    Against<br/>
-    <Graident>Strange</Graident><br/>
-    <Graident>Dudes</Graident>
+    Cards of<br/>
+    <Gradient>Personality</Gradient>
   </LogoElement>
 );
 
