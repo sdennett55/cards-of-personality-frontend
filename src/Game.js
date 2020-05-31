@@ -522,7 +522,7 @@ const PlayerDecks = styled.div`
   display: flex;
   flex-wrap: wrap;
   width: calc(60% - .25em);
-  justify-content: space-between;
+  justify-content: center;
   align-content: center;
   margin-right: -.5em;
   font-size: .7rem;
