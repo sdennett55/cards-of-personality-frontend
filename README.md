@@ -1,23 +1,21 @@
 # Cards of Personality (frontend)
 A mobile-first multiplayer web game inspired by the popular Cards Against Humanity card game.
 
-## How to Deploy Your Own Instance of the Game
+## How to Deploy Your Own Version of the Game
 
-1. Deploy frontend (this repo) to Netlify via the button below.
+1. Clone the [backend](https://github.com/sdennett55/cards-of-personality-backend).
 
-[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/sdennett55/cards-of-personality-frontend)
+2. Duplicate this [Airtable template](https://airtable.com/shr9xPObtiWFRa3gU) which holds the cards and decks data by clicking "Copy Base" in the top right of the page.
 
-2. Clone the [backend](https://github.com/sdennett55/cards-of-personality-backend).
+3. Add your [Airtable API key](https://airtable.com/account) to the `backend/app.json` file, push to github, and then deploy to Heroku with this link using your github repo URL: https://heroku.com/deploy?template=[URL_TO_YOUR_BACKEND_GITHUB_REPO]/tree/master
 
-3. Duplicate this [Airtable template](https://airtable.com/shr9xPObtiWFRa3gU) which holds the cards and decks data by clicking "Copy Base" in the top right of the page.
+4. Clone the [frontend](https://github.com/sdennett55/cards-of-personality-frontend).
 
-4. Add your [Airtable API key](https://airtable.com/account) to the `backend/app.json` file and then click the button below to deploy to Heroku.
+5. Add the URL to your new heroku backend to `frontend/netlify.toml` and `frontend/src/config.js` and then deploy to Netlify with this link using your github repo URL: https://app.netlify.com/start/deploy?repository=[URL_TO_YOUR_FRONTEND_GITHUB_REPO]
 
-[![Deploy to Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/sdennett55/cards-of-personality-backend/tree/master)
+7. Play the game by hitting your netlify site! Share the link with friends.
 
-5. Play the game by hitting your netlify site! Share the link with friends.
-
-6. (Optional) Specify a deck to load via the `deck` url param, e.g. [https://yourSiteName.netlify.app?deck=safe-for-work] will only load cards from the _safe-for-work_ deck.
+8. (Optional) Specify a deck to load via the `deck` url param, e.g. [https://yourSiteName.netlify.app?deck=safe-for-work] will only load cards from the _safe-for-work_ deck.
 
 ## Available Scripts
 
