@@ -17,7 +17,7 @@ A mobile-first multiplayer web game inspired by the popular Cards Against Humani
 
 7. Play the game by hitting your netlify site! Share the link with friends.
 
-8. (Optional) Specify a deck to load via the `deck` url param, e.g. [https://yourSiteName.netlify.app?deck=safe-for-work] will only load cards from the _safe-for-work_ deck.
+8. (Optional) Specify a deck to load via the `deck` url param, e.g. https://yourSiteName.netlify.app?deck=safe-for-work will only load cards from the _safe-for-work_ deck.
 
 ## Available Scripts
 
