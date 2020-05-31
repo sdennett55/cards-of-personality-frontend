@@ -16,16 +16,17 @@ import styled from 'styled-components';
 import io from 'socket.io-client';
 import axios from 'axios';
 import queryString from 'query-string';
+import config from './config';
 import './Game.css';
 
 var socketIP = process.env.NODE_ENV === 'development'
   ? 'http://10.0.0.208:3001'
-  : 'https://cards-against-steve.herokuapp.com';
+  : config.BACKEND_URL;
 var socket = io(socketIP);
 
 var SERVER_URL = process.env.NODE_ENV === 'development'
   ? 'http://10.0.0.208:3001'
-  : 'https://cards-against-steve.herokuapp.com';
+  : config.BACKEND_URL;
 
 export const BlackCard = React.memo(({ text, setUserIsDragging }) => {
   return (

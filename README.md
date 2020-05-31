@@ -7,11 +7,11 @@ A mobile-first multiplayer web game inspired by the popular Cards Against Humani
 
 2. Duplicate this [Airtable template](https://airtable.com/shr9xPObtiWFRa3gU) which holds the cards and decks data by clicking "Copy Base" in the top right of the page.
 
-3. Add your [Airtable API key](https://airtable.com/account) to the `backend/app.json` file, push to github, and then deploy to Heroku with this link using your github repo URL: https://heroku.com/deploy?template=[URL_TO_YOUR_BACKEND_GITHUB_REPO]/tree/master
+3. Add your [Airtable API key](https://airtable.com/account) to the `backend/app.json` file, push the repo to github, and then deploy to Heroku with this link using your github repo URL: https://heroku.com/deploy?template=URL_TO_YOUR_BACKEND_GITHUB_REPO/tree/master
 
 4. Clone the [frontend](https://github.com/sdennett55/cards-of-personality-frontend).
 
-5. Add the URL to your new heroku backend to `frontend/netlify.toml` and `frontend/src/config.js` and then deploy to Netlify with this link using your github repo URL: https://app.netlify.com/start/deploy?repository=[URL_TO_YOUR_FRONTEND_GITHUB_REPO]
+5. Add the URL to your new heroku backend to `frontend/netlify.toml` and `frontend/src/config.js` and then deploy to Netlify with this link using your github repo URL: https://app.netlify.com/start/deploy?repository=URL_TO_YOUR_FRONTEND_GITHUB_REPO
 
 7. Play the game by hitting your netlify site! Share the link with friends.
 
