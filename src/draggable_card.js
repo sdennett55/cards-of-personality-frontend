@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { useDrag } from 'react-dnd';
 
 const CardElement = styled.div`
+  transition: transform .35s, z-index 0s .35s;
   position: absolute;
   top: 0;
   left: 0;
@@ -19,6 +20,11 @@ const CardElement = styled.div`
   user-select: none;
   @media screen and (min-width: 1100px) {
     font-size: 16px;
+  }
+
+  &.is-dragging {
+    background: red;
+    transition: none;
   }
 `;
 
@@ -107,7 +113,7 @@ const DraggableCard = ({ bgColor, isBroadcastingDrag = true, isFlipBroadcasted, 
         if (ghostCard.text === text) {
           return { pointerEvents: 'none', opacity: '1', transform: `translate3d(${ghostCard.x}px, ${ghostCard.y}px, 0)`, zIndex: '1' };
         } else {
-          return { pointerEvents: 'none', transform: 'none' };
+          return { pointerEvents: 'none', transform: 'translate3d(0, 0, 0)' };
         }
       }
     }
@@ -117,18 +123,18 @@ const DraggableCard = ({ bgColor, isBroadcastingDrag = true, isFlipBroadcasted, 
       return { pointerEvents: 'none', transform: `translate3d(${getDifferenceFromInitialOffset.x}px, ${getDifferenceFromInitialOffset.y}px, 0)` };
     }
 
-    return { transform: 'none' };
+    return { transform: 'translate3d(0, 0, 0)' };
   }
 
   return (
-    <CardElement onClick={() => {
+    <CardElement className={isDragging ? 'is-dragging' : ''} onClick={() => {
       if (isFlippable) {
         setFlipped(isFlipped => {
           socket.emit('card is flipped', { isFlipped: !isFlipped, text });
           return !isFlipped
         });
       }
-    }} ref={drag} style={{ zIndex: (isDragging ? 999 : 'auto'), ...getTransform(), backgroundColor: bgColor, color }}>
+    }} ref={drag} style={{ zIndex: (isDragging ? 999 : '0'), ...getTransform(), backgroundColor: bgColor, color }}>
 
       {isFlipped ? text : (
         <Logo />
