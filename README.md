@@ -11,7 +11,7 @@ A mobile-first multiplayer web game inspired by the popular Cards Against Humani
 
 4. Clone the [frontend](https://github.com/sdennett55/cards-of-personality-frontend).
 
-5. Add the URL to your new heroku backend to `frontend/netlify.toml` and `frontend/src/config.js` and then deploy to Netlify with this link using your github repo URL: https://app.netlify.com/start/deploy?repository=URL_TO_YOUR_FRONTEND_GITHUB_REPO
+5. Add the URL to your new heroku backend to `netlify.toml` and `src/config.js` and then deploy to Netlify with this link using your github repo URL: https://app.netlify.com/start/deploy?repository=URL_TO_YOUR_FRONTEND_GITHUB_REPO
 
 7. Play the game by hitting your netlify site! Share the link with friends.
 
