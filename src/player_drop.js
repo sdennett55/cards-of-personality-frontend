@@ -40,13 +40,13 @@ const CardElement = styled.div`
 `;
 
 const Wrap = styled.div`
-  position: relative; 
+  position: relative;
   padding-bottom: 140%;
 `;
 
 const PlayerDropWrap = styled.div`
   position: relative;
-  width: calc(25% - 1em); 
+  width: calc(25% - 1em);
   max-width: 25vh;
   margin: 0.5em;
 

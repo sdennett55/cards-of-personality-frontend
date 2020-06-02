@@ -17,17 +17,11 @@ import styled from 'styled-components';
 import io from 'socket.io-client';
 import axios from 'axios';
 import queryString from 'query-string';
-import {config} from './config';
+import {SERVER_URL} from './helpers';
 import './Game.css';
 
-var socketIP = process.env.NODE_ENV === 'development'
-  ? 'http://10.0.0.208:3001'
-  : config.BACKEND_URL;
+var socketIP = SERVER_URL
 var socket = io(socketIP);
-
-var SERVER_URL = process.env.NODE_ENV === 'development'
-  ? 'http://10.0.0.208:3001'
-  : config.BACKEND_URL;
 
 export const BlackCard = React.memo(({ text, setUserIsDragging }) => {
   return (
@@ -180,7 +174,11 @@ class Game extends React.PureComponent {
     if (prevState.players !== this.state.players) {
       const lengths = this.state.players.map(player => player.blackCards ? player.blackCards.length : -1);
       const winner = Math.max(...lengths);
+      const numberOfWinners = lengths.filter(length => length === winner).length;
       const index = this.state.players.findIndex(player => player.blackCards && player.blackCards.length === winner);
+      if (winner === 0 || numberOfWinners > 1) {
+        return this.setState({winningPlayerIndex: -1});
+      }
       this.setState({winningPlayerIndex: index});
     }
   }
@@ -550,15 +548,15 @@ const PlayerDecks = styled.div`
 `;
 
 const CardsWrap = styled.div`
-  display: flex; 
-  flex-grow: 1; 
-  padding: 1em; 
+  display: flex;
+  flex-grow: 1;
+  padding: 1em;
   justify-content: space-between;
   max-height: calc(100vh - 50px);
 
   @media (min-width: 1600px) {
     padding: 0;
-  } 
+  }
 
   @media (max-width: 500px) and (orientation: portrait) {
     max-height: none;
