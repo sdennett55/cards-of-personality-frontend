@@ -70,6 +70,7 @@ button, input {
 .MyCardsContainer.is-open,
 .SubmittedCardsTable.is-open {
   transform: translateX(0) translateZ(0);
+  z-index: 999; /* sit on top of cards being dragged on table screen */
 }
 
 .Game-namePopup {
