@@ -1,15 +1,16 @@
 import React from 'react';
 // import PropTypes from 'prop-types';
 import DraggableCard from './draggable_card';
-import MultiBackend, { Preview } from 'react-dnd-multi-backend';
-import HTML5toTouch from 'react-dnd-multi-backend/dist/esm/HTML5toTouch';
+// import MultiBackend, { Preview } from 'react-dnd-multi-backend';
+// import HTML5toTouch from 'react-dnd-multi-backend/dist/esm/HTML5toTouch';
+import TouchBackend from 'react-dnd-touch-backend'
 import { DndProvider } from 'react-dnd';
 import MyCardsDropZone from './my_cards_drop_zone';
 import PlayerDrop from './player_drop';
 import CardWrap from './card_wrap';
 import BlankPlayerCard from './blank_player_card';
 import BlackCardDrop from './black_card_drop';
-import GeneratePreview from './generate_preview';
+// import GeneratePreview from './generate_preview';
 import { MAX_PLAYERS } from './data';
 import { withRouter } from 'react-router-dom'
 import styled from 'styled-components';
@@ -446,7 +447,7 @@ class Game extends React.PureComponent {
             </div>
           </form>
         )}
-        <DndProvider backend={MultiBackend} options={HTML5toTouch}>
+        <DndProvider backend={TouchBackend} options={{enableMouseEvents: true}}>
           <Table>
             <CardsWrap>
               <Piles>
