@@ -176,6 +176,15 @@ class Game extends React.PureComponent {
     });
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.players !== this.state.players) {
+      const lengths = this.state.players.map(player => player.blackCards ? player.blackCards.length : -1);
+      const winner = Math.max(...lengths);
+      const index = this.state.players.findIndex(player => player.blackCards && player.blackCards.length === winner);
+      this.setState({winningPlayerIndex: index});
+    }
+  }
+
   componentWillUnmount() {
     socket.off('name change');
     socket.off('user disconnected');
@@ -202,6 +211,7 @@ class Game extends React.PureComponent {
     showNamePopup: true,
     userIsDragging: false,
     nameError: '',
+    winningPlayerIndex: -1,
   }
 
   blackCardRef = React.createRef();
@@ -486,6 +496,7 @@ class Game extends React.PureComponent {
                     addCardToPlayer={this.addCardToPlayer}
                     players={this.state.players}
                     myName={this.state.myName}
+                    winningPlayerIndex={this.state.winningPlayerIndex}
                   />
                 ))}
                 {this.getBlankPlayerCards(this.state.players).map((num, index) => (
@@ -513,6 +524,9 @@ const Piles = styled.div`
   width: calc(40% - .25em);
   justify-content: space-between;
   align-items: center;
+  @media (min-width: 1600px) {
+    margin-right: 2em;
+  }
   @media (max-width: 500px) and (orientation: portrait) {
     width: 100%;
     margin: .5em 0;

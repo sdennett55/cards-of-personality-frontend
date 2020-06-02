@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { useDrop } from 'react-dnd';
 import { MAX_PLAYERS } from './data';
 import DraggableCard from './draggable_card';
+import { Confetti } from './icons';
 
 const PlayerName = styled.p`
   margin: 0px;
@@ -70,14 +71,14 @@ const getPlayerName = ({ index, myName, players, socket }) => {
 }
 
 const getBlackCardLength = ({ players, index }) => {
-  if (players[index].blackCards) {
+  if (players[index].blackCards && players[index].blackCards.length) {
     return `(${players[index].blackCards.length})`;
   }
 
   return '';
 }
 
-const PlayerDrop = ({ index, myName, players, socket, addCardToPlayer, userIsDragging, setUserIsDragging }) => {
+const PlayerDrop = ({ index, winningPlayerIndex, myName, players, socket, addCardToPlayer, userIsDragging, setUserIsDragging }) => {
   const [{ isOver }, drop] = useDrop({
     accept: ['blackCard', 'blackCardFromPlayer'],
     drop: (item, monitor) => {
@@ -87,12 +88,16 @@ const PlayerDrop = ({ index, myName, players, socket, addCardToPlayer, userIsDra
       isOver: !!monitor.isOver() && userIsDragging,
     }),
   })
+
   return (
     <PlayerDropWrap>
       <Wrap ref={drop}>
         <CardElement style={{ background: isOver ? '#2cce9f' : null }}>
-          <PlayerName style={{ margin: 0 }}>{`${getBlackCardLength({players, index})} ${getPlayerName({ myName, players, index, socket })}`}</PlayerName>
+          <PlayerName style={{ margin: 0 }}>{`${getBlackCardLength({ players, index })} ${getPlayerName({ myName, players, index, socket })}`}</PlayerName>
         </CardElement>
+        {index === winningPlayerIndex && (
+          <Confetti />
+        )}
       </Wrap>
       {players && players[index] && players[index].blackCards && players[index].blackCards.map(blackCard => (
         <div key={blackCard.text} style={{ pointerEvents: userIsDragging ? 'none' : null }}>

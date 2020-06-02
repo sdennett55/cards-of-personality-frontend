@@ -116,12 +116,22 @@ const MenuTitle = styled.h2`
   width: 100%;
   padding-left: .25em;
   font-style: italic;
+
+  @media (min-width: 1200px) {
+    display: flex;
+    justify-content: center;
+  }
 `;
 
 const ScrollingWrap = styled.div`
   position: relative;
   height: 226px;
   width: 100%;
+
+  @media (min-width: 1200px) {
+    display: flex;
+    justify-content: center;
+  }
 `;
 
 const ButtonWrapper = styled.div`
