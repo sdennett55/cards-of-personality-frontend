@@ -17,6 +17,10 @@ const MyCards = styled.button`
   color: #fff;
   border: 0;
   padding: 0;
+
+  @media (min-width: 1600px) {
+    border-radius: 8px 8px 0 0;
+  }
 `;
 
 const Wrapper = styled.div`
