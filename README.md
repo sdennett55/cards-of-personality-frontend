@@ -5,7 +5,9 @@ A mobile-first multiplayer web game inspired by the popular Cards Against Humani
 
 1. Clone the [backend](https://github.com/sdennett55/cards-of-personality-backend).
 
-2. Add the URL to your github repo to the `repository` field in `app.json`, push the repo to github, and then deploy to Heroku with this link using your github repo URL: https://heroku.com/deploy?template=URL_TO_YOUR_BACKEND_GITHUB_REPO/tree/master
+2. Add the URL to your github repo to the `repository` field in `app.json`, then:
+    1. Push the repo to github
+    2. Deploy to Heroku with this link using your github repo URL: https://heroku.com/deploy?template=URL_TO_YOUR_BACKEND_GITHUB_REPO/tree/master
 
 3. Duplicate this [Airtable template](https://airtable.com/shr9xPObtiWFRa3gU) which holds the cards and decks data by clicking "Copy Base" in the top right of the page.
 
@@ -13,11 +15,15 @@ A mobile-first multiplayer web game inspired by the popular Cards Against Humani
 
 5. Clone the [frontend](https://github.com/sdennett55/cards-of-personality-frontend).
 
-6. Add the URL to your new heroku backend to `netlify.toml` and `src/config.js` and then deploy to Netlify with this link using your github repo URL: https://app.netlify.com/start/deploy?repository=URL_TO_YOUR_FRONTEND_GITHUB_REPO
+6. Add the URL to your new heroku backend to `netlify.toml` and `src/config.js`, then: 
+    1. Push the repo to github
+    2. Deploy to Netlify with this link using your github repo URL: https://app.netlify.com/start/deploy?repository=URL_TO_YOUR_FRONTEND_GITHUB_REPO
 
 7. Play the game by hitting your netlify site! Share the link with friends.
 
 8. (Optional) Specify a deck to load via the `deck` url param, e.g. https://yourSiteName.netlify.app?deck=safe-for-work will only load cards from the _safe-for-work_ deck.
+
+9. (Optional) Make your own decks and/or modify existing ones via the `/create-deck` and `/edit-deck/example-deck` frontends.
 
 ## Available Scripts
 
