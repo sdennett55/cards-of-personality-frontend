@@ -17,7 +17,7 @@ import styled from 'styled-components';
 import io from 'socket.io-client';
 import axios from 'axios';
 import queryString from 'query-string';
-import config from './config';
+import {config} from './config';
 import './Game.css';
 
 var socketIP = process.env.NODE_ENV === 'development'
