@@ -11,6 +11,11 @@ const LogoElement = styled.p`
   line-height: 1;
   font-size: 5vw;
 
+  .MyCardsContainer &,
+  .SubmittedCardsTable & {
+    font-size: 18px;
+  }
+
   @media (min-width: 501px) {
     font-size: 2vw;
   }

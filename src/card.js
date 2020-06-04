@@ -13,11 +13,12 @@ const CardElement = styled.div`
   justify-content: center;
   align-items: center;
   padding: 1em;
+  border: 2px solid #000;
 `;
 
 const Wrapper = styled.div`
   position: relative;
-  padding-bottom: 140%;
+  padding-bottom: calc(140% + 4px);
 `;
 
 const Card = ({ bgColor, color, text }) => {

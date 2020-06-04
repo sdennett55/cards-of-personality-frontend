@@ -158,7 +158,7 @@ function getBlankSubmittedCards(cards) {
   return arr;
 }
 
-const MyCardsDropZone = ({ addCardToMyCards, submittedCards, discardACard, myCards, myName, socket, setUserIsDragging, userIsDragging, submitACard }) => {
+const MyCardsDropZone = ({ addCardToMyCards, submittedCards, discardACard, myCards, myName, socket, setUserIsDragging, userIsDragging, submitACard, blackCards }) => {
   const [isOpen, setOpen] = useState(false);
   const [isSubmittedTableOpen, setSubmittedTableOpen] = useState(false);
   const [{ isOver }, drop] = useDrop({
@@ -221,6 +221,7 @@ const MyCardsDropZone = ({ addCardToMyCards, submittedCards, discardACard, myCar
           <MenuTitle>SUBMITTED CARDS</MenuTitle>
           <ScrollingWrap>
             <Scrolling>
+              <Card text={blackCards && blackCards.length ? blackCards[blackCards.length - 1] : ''} bgColor="#000" color="#fff" />
               {submittedCards.map(card => (
                 <CardWrap key={card.text} width="150px" margin=".5em">
                   <DraggableCard isFlipBroadcasted key={card.text} setUserIsDragging={setUserIsDragging} socket={socket} {...card} />

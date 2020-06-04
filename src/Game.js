@@ -503,7 +503,7 @@ class Game extends React.PureComponent {
               </PlayerDecks>
 
             </CardsWrap>
-            <MyCardsDropZone setUserIsDragging={this.setUserIsDragging} userIsDragging={this.state.userIsDragging} socket={socket} discardACard={this.discardACard} addCardToMyCards={this.addCardToMyCards} submitACard={this.submitACard} submittedCards={this.state.submittedCards} myCards={this.state.myCards} myName={this.state.myName} />
+            <MyCardsDropZone setUserIsDragging={this.setUserIsDragging} blackCards={this.state.blackCards} userIsDragging={this.state.userIsDragging} socket={socket} discardACard={this.discardACard} addCardToMyCards={this.addCardToMyCards} submitACard={this.submitACard} submittedCards={this.state.submittedCards} myCards={this.state.myCards} myName={this.state.myName} />
           </Table>
         </DndProvider>
       </div>
