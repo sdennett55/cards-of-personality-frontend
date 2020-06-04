@@ -117,7 +117,7 @@ const MenuTitle = styled.h2`
   padding-left: .25em;
   font-style: italic;
 
-  @media (min-width: 1200px) {
+  @media (min-width: 1384px) {
     display: flex;
     justify-content: center;
   }
@@ -128,7 +128,7 @@ const ScrollingWrap = styled.div`
   height: 226px;
   width: 100%;
 
-  @media (min-width: 1200px) {
+  @media (min-width: 1384px) {
     display: flex;
     justify-content: center;
   }
@@ -200,6 +200,7 @@ const MyCardsDropZone = ({ addCardToMyCards, submittedCards, discardACard, myCar
           <MenuTitle>{`${myName}'s Cards`}</MenuTitle>
           <ScrollingWrap>
             <Scrolling>
+            <Card text={blackCards && blackCards.length ? blackCards[blackCards.length - 1] : ''} bgColor="#000" color="#fff" />
               {myCards.map(card => (
                 <CardWrap key={card.text} width="150px" margin=".5em">
                   <DraggableCard isBroadcastingDrag={false} flippedByDefault key={card.text} setUserIsDragging={setUserIsDragging} socket={socket} {...card} />

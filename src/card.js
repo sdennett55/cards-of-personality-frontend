@@ -14,6 +14,10 @@ const CardElement = styled.div`
   align-items: center;
   padding: 1em;
   border: 2px solid #000;
+
+  .MyCardsContainer & {
+    border-color: #2cce9f;
+  }
 `;
 
 const Wrapper = styled.div`
