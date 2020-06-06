@@ -116,15 +116,8 @@ class Game extends React.PureComponent {
       this.setState({ players });
     });
 
-    socket.on('dropped in my cards', ({ whiteCard: { text }, players }) => {
-      const droppedCardIndex = this.state.whiteCards.findIndex(whiteCard => whiteCard === text);
-      const newWhiteCards = [...this.state.whiteCards];
-      newWhiteCards.splice(droppedCardIndex, 1);
-
-      // send the server the new whiteCards
-      socket.emit('update whiteCards', { whiteCards: newWhiteCards, players });
-
-      this.setState({ whiteCards: newWhiteCards, players, });
+    socket.on('dropped in my cards', ({ players, whiteCards }) => {
+      this.setState({ whiteCards, players, });
     });
 
     socket.on('update players', players => {
@@ -149,7 +142,6 @@ class Game extends React.PureComponent {
     })
 
     socket.on('dropped in player drop', ({ players, blackCards }) => {
-      // socket.emit('update players and blackCards', newWhiteCards);
       this.setState({ players, blackCards });
     });
 
@@ -278,32 +270,12 @@ class Game extends React.PureComponent {
       return;
     }
 
-    this.setState(prevState => {
-      const indexOfPassedInCard = prevState.whiteCards.findIndex(whiteCard => whiteCard === passedInCard.text);
-      const newWhiteCards = [...prevState.whiteCards];
-      newWhiteCards.splice(indexOfPassedInCard, 1);
+    this.setState(prevState => ({
+      myCards: [...prevState.myCards, passedInCard],
+    }));
 
-      // update player whiteCards property
-      const newPlayers = [...prevState.players].map(player => {
-        if (player.id === socket.id) {
-          const newPlayer = { ...player };
-          newPlayer.whiteCards = [...(newPlayer.whiteCards ? newPlayer.whiteCards : []), passedInCard];
-          return newPlayer;
-        }
-        return player;
-      });
-
-      return {
-        myCards: [...prevState.myCards, passedInCard],
-        whiteCards: newWhiteCards,
-        players: newPlayers,
-      };
-    }, () => {
-      // send event that a card was moved to someones deck to the server
-      socket.emit('dropped in my cards', { passedInCard, players: this.state.players, whiteCards: this.state.whiteCards });
-    });
-
-
+    // send event that a card was moved to someones deck to the server
+    socket.emit('dropped in my cards', { passedInCard, socketId: socket.id });
   }
 
   addBlackCardBackToPile = passedInCard => {
@@ -334,7 +306,7 @@ class Game extends React.PureComponent {
 
     // update blackCards for everyone
     socket.emit('dropped in player drop', { blackCards: newBlackCards, players: newPlayers });
-  
+
   };
 
   submitACard = passedInCard => {
