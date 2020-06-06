@@ -17,7 +17,7 @@ import styled from 'styled-components';
 import io from 'socket.io-client';
 import axios from 'axios';
 import queryString from 'query-string';
-import {SERVER_URL} from './helpers';
+import { SERVER_URL } from './helpers';
 import './Game.css';
 
 var socketIP = SERVER_URL
@@ -177,9 +177,9 @@ class Game extends React.PureComponent {
       const numberOfWinners = lengths.filter(length => length === winner).length;
       const index = this.state.players.findIndex(player => player.blackCards && player.blackCards.length === winner);
       if (winner === 0 || numberOfWinners > 1) {
-        return this.setState({winningPlayerIndex: -1});
+        return this.setState({ winningPlayerIndex: -1 });
       }
-      this.setState({winningPlayerIndex: index});
+      this.setState({ winningPlayerIndex: index });
     }
   }
 
@@ -334,7 +334,7 @@ class Game extends React.PureComponent {
 
     // update blackCards for everyone
     socket.emit('dropped in player drop', { blackCards: newBlackCards, players: newPlayers });
-
+  
   };
 
   submitACard = passedInCard => {
@@ -347,40 +347,20 @@ class Game extends React.PureComponent {
     const newMyCards = [...this.state.myCards];
     newMyCards.splice(passedInCardIndex, 1);
 
-    // find current player from players and update whiteCards property to be newMyCards
-    const myPlayerIndex = this.state.players.findIndex(player => player.id === socket.id);
-    const newPlayers = [...this.state.players];
-    newPlayers[myPlayerIndex].whiteCards = newMyCards;
-
-    const newSubmittedCards = [...this.state.submittedCards, passedInCard];
-
     // update players and myCards
     this.setState({
       myCards: newMyCards,
-      players: newPlayers,
-      submittedCards: newSubmittedCards,
     });
 
-    socket.emit('submitted a card', { submittedCards: newSubmittedCards, players: newPlayers });
+    socket.emit('submitted a card', { socketId: socket.id, passedInCard, newMyCards });
   };
 
   discardACard = passedInCard => {
-
     if (!this.state.userIsDragging) {
       return;
     }
-    // remove passedInCard from submittedCards
-    const passedInCardIndex = this.state.submittedCards.findIndex(card => card.text === passedInCard.text);
-    const newSubmittedCards = [...this.state.submittedCards];
-    newSubmittedCards.splice(passedInCardIndex, 1);
 
-    // update submittedCards
-    this.setState({
-      submittedCards: newSubmittedCards,
-    });
-
-    socket.emit('update submittedCards', newSubmittedCards);
-
+    socket.emit('update submittedCards', passedInCard);
   }
 
   getBlankPlayerCards(players) {
@@ -455,7 +435,7 @@ class Game extends React.PureComponent {
             </div>
           </form>
         )}
-        <DndProvider backend={TouchBackend} options={{enableMouseEvents: true}}>
+        <DndProvider backend={TouchBackend} options={{ enableMouseEvents: true }}>
           <Table>
             <CardsWrap>
               <Piles>
