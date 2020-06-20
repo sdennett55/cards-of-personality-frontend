@@ -22,7 +22,7 @@ const Landing = ({ title }) => {
       </Helmet>
       <Heading>
         <HeadingText>Cards of</HeadingText>{" "}
-        <Personality>Personality</Personality>
+        <Personality><LetterP>P</LetterP>ersonalit<LetterY>y</LetterY></Personality>
       </Heading>
       <Form
         onSubmit={() => history.push(`/g/${joinGameInputRef.current.value}`)}
@@ -117,6 +117,12 @@ const Button = styled.button`
     opacity: 0.5;
     outline: 0;
   }
+`;
+const LetterP = styled.span`
+  margin-right: -.04em;
+`;
+const LetterY = styled.span`
+  margin-left: .02em;
 `;
 const JoinGameButton = styled.button`
   display: block;
