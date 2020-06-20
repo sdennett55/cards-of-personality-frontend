@@ -17,6 +17,13 @@ const MyCards = styled.button`
   color: #fff;
   border: 0;
   padding: 0;
+  transition: background .25s;
+
+  &:hover,
+  &:focus {
+    background: #2cce9f;
+    outline: 0;
+  }
 
   @media (min-width: 1600px) {
     border-radius: 8px 8px 0 0;
@@ -69,6 +76,7 @@ const BackToTableButton = styled.button`
   padding: 0;
   margin: 0;
   border-top: 1px solid #fff;
+  transition: color .25s;
 
   &:hover,
   &:focus {
@@ -88,7 +96,15 @@ const SubmittedCardsButton = styled.button`
   padding: 0;
   margin: 0;
   font-size: 16px;
-    font-weight: bold;
+  font-weight: bold;
+  transition: color .25s, background .25s;
+
+  &:hover,
+  &:focus {
+    background: #2cce9f;
+    color: #fff;
+    outline: 0;
+  }
 `;
 
 const DiscardButton = styled.div`
@@ -103,6 +119,7 @@ const DiscardButton = styled.div`
   font-size: 16px;
   font-weight: bold;
   line-height: 50px;
+  transition: background .25s;
 `;
 
 const MenuTitle = styled.h2`

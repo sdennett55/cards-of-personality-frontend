@@ -1,4 +1,5 @@
 import React from 'react';
+import Landing from './Landing';
 import Game from './Game';
 import CreateADeck from './CreateADeck';
 import EditADeck from './EditADeck';
@@ -9,6 +10,9 @@ const App = () => {
     <Router>
       <Switch>
         <Route exact path="/">
+          <Landing />
+        </Route>
+        <Route path="/g/:roomId">
           <Game />
         </Route>
         <Route path="/create-deck">

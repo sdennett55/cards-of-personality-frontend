@@ -92,30 +92,10 @@ button, input {
   display: flex;
   flex-direction: column;
 }
-.Game-namePopup input {
-  -moz-appearance: none;
-  -webkit-appearance: none;
-  appearance: none;
-  font-size: 1em;
-  border: 0;
-  margin: 0 0 1em;
-  padding: .25em 0 .5em;
-  background: transparent;
-  border-bottom: 1px solid white;
-  color: #fff;
-  transition: border-color .25s;
-  border-radius: 0;
-}
 .Game-namePopup input:focus,
 .Game-namePopup button:focus {
   outline: 0;
   border-color:#2cce9f;
-}
-.Game-namePopup label {
- text-align: left;
- text-transform: uppercase;
- font-size: .813em;
- color: #c1bdbd;
 }
 .Game-namePopup button {
   -moz-appearance: none;
@@ -128,6 +108,7 @@ button, input {
   padding: .7em 1em;
   border-radius: 8px;
   margin: 0 auto;
+  transition: opacity .25s;
 }
 .Game-namePopup button:hover,
 .Game-namePopup button:focus {
