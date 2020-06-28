@@ -11,6 +11,7 @@ import CardWrap from "./card_wrap";
 import BlankPlayerCard from "./blank_player_card";
 import BlackCardDrop from "./black_card_drop";
 // import GeneratePreview from './generate_preview';
+import ReactGA from "react-ga";
 import { MAX_PLAYERS } from "./data";
 import { withRouter } from "react-router-dom";
 import styled, { createGlobalStyle } from "styled-components";
