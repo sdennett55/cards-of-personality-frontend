@@ -13,12 +13,12 @@ import BlackCardDrop from "./black_card_drop";
 // import GeneratePreview from './generate_preview';
 import { MAX_PLAYERS } from "./data";
 import { withRouter } from "react-router-dom";
-import styled, {createGlobalStyle} from "styled-components";
+import styled, { createGlobalStyle } from "styled-components";
 import io from "socket.io-client";
 import axios from "axios";
 import queryString from "query-string";
 import { CLIENT_URL, SERVER_URL } from "./helpers";
-import {CopyIcon} from './icons';
+import { CopyIcon } from "./icons";
 import "./Game.css";
 
 export const BlackCard = React.memo(({ text, setUserIsDragging, socket }) => {
@@ -55,11 +55,12 @@ class Game extends React.PureComponent {
 
   roomId = null;
 
-  // joinTheRoom = () => {
-
-  // }
-
   componentDidMount() {
+    // initialize analytics
+    if (process.env.NODE_ENV === "production") {
+      this.initializeReactGA();
+    }
+
     if (!this.socket) {
       // start socket connection
       this.socket = io(SERVER_URL);
@@ -105,15 +106,13 @@ class Game extends React.PureComponent {
 
       const newPlayers = [...this.state.players, { socket: null }];
 
-      this.setState(
-        {
-          cardDimensions: {
-            width: this.blackCardRef.current.offsetWidth,
-            height: this.blackCardRef.current.offsetHeight,
-          },
-          players: newPlayers,
-        }
-      );
+      this.setState({
+        cardDimensions: {
+          width: this.blackCardRef.current.offsetWidth,
+          height: this.blackCardRef.current.offsetHeight,
+        },
+        players: newPlayers,
+      });
     }
 
     this.socket.on(
@@ -278,6 +277,11 @@ class Game extends React.PureComponent {
   };
 
   blackCardRef = React.createRef();
+
+  initializeReactGA = () => {
+    ReactGA.initialize("UA-171045081-1");
+    ReactGA.pageview("/game");
+  };
 
   getTheCurrentHost = (index) => this.setState({ currentHost: index });
 
@@ -484,6 +488,12 @@ class Game extends React.PureComponent {
         id: this.socket.id,
       });
 
+      ReactGA.event({
+        category: "Game",
+        action: "Submitted A Name",
+        label: this.state.myName,
+      });
+
       return {
         showNamePopup: false,
         players: newPlayers,
@@ -499,7 +509,7 @@ class Game extends React.PureComponent {
   copyLink = () => {
     this.inviteInputRef.current.select();
     document.execCommand("copy");
-  }
+  };
 
   inviteInputRef = React.createRef();
 
@@ -513,13 +523,19 @@ class Game extends React.PureComponent {
             onSubmit={(e) => this.handleSubmit(e)}
           >
             <div className="Game-namePopup-innerWrap">
-            <InviteLabel htmlFor="invite">Invite a friend</InviteLabel>
-            <Flex>
-              <InviteInput id="invite" ref={this.inviteInputRef} type="text" value={`${CLIENT_URL}/g/${this.roomId}`} readOnly />
-              <IconWrap type="button" onClick={this.copyLink}>
-                <CopyIcon />
-              </IconWrap>
-            </Flex>
+              <InviteLabel htmlFor="invite">Invite a friend</InviteLabel>
+              <Flex>
+                <InviteInput
+                  id="invite"
+                  ref={this.inviteInputRef}
+                  type="text"
+                  value={`${CLIENT_URL}/g/${this.roomId}`}
+                  readOnly
+                />
+                <IconWrap type="button" onClick={this.copyLink}>
+                  <CopyIcon />
+                </IconWrap>
+              </Flex>
               <NameLabel htmlFor="name">Enter your name</NameLabel>
               <NameInput
                 type="text"
@@ -696,7 +712,7 @@ const CardsWrap = styled.div`
 
 const IconWrap = styled.button`
   appearance: none;
-  padding: .5em;
+  padding: 0.5em;
   & svg {
     display: block;
   }
@@ -714,23 +730,23 @@ const NameInput = styled.input`
   font-size: 1em;
   border: 0;
   margin: 0 0 1em;
-  padding: .25em 0 .5em;
+  padding: 0.25em 0 0.5em;
   background: transparent;
   border-bottom: 1px solid white;
   color: #fff;
-  transition: border-color .25s;
+  transition: border-color 0.25s;
   border-radius: 0;
 `;
 const NameLabel = styled.label`
   text-align: left;
   text-transform: uppercase;
-  font-size: .813em;
+  font-size: 0.813em;
   color: #c1bdbd;
 `;
 
 const InviteTitle = styled.h2`
   font-weight: normal;
-  margin-bottom: .25em;
+  margin-bottom: 0.25em;
 `;
 const InviteInput = styled.input`
   appearance: none;
@@ -745,9 +761,9 @@ const InviteInput = styled.input`
 const InviteLabel = styled.label`
   text-align: left;
   text-transform: uppercase;
-  font-size: .813em;
+  font-size: 0.813em;
   color: #c1bdbd;
-  margin-bottom: .5em;
+  margin-bottom: 0.5em;
 `;
 
 export default withRouter(Game);
