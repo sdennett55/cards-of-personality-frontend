@@ -54,13 +54,13 @@ const Admin = () => {
                     {whiteCards.length > 0 &&
                       whiteCards
                         .slice(0, getSlice("white", whiteCards))
-                        .map((whiteCard) => (
+                        .map((whiteCard, index) => (
                           <tr>
                             <td>
                               {whiteCard}{" "}
-                              {!toggleWhiteCards && (
+                              {index === 0 && (
                                 <button
-                                  onClick={(bool) => setToggleWhiteCards(true)}
+                                  onClick={() => setToggleWhiteCards(bool => !bool)}
                                 >
                                   {toggleWhiteCards ? "-" : "+"}
                                 </button>
@@ -73,13 +73,13 @@ const Admin = () => {
                     {blackCards.length > 0 &&
                       blackCards
                         .slice(0, getSlice("black", blackCards))
-                        .map((blackCard) => (
+                        .map((blackCard, index) => (
                           <tr>
                             <td>
                               {blackCard}{" "}
-                              {!toggleBlackCards && (
+                              {index === 0 && (
                                 <button
-                                  onClick={(bool) => setToggleBlackCards(true)}
+                                  onClick={() => setToggleBlackCards(bool => !bool)}
                                 >
                                   {toggleBlackCards ? "-" : "+"}
                                 </button>

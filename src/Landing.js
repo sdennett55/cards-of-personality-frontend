@@ -3,17 +3,18 @@ import { useHistory } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import styled, { createGlobalStyle } from "styled-components";
 
-function handleCreateGame(history) {
+function handleCreateGame({ history, deck }) {
   const random = (
     Math.random().toString(36).substring(2, 15) +
     Math.random().toString(36).substring(2, 15)
   ).substr(0, 5);
-  history.push(`/g/${random}`);
+  history.push(`/g/${random}?deck=${deck}`);
 }
 
 const Landing = ({ title }) => {
   const history = useHistory();
   const joinGameInputRef = useRef(null);
+  const [startGame, setStartGame] = useState(false);
   return (
     <LandingWrapper>
       <GlobalStyle />
@@ -22,7 +23,9 @@ const Landing = ({ title }) => {
       </Helmet>
       <Heading>
         <HeadingText>Cards of</HeadingText>{" "}
-        <Personality><LetterP>P</LetterP>ersonalit<LetterY>y</LetterY></Personality>
+        <Personality>
+          <LetterP>P</LetterP>ersonalit<LetterY>y</LetterY>
+        </Personality>
       </Heading>
       <Form
         onSubmit={() => history.push(`/g/${joinGameInputRef.current.value}`)}
@@ -40,7 +43,29 @@ const Landing = ({ title }) => {
       <OrTextWrap>
         <OrText>OR</OrText>
       </OrTextWrap>
-      <Button onClick={() => handleCreateGame(history)}>Create Game</Button>
+      {startGame ? (
+        <>
+          <StartTitle>Choose a Deck</StartTitle>
+          <Flex>
+            <StartGameButton
+              onClick={() =>
+                handleCreateGame({ history, deck: "safe-for-work" })
+              }
+            >
+              Safe for Work
+            </StartGameButton>
+            <StartGameButton
+              onClick={() =>
+                handleCreateGame({ history, deck: "not-safe-for-work" })
+              }
+            >
+              Not Safe for Work
+            </StartGameButton>
+          </Flex>
+        </>
+      ) : (
+        <Button onClick={() => setStartGame(true)}>Create Game</Button>
+      )}
       {/* <AltButton onClick={() => history.push('/create-deck')}>Create Deck</AltButton>
       <AltButton onClick={() => history.push('/edit-deck')}>Edit Deck</AltButton> */}
     </LandingWrapper>
@@ -56,6 +81,14 @@ const GlobalStyle = createGlobalStyle`
     appearance: none;
     border: 0;
   }
+`;
+const Flex = styled.div`
+  display: flex;
+`;
+const StartTitle = styled.h2`
+  color: #fff;
+  margin: .5em 0 0;
+  font-weight: normal;
 `;
 const LandingWrapper = styled.div`
   display: flex;
@@ -109,7 +142,27 @@ const Button = styled.button`
   border-radius: 8px;
   margin: 1em 0;
   font-weight: bold;
-  transition: opacity .25s;
+  transition: opacity 0.25s;
+
+  &:hover,
+  &:focus,
+  &:disabled {
+    opacity: 0.5;
+    outline: 0;
+  }
+`;
+const StartGameButton = styled.button`
+  display: block;
+  appearance: none;
+  background: #2cce9f;
+  color: #000;
+  font-size: 1em;
+  border: 0;
+  padding: 0.7em 1em;
+  border-radius: 8px;
+  margin: 1em .5em;
+  font-weight: bold;
+  transition: opacity 0.25s;
 
   &:hover,
   &:focus,
@@ -119,10 +172,10 @@ const Button = styled.button`
   }
 `;
 const LetterP = styled.span`
-  margin-right: -.04em;
+  margin-right: -0.04em;
 `;
 const LetterY = styled.span`
-  margin-left: .02em;
+  margin-left: 0.02em;
 `;
 const JoinGameButton = styled.button`
   display: block;
@@ -135,7 +188,7 @@ const JoinGameButton = styled.button`
   border-radius: 8px;
   margin: 1em 0;
   font-weight: bold;
-  transition: opacity .25s;
+  transition: opacity 0.25s;
 
   &:hover,
   &:focus,
@@ -155,7 +208,7 @@ const AltButton = styled.button`
   border-radius: 8px;
   margin: 1em 0;
   font-weight: bold;
-  transition: opacity .25s;
+  transition: opacity 0.25s;
 
   &:hover,
   &:focus,
