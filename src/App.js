@@ -3,6 +3,8 @@ import Landing from './Landing';
 import Game from './Game';
 import CreateADeck from './CreateADeck';
 import EditADeck from './EditADeck';
+import Admin from './Admin';
+import PlayerInfo from './PlayerInfo';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 
 const App = () => {
@@ -20,6 +22,12 @@ const App = () => {
         </Route>
         <Route path="/edit-deck">
           <EditADeck title="Cards of Personality: Edit Deck" />
+        </Route>
+        <Route path="/admin">
+          <Admin />
+        </Route>
+        <Route path="/player-info">
+          <PlayerInfo />
         </Route>
       </Switch>
     </Router>

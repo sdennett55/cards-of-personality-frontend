@@ -21,12 +21,6 @@ body,
   height: 100%;
 }
 
-html {
-  overflow: hidden;
-  position: fixed;
-  width: 100%;
-}
-
 body {
   background: #e5e5e5;
   width: 100%;

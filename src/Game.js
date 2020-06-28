@@ -13,7 +13,7 @@ import BlackCardDrop from "./black_card_drop";
 // import GeneratePreview from './generate_preview';
 import { MAX_PLAYERS } from "./data";
 import { withRouter } from "react-router-dom";
-import styled from "styled-components";
+import styled, {createGlobalStyle} from "styled-components";
 import io from "socket.io-client";
 import axios from "axios";
 import queryString from "query-string";
@@ -506,6 +506,7 @@ class Game extends React.PureComponent {
   render() {
     return (
       <div className="Game">
+        <GlobalStyle />
         {this.state.showNamePopup && (
           <form
             className="Game-namePopup"
@@ -629,6 +630,14 @@ class Game extends React.PureComponent {
     );
   }
 }
+
+const GlobalStyle = createGlobalStyle`
+  html {
+    overflow: hidden;
+    position: fixed;
+    width: 100%;
+  }
+`;
 
 const Table = styled.div`
   display: flex;
