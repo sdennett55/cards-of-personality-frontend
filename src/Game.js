@@ -542,7 +542,7 @@ class Game extends React.PureComponent {
     // Pop a success toast
     toast.success("Copied to clipboard!", {
       toastId: 'copy-toast',
-      position: toast.POSITION.BOTTOM_CENTER
+      position: toast.POSITION.TOP_CENTER
     });
   };
 
@@ -693,7 +693,8 @@ const GlobalStyle = createGlobalStyle`
     background: #2cce9f;
     border-radius: 8px;
     color: #000;
-    margin: 1em;
+    max-width: 200px;
+    margin: 1em auto;
     font: inherit;
   }
   .Toastify__close-button {
@@ -802,6 +803,7 @@ const InviteInput = styled.input`
   border-radius: 8px 0 0 8px;
   color: #000;
   padding: 0.25em 0.5em;
+  direction: rtl;
 `;
 
 const InviteLabel = styled.label`

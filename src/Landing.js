@@ -47,13 +47,13 @@ const Landing = ({ title }) => {
         <>
           <StartTitle>Choose a Deck</StartTitle>
           <Flex>
-            <StartGameButton
+            <StartGameButtonSFW
               onClick={() =>
                 handleCreateGame({ history, deck: "safe-for-work" })
               }
             >
               Safe for Work
-            </StartGameButton>
+            </StartGameButtonSFW>
             <StartGameButton
               onClick={() =>
                 handleCreateGame({ history, deck: "not-safe-for-work" })
@@ -104,7 +104,7 @@ const Heading = styled.h1`
   padding: 0 1rem;
   font-size: 4em;
 
-  @media (min-width: 501px) {
+  @media (min-width: 560px) {
     font-size: 7em;
   }
 `;
@@ -120,6 +120,7 @@ const Personality = styled.span`
   letter-spacing: -1.2px;
   text-shadow: 1px 1px 1xp rgba(0, 0, 0, 0);
 `;
+
 const HeadingText = styled.span`
   position: absolute;
   top: -0.05em;
@@ -129,6 +130,10 @@ const HeadingText = styled.span`
   letter-spacing: 0.1em;
   font-weight: normal;
   color: #fff;
+
+  @media (min-width: 560px) {
+    left: 2em;
+  }
 `;
 
 const Button = styled.button`
@@ -154,7 +159,27 @@ const Button = styled.button`
 const StartGameButton = styled.button`
   display: block;
   appearance: none;
-  background: #2cce9f;
+  background: rgb(255,0,128);
+  color: #000;
+  font-size: 1em;
+  border: 0;
+  padding: 0.7em 1em;
+  border-radius: 8px;
+  margin: 1em .5em;
+  font-weight: bold;
+  transition: opacity 0.25s;
+
+  &:hover,
+  &:focus,
+  &:disabled {
+    opacity: 0.5;
+    outline: 0;
+  }
+`;
+const StartGameButtonSFW = styled.button`
+  display: block;
+  appearance: none;
+  background: rgb(64,224,208);
   color: #000;
   font-size: 1em;
   border: 0;
