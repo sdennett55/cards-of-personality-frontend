@@ -6,6 +6,6 @@ const SERVER_URL = process.env.NODE_ENV === 'development'
 
 const CLIENT_URL = process.env.NODE_ENV === 'development'
 ? 'http://localhost:3000'
-: 'https://cards-of-personality.netlify.app';
+: 'https://cardsofpersonality.com';
 
 export { SERVER_URL, CLIENT_URL }
