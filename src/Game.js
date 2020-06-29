@@ -11,6 +11,7 @@ import CardWrap from "./card_wrap";
 import BlankPlayerCard from "./blank_player_card";
 import BlackCardDrop from "./black_card_drop";
 // import GeneratePreview from './generate_preview';
+import { ToastContainer, toast, Slide } from "react-toastify";
 import ReactGA from "react-ga";
 import { MAX_PLAYERS } from "./data";
 import { withRouter } from "react-router-dom";
@@ -21,6 +22,7 @@ import queryString from "query-string";
 import { CLIENT_URL, SERVER_URL } from "./helpers";
 import { CopyIcon } from "./icons";
 import "./Game.css";
+import "react-toastify/dist/ReactToastify.min.css";
 
 export const BlackCard = React.memo(({ text, setUserIsDragging, socket }) => {
   return (
@@ -518,11 +520,14 @@ class Game extends React.PureComponent {
           console.log("Thanks for sharing!");
         })
         .catch(console.error);
-    } else {
-      // fallback
-      this.inviteInputRef.current.select();
-      document.execCommand("copy");
     }
+    // fallback
+    this.inviteInputRef.current.select();
+    document.execCommand("copy");
+    toast.success("Copied to clipboard!", {
+      toastId: 'copy-toast',
+      position: toast.POSITION.BOTTOM_CENTER
+    });
   };
 
   inviteInputRef = React.createRef();
@@ -656,6 +661,7 @@ class Game extends React.PureComponent {
             />
           </Table>
         </DndProvider>
+        <ToastContainer limit={1} autoClose={3000} hideProgressBar closeOnClick transition={Slide} pauseOnFocusLoss={false} />
       </div>
     );
   }
@@ -666,6 +672,14 @@ const GlobalStyle = createGlobalStyle`
     overflow: hidden;
     position: fixed;
     width: 100%;
+  }
+  .Toastify__toast--success {
+    background: #2cce9f;
+    border-radius: 8px;
+    color: #000;
+  }
+  .Toastify__close-button {
+    color: #000;
   }
 `;
 
