@@ -57,7 +57,7 @@ const Admin = () => {
                         .map((whiteCard, index) => (
                           <tr>
                             <td>
-                              {whiteCard}{" "}
+                              {whiteCard.text ? whiteCard.text : whiteCard}{" "}
                               {index === 0 && (
                                 <button
                                   onClick={() => setToggleWhiteCards(bool => !bool)}
@@ -76,7 +76,7 @@ const Admin = () => {
                         .map((blackCard, index) => (
                           <tr>
                             <td>
-                              {blackCard}{" "}
+                              {blackCard.text ? blackCard.text : blackCard}{" "}
                               {index === 0 && (
                                 <button
                                   onClick={() => setToggleBlackCards(bool => !bool)}
