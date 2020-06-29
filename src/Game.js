@@ -510,6 +510,8 @@ class Game extends React.PureComponent {
   };
 
   copyLink = () => {
+
+    // Web Share API for cool browsers
     if (navigator && navigator.share) {
       navigator
         .share({
@@ -521,9 +523,23 @@ class Game extends React.PureComponent {
         })
         .catch(console.error);
     }
-    // fallback
+
+    // Generic copy to clipboard
     this.inviteInputRef.current.select();
     document.execCommand("copy");
+
+    // Clear the text selection
+    if (window.getSelection) {
+      if (window.getSelection().empty) {  // Chrome
+        window.getSelection().empty();
+      } else if (window.getSelection().removeAllRanges) {  // Firefox
+        window.getSelection().removeAllRanges();
+      }
+    } else if (document.selection) {  // IE?
+      document.selection.empty();
+    }
+
+    // Pop a success toast
     toast.success("Copied to clipboard!", {
       toastId: 'copy-toast',
       position: toast.POSITION.BOTTOM_CENTER
@@ -677,6 +693,8 @@ const GlobalStyle = createGlobalStyle`
     background: #2cce9f;
     border-radius: 8px;
     color: #000;
+    margin: 1em;
+    font: inherit;
   }
   .Toastify__close-button {
     color: #000;
