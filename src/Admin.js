@@ -49,7 +49,14 @@ const Admin = () => {
                 },
               ]) => (
                 <tr style={{ opacity: players.length > 0 ? "1" : ".5" }}>
-                  <td>{roomName}</td>
+                  <td>
+                    <LinkElement
+                      to={`/g/${roomName}`}
+                      target="_blank"
+                    >
+                      {roomName}
+                    </LinkElement>
+                  </td>
                   <td>
                     {whiteCards.length > 0 &&
                       whiteCards
@@ -60,7 +67,9 @@ const Admin = () => {
                               {whiteCard.text ? whiteCard.text : whiteCard}{" "}
                               {index === 0 && (
                                 <button
-                                  onClick={() => setToggleWhiteCards(bool => !bool)}
+                                  onClick={() =>
+                                    setToggleWhiteCards((bool) => !bool)
+                                  }
                                 >
                                   {toggleWhiteCards ? "-" : "+"}
                                 </button>
@@ -79,7 +88,9 @@ const Admin = () => {
                               {blackCard.text ? blackCard.text : blackCard}{" "}
                               {index === 0 && (
                                 <button
-                                  onClick={() => setToggleBlackCards(bool => !bool)}
+                                  onClick={() =>
+                                    setToggleBlackCards((bool) => !bool)
+                                  }
                                 >
                                   {toggleBlackCards ? "-" : "+"}
                                 </button>
