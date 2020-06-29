@@ -508,8 +508,21 @@ class Game extends React.PureComponent {
   };
 
   copyLink = () => {
-    this.inviteInputRef.current.select();
-    document.execCommand("copy");
+    if (navigator && navigator.share) {
+      navigator
+        .share({
+          title: "Cards of Personality Game",
+          url: this.inviteInputRef.current,
+        })
+        .then(() => {
+          console.log("Thanks for sharing!");
+        })
+        .catch(console.error);
+    } else {
+      // fallback
+      this.inviteInputRef.current.select();
+      document.execCommand("copy");
+    }
   };
 
   inviteInputRef = React.createRef();
