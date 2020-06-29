@@ -274,7 +274,7 @@ class Game extends React.PureComponent {
     submittedCards: [],
     currentHost: 0,
     showNamePopup: true,
-    userIsDragging: false,
+    userIsDragging: null,
     nameError: "",
     winningPlayerIndex: -1,
   };
@@ -505,8 +505,8 @@ class Game extends React.PureComponent {
     });
   };
 
-  setUserIsDragging = (bool) => {
-    this.setState({ userIsDragging: bool });
+  setUserIsDragging = (type) => {
+    this.setState({ userIsDragging: type });
   };
 
   copyLink = () => {

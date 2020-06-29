@@ -175,6 +175,22 @@ function getBlankSubmittedCards(cards) {
   return arr;
 }
 
+function getMyNameCards({myCards, userIsDragging, myName}) {
+  if (myCards.length === 7 && userIsDragging === 'whiteCard') {
+    return 'YOU ALREADY HAVE 7 CARDS';
+  }
+
+  return userIsDragging === 'whiteCard' ? `DROP ${7 - myCards.length} WHITE CARDS HERE` : `${myName}'S CARDS (${myCards.length})`
+}
+
+function getMyNameCardsStyle({myCards, userIsDragging}) {
+  if (myCards.length === 7 && userIsDragging === 'whiteCard') {
+    return '#ff2d55';
+  }
+
+  return userIsDragging === 'whiteCard' ? '#2cce9f' : null
+}
+
 const MyCardsDropZone = ({ addCardToMyCards, submittedCards, discardACard, myCards, myName, socket, setUserIsDragging, userIsDragging, submitACard, blackCards }) => {
   const [isOpen, setOpen] = useState(false);
   const [isSubmittedTableOpen, setSubmittedTableOpen] = useState(false);
@@ -183,9 +199,6 @@ const MyCardsDropZone = ({ addCardToMyCards, submittedCards, discardACard, myCar
     drop: (item, monitor) => {
       addCardToMyCards(item)
     },
-    collect: monitor => ({
-      isOver: !!monitor.isOver() && userIsDragging,
-    }),
   });
   const [{ submitIsOver }, submitDropRef] = useDrop({
     accept: 'whiteCard',
@@ -203,14 +216,14 @@ const MyCardsDropZone = ({ addCardToMyCards, submittedCards, discardACard, myCar
       discardACard(item)
     },
     collect: monitor => ({
-      discardIsOver: !!monitor.isOver() && userIsDragging,
+      discardIsOver: !!monitor.isOver() && userIsDragging === 'whiteCard',
     }),
   });
 
   return (
     <>
-      <MyCards onClick={() => setOpen(isOpen => !isOpen)} ref={drop} style={{ background: isOver ? '#2cce9f' : null }}>
-        {isOver ? 'DROP HERE' : `${myName}'S CARDS (${myCards.length})`}
+      <MyCards onClick={() => setOpen(isOpen => !isOpen)} ref={drop} style={{ background: getMyNameCardsStyle({myCards, userIsDragging}) }}>
+        {getMyNameCards({myCards, userIsDragging, myName})}
       </MyCards>
       <div className={cx('MyCardsContainer', { 'is-open': isOpen })}>
         <Wrapper>
@@ -220,7 +233,14 @@ const MyCardsDropZone = ({ addCardToMyCards, submittedCards, discardACard, myCar
             <Card text={blackCards && blackCards.length ? blackCards[blackCards.length - 1] : ''} bgColor="#000" color="#fff" />
               {myCards.map(card => (
                 <CardWrap key={card.text} width="150px" margin=".5em">
-                  <DraggableCard isBroadcastingDrag={false} flippedByDefault key={card.text} setUserIsDragging={setUserIsDragging} socket={socket} {...card} />
+                  <DraggableCard
+                    isBroadcastingDrag={false}
+                    flippedByDefault
+                    key={card.text}
+                    setUserIsDragging={setUserIsDragging}
+                    socket={socket}
+                    {...card}
+                  />
                 </CardWrap>
               ))}
               {getBlankCards(myCards).map(num => (
@@ -231,7 +251,7 @@ const MyCardsDropZone = ({ addCardToMyCards, submittedCards, discardACard, myCar
         </Wrapper>
         <ButtonWrapper>
           <BackToTableButton onClick={() => setOpen(isOpen => !isOpen)}><BackIcon /></BackToTableButton>
-          <SubmittedCardsButton ref={submitDropRef} onClick={() => setSubmittedTableOpen(isSubmittedTableOpen => !isSubmittedTableOpen)} style={{ background: submitIsOver ? '#2cce9f' : null, color: submitIsOver ? '#fff' : null }}>{submitIsOver ? 'DROP TO SUBMIT CARD' : 'Submitted Cards'}</SubmittedCardsButton>
+          <SubmittedCardsButton ref={submitDropRef} onClick={() => setSubmittedTableOpen(isSubmittedTableOpen => !isSubmittedTableOpen)} style={{ background: submitIsOver || userIsDragging === 'whiteCard' ? '#2cce9f' : null, color: submitIsOver || userIsDragging === 'whiteCard' ? '#fff' : null }}>{submitIsOver || userIsDragging === 'whiteCard' ? 'DROP TO SUBMIT CARD' : 'Submitted Cards'}</SubmittedCardsButton>
         </ButtonWrapper>
       </div>
       <div className={cx('SubmittedCardsTable', { 'is-open': isSubmittedTableOpen })}>
@@ -256,7 +276,7 @@ const MyCardsDropZone = ({ addCardToMyCards, submittedCards, discardACard, myCar
             setSubmittedTableOpen(isOpen => !isOpen)
           }}><BackIcon /></BackToTableButton>
 
-          <DiscardButton ref={discardDropRef} style={{ background: discardIsOver ? '#2cce9f' : null, color: discardIsOver ? '#fff' : null }}>DROP TO DISCARD</DiscardButton>
+          <DiscardButton ref={discardDropRef} style={{ background: discardIsOver || userIsDragging === 'whiteCard' ? '#2cce9f' : null, color: discardIsOver || userIsDragging === 'whiteCard' ? '#fff' : null }}>DROP TO DISCARD</DiscardButton>
         </ButtonWrapper>
       </div>
     </>

@@ -56,19 +56,21 @@ const DraggableCard = ({ bgColor, isBroadcastingDrag = true, isFlipBroadcasted, 
   }
 
   useEffect(() => {
-    if (isBroadcastingDrag) {
-      setUserIsDragging(true);
+    setUserIsDragging(type);
 
+    if (isBroadcastingDrag) {
       if (!isDragging) {
         // send card that was let go to server
         socket.emit('let go card', { ghostDragging: false, type, text });
-
-        setUserIsDragging(false);
       }
     }
 
+    if (!isDragging) {
+      setUserIsDragging(null);
+    }
+
     return () => {
-      setUserIsDragging(false);
+      setUserIsDragging(null);
     }
   }, [isBroadcastingDrag, setUserIsDragging, socket, text, type, isDragging])
 
@@ -158,6 +160,9 @@ const DraggableCard = ({ bgColor, isBroadcastingDrag = true, isFlipBroadcasted, 
 
       {isFlipped ? text : (
         <Logo />
+      )}
+      {!isFlipped && type === 'blackCard' && (
+        <p>Tap to flip and<br/> start the round</p>
       )}
     </CardElement>
 
