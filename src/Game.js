@@ -165,7 +165,7 @@ class Game extends React.PureComponent {
 
         console.log("new connection!", players);
 
-        this.setState(() => ({ players, showNamePopup: true }));
+        this.setState(() => ({ players, showNamePopup: true, socketConnected: true }));
       }
     );
 
@@ -277,6 +277,7 @@ class Game extends React.PureComponent {
     userIsDragging: null,
     nameError: "",
     winningPlayerIndex: -1,
+    socketConnected: false,
   };
 
   blackCardRef = React.createRef();
@@ -462,6 +463,14 @@ class Game extends React.PureComponent {
     if (this.state.myName.trim().length < 2) {
       this.setState({
         nameError: "Please submit a name at least 2 characters long.",
+      });
+      return;
+    }
+    // This handles a case for slower connections so users cannot
+    // enter the game and do stuff before the socket is connected
+    if (!this.state.socketConnected) {
+      this.setState({
+        nameError: "Please try again in a few seconds.",
       });
       return;
     }
