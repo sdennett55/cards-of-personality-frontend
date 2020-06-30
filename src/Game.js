@@ -577,6 +577,7 @@ class Game extends React.PureComponent {
             updateMyName={this.updateMyName}
             myName={this.state.myName}
             nameError={this.state.nameError}
+            reactGA={ReactGA}
           />
         )}
         <DndProvider

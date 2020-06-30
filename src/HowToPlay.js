@@ -16,8 +16,8 @@ const HowToPlay = ({ setIsVisible }) => {
           cards at all times.
         </li>
         <li>
-          The first player to enter the room is the judge, they tap to flip the
-          big black card and read it out loud to start the round.
+          The first player to enter the room is the judge; they flip the big
+          black card and read it out loud to start the round.
         </li>
         <li>
           Tap the bottom bar to view your deck. Everyone but the judge can

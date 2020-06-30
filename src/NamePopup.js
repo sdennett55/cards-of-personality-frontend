@@ -12,9 +12,18 @@ const NamePopup = ({
   updateMyName,
   myName,
   nameError,
+  reactGA,
 }) => {
   const [isVisible, setIsVisible] = useState(false);
   const PopupElement = isVisible ? HelpPopup : Popup;
+  const handleHowToPlay = () => {
+    setIsVisible((toggle) => !toggle);
+    reactGA.event({
+      category: "Game",
+      action: "Opened Help Menu",
+      label: myName,
+    });
+  };
   return (
     <PopupElement>
       {isVisible ? (
@@ -48,10 +57,7 @@ const NamePopup = ({
               <JoinGameButton type="submit">JOIN GAME</JoinGameButton>
             </PopupInnerWrap>
           </form>
-          <HowToPlayButton
-            type="button"
-            onClick={() => setIsVisible((toggle) => !toggle)}
-          >
+          <HowToPlayButton type="button" onClick={handleHowToPlay}>
             <HelpIconWrap>
               <HelpIcon />
             </HelpIconWrap>{" "}
@@ -76,7 +82,7 @@ const Popup = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  transition: background .25s;
+  transition: background 0.25s;
 `;
 
 const HelpPopup = styled.div`
@@ -92,7 +98,7 @@ const HelpPopup = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  transition: background .25s;
+  transition: background 0.25s;
 `;
 
 const PopupInnerWrap = styled.div`
