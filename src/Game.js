@@ -481,7 +481,7 @@ class Game extends React.PureComponent {
     }
 
     if (
-      this.state.players.find((player) => player.name === this.state.myName)
+      this.state.players.find((player) => player.name === this.state.myName && player.id !== this.socket.id)
     ) {
       this.setState({ nameError: "Name taken. Please choose another name." });
       return;
