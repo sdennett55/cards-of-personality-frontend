@@ -22,20 +22,35 @@ const CardElement = styled.div`
 `;
 
 const Wrapper = styled.div`
-  position: relative; 
+  position: relative;
   padding-bottom: 140%;
+`;
+const BlankCard = styled.div`
+  position: relative;
+  width: calc(20% - 1em);
+  max-width: 25vh;
+  margin: .5em;
+
+  /*
+    some devices with small viewport height like Moto G2
+    need to make the player slots smaller.
+    they can take up full space at this height
+  */
+  @media (min-height: 556px) {
+    width: calc(25% - 1em);
+  }
 `;
 
 const BlankPlayerCard = ({count, index}) => {
 
   return (
-    <div style={{ position: 'relative', width: 'calc(25% - 1em)', maxWidth: '25vh', 'margin': '0.5em' }}>
+    <BlankCard>
       <Wrapper>
         <CardElement>
           Player {count < MAX_PLAYERS ? count + index + 1 : index + 1}
         </CardElement>
       </Wrapper>
-    </div>
+    </BlankCard>
 
   )
 }

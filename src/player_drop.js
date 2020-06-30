@@ -47,7 +47,7 @@ const Wrap = styled.div`
 
 const PlayerDropWrap = styled.div`
   position: relative;
-  width: calc(25% - 1em);
+  width: calc(20% - 1em);
   max-width: 25vh;
   margin: 0.5em;
 
@@ -56,6 +56,15 @@ const PlayerDropWrap = styled.div`
     bottom: 0;
     top: auto;
     padding-top: .1em;
+  }
+
+  /*
+    some devices with small viewport height like Moto G2
+    need to make the player slots smaller.
+    they can take up full space at this height
+  */
+  @media (min-height: 556px) {
+    width: calc(25% - 1em);
   }
 `;
 

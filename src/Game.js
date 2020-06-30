@@ -736,11 +736,19 @@ const PlayerDecks = styled.div`
   display: flex;
   flex-wrap: wrap;
   width: calc(60% - 0.25em);
-  justify-content: center;
+  justify-content: flex-start;
   align-content: center;
   margin-right: -0.5em;
   font-size: 0.7rem;
 
+  /*
+    some devices with small viewport height like Moto G2
+    need to make the player slots smaller.
+    they can take up full space at this height
+  */
+  @media (min-height: 556px) {
+    justify-content: center;
+  }
   @media (max-width: 500px) and (orientation: portrait) {
     width: calc(100% + 1em);
     margin: 0.5em -0.5em 0.5em;
