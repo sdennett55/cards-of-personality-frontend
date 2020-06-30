@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import cx from 'classnames';
-import { useDrop } from 'react-dnd';
-import Card from './card';
-import { BackIcon } from './icons';
-import DraggableCard from './draggable_card';
-import BlankCard from './blank_card';
-import CardWrap from './card_wrap';
+import React, { useState } from "react";
+import styled from "styled-components";
+import cx from "classnames";
+import { useDrop } from "react-dnd";
+import Card from "./card";
+import { BackIcon } from "./icons";
+import DraggableCard from "./draggable_card";
+import BlankCard from "./blank_card";
+import CardWrap from "./card_wrap";
 import { MAX_PLAYERS } from "./data";
 
 const MyCards = styled.button`
@@ -17,7 +17,7 @@ const MyCards = styled.button`
   color: #fff;
   border: 0;
   padding: 0;
-  transition: background .25s;
+  transition: background 0.25s;
 
   &:hover,
   &:focus {
@@ -57,7 +57,7 @@ const WrapperCentered = styled.div`
   justify-content: center;
   padding-left: 2em;
   padding-bottom: 50px;
-  background-color: rgba(35, 139, 179, .34);
+  background-color: rgba(35, 139, 179, 0.34);
 `;
 
 const Scrolling = styled.div`
@@ -76,7 +76,7 @@ const BackToTableButton = styled.button`
   padding: 0;
   margin: 0;
   border-top: 1px solid #fff;
-  transition: color .25s;
+  transition: color 0.25s;
 
   &:hover,
   &:focus {
@@ -97,7 +97,7 @@ const SubmittedCardsButton = styled.button`
   margin: 0;
   font-size: 16px;
   font-weight: bold;
-  transition: color .25s, background .25s;
+  transition: color 0.25s, background 0.25s;
 
   &:hover,
   &:focus {
@@ -119,19 +119,19 @@ const DiscardButton = styled.div`
   font-size: 16px;
   font-weight: bold;
   line-height: 50px;
-  transition: background .25s;
+  transition: background 0.25s;
 `;
 
 const MenuTitle = styled.h2`
   color: #fff;
   font-size: 2.5rem;
-  opacity: .5;
+  opacity: 0.5;
   text-transform: uppercase;
   text-align: left;
   margin: 0;
   line-height: 1;
   width: 100%;
-  padding-left: .25em;
+  padding-left: 0.25em;
   font-style: italic;
 
   @media (min-width: 1384px) {
@@ -169,69 +169,118 @@ function getBlankCards(myCards) {
 }
 
 function getBlankSubmittedCards(cards) {
-  const length = (MAX_PLAYERS - 1) - cards.length;
+  const length = MAX_PLAYERS - 1 - cards.length;
   const arr = Array.from({ length }, (_, i) => i);
 
   return arr;
 }
 
-function getMyNameCards({myCards, userIsDragging, myName}) {
-  if (myCards.length === 7 && userIsDragging === 'whiteCard') {
-    return 'YOU ALREADY HAVE 7 CARDS';
+function getMyNameCards({ myCards, userIsDragging, myName }) {
+  if (myCards.length === 7 && userIsDragging === "whiteCard") {
+    return "YOU ALREADY HAVE 7 CARDS";
   }
 
-  return userIsDragging === 'whiteCard' ? `DROP ${7 - myCards.length} WHITE CARDS HERE` : `${myName}'S CARDS (${myCards.length})`
+  return userIsDragging === "whiteCard"
+    ? `DROP ${7 - myCards.length} WHITE CARDS HERE`
+    : `${myName}'S CARDS (${myCards.length})`;
 }
 
-function getMyNameCardsStyle({myCards, userIsDragging}) {
-  if (myCards.length === 7 && userIsDragging === 'whiteCard') {
-    return '#ff2d55';
+function getMyNameCardsStyle({ myCards, userIsDragging }) {
+  if (myCards.length === 7 && userIsDragging === "whiteCard") {
+    return "#ff2d55";
   }
 
-  return userIsDragging === 'whiteCard' ? '#2cce9f' : null
+  return userIsDragging === "whiteCard" ? "#2cce9f" : null;
 }
 
-const MyCardsDropZone = ({ addCardToMyCards, submittedCards, discardACard, myCards, myName, socket, setUserIsDragging, userIsDragging, submitACard, blackCards }) => {
+function getBottomBarText({submittedCards, userIsDragging}) {
+  if (submittedCards.length === 7 && userIsDragging === "whiteCard") {
+    return "CARDS ARE FULL";
+  }
+
+  return userIsDragging === "whiteCard"
+    ? "DROP TO SUBMIT CARD"
+    : "Submitted Cards";
+}
+
+function getBottomBarStyles({submittedCards, userIsDragging}) {
+  if (submittedCards.length === 7 && userIsDragging === "whiteCard") {
+    return {
+      background: userIsDragging === "whiteCard" ? "#ff2d55" : null,
+      color: userIsDragging === "whiteCard" ? "#fff" : null,
+    };
+  }
+
+  return {
+    background: userIsDragging === "whiteCard" ? "#2cce9f" : null,
+    color: userIsDragging === "whiteCard" ? "#fff" : null,
+  };
+}
+
+const MyCardsDropZone = ({
+  addCardToMyCards,
+  submittedCards,
+  discardACard,
+  myCards,
+  myName,
+  socket,
+  setUserIsDragging,
+  userIsDragging,
+  submitACard,
+  blackCards,
+}) => {
   const [isOpen, setOpen] = useState(false);
   const [isSubmittedTableOpen, setSubmittedTableOpen] = useState(false);
   const [{ isOver }, drop] = useDrop({
-    accept: 'whiteCard',
+    accept: "whiteCard",
     drop: (item, monitor) => {
-      addCardToMyCards(item)
+      addCardToMyCards(item);
     },
   });
   const [{ submitIsOver }, submitDropRef] = useDrop({
-    accept: 'whiteCard',
+    accept: "whiteCard",
     drop: (item, monitor) => {
-      submitACard(item)
+      submitACard(item);
     },
-    collect: monitor => ({
+    collect: (monitor) => ({
       // we don't need to monitor if user is dragging, because these our each player's cards that no one else can drag.
       submitIsOver: !!monitor.isOver(),
     }),
   });
   const [{ discardIsOver }, discardDropRef] = useDrop({
-    accept: 'whiteCard',
+    accept: "whiteCard",
     drop: (item, monitor) => {
-      discardACard(item)
+      discardACard(item);
     },
-    collect: monitor => ({
-      discardIsOver: !!monitor.isOver() && userIsDragging === 'whiteCard',
+    collect: (monitor) => ({
+      discardIsOver: !!monitor.isOver() && userIsDragging === "whiteCard",
     }),
   });
 
   return (
     <>
-      <MyCards onClick={() => setOpen(isOpen => !isOpen)} ref={drop} style={{ background: getMyNameCardsStyle({myCards, userIsDragging}) }}>
-        {getMyNameCards({myCards, userIsDragging, myName})}
+      <MyCards
+        onClick={() => setOpen((isOpen) => !isOpen)}
+        ref={drop}
+        style={{ background: getMyNameCardsStyle({ myCards, userIsDragging }) }}
+      >
+        {getMyNameCards({ myCards, userIsDragging, myName })}
       </MyCards>
-      <div className={cx('MyCardsContainer', { 'is-open': isOpen })}>
+      <div className={cx("MyCardsContainer", { "is-open": isOpen })}>
         <Wrapper>
           <MenuTitle>{`${myName}'s Cards`}</MenuTitle>
           <ScrollingWrap>
             <Scrolling>
-            <Card text={blackCards && blackCards.length ? blackCards[blackCards.length - 1] : ''} bgColor="#000" color="#fff" />
-              {myCards.map(card => (
+              <Card
+                text={
+                  blackCards && blackCards.length
+                    ? blackCards[blackCards.length - 1]
+                    : ""
+                }
+                bgColor="#000"
+                color="#fff"
+              />
+              {myCards.map((card) => (
                 <CardWrap key={card.text} width="150px" margin=".5em">
                   <DraggableCard
                     isBroadcastingDrag={false}
@@ -243,44 +292,90 @@ const MyCardsDropZone = ({ addCardToMyCards, submittedCards, discardACard, myCar
                   />
                 </CardWrap>
               ))}
-              {getBlankCards(myCards).map(num => (
+              {getBlankCards(myCards).map((num) => (
                 <BlankCard key={num}>Draw a card</BlankCard>
               ))}
             </Scrolling>
           </ScrollingWrap>
         </Wrapper>
         <ButtonWrapper>
-          <BackToTableButton onClick={() => setOpen(isOpen => !isOpen)}><BackIcon /></BackToTableButton>
-          <SubmittedCardsButton ref={submitDropRef} onClick={() => setSubmittedTableOpen(isSubmittedTableOpen => !isSubmittedTableOpen)} style={{ background: submitIsOver || userIsDragging === 'whiteCard' ? '#2cce9f' : null, color: submitIsOver || userIsDragging === 'whiteCard' ? '#fff' : null }}>{submitIsOver || userIsDragging === 'whiteCard' ? 'DROP TO SUBMIT CARD' : 'Submitted Cards'}</SubmittedCardsButton>
+          <BackToTableButton onClick={() => setOpen((isOpen) => !isOpen)}>
+            <BackIcon />
+          </BackToTableButton>
+          <SubmittedCardsButton
+            ref={submitDropRef}
+            onClick={() =>
+              setSubmittedTableOpen(
+                (isSubmittedTableOpen) => !isSubmittedTableOpen
+              )
+            }
+            style={getBottomBarStyles({submittedCards, userIsDragging})}
+          >
+            {getBottomBarText({submittedCards, userIsDragging})}
+          </SubmittedCardsButton>
         </ButtonWrapper>
       </div>
-      <div className={cx('SubmittedCardsTable', { 'is-open': isSubmittedTableOpen })}>
+      <div
+        className={cx("SubmittedCardsTable", {
+          "is-open": isSubmittedTableOpen,
+        })}
+      >
         <WrapperCentered>
           <MenuTitle>SUBMITTED CARDS</MenuTitle>
           <ScrollingWrap>
             <Scrolling>
-              <Card text={blackCards && blackCards.length ? blackCards[blackCards.length - 1] : ''} bgColor="#000" color="#fff" />
-              {submittedCards.map(card => (
+              <Card
+                text={
+                  blackCards && blackCards.length
+                    ? blackCards[blackCards.length - 1]
+                    : ""
+                }
+                bgColor="#000"
+                color="#fff"
+              />
+              {submittedCards.map((card) => (
                 <CardWrap key={card.text} width="150px" margin=".5em">
-                  <DraggableCard isFlipBroadcasted key={card.text} setUserIsDragging={setUserIsDragging} socket={socket} {...card} />
+                  <DraggableCard
+                    isFlipBroadcasted
+                    key={card.text}
+                    setUserIsDragging={setUserIsDragging}
+                    socket={socket}
+                    {...card}
+                  />
                 </CardWrap>
               ))}
-              {getBlankSubmittedCards(submittedCards).map(num => (
+              {getBlankSubmittedCards(submittedCards).map((num) => (
                 <BlankCard key={num}></BlankCard>
               ))}
             </Scrolling>
           </ScrollingWrap>
         </WrapperCentered>
         <ButtonWrapper>
-          <BackToTableButton onClick={() => {
-            setSubmittedTableOpen(isOpen => !isOpen)
-          }}><BackIcon /></BackToTableButton>
+          <BackToTableButton
+            onClick={() => {
+              setSubmittedTableOpen((isOpen) => !isOpen);
+            }}
+          >
+            <BackIcon />
+          </BackToTableButton>
 
-          <DiscardButton ref={discardDropRef} style={{ background: discardIsOver || userIsDragging === 'whiteCard' ? '#2cce9f' : null, color: discardIsOver || userIsDragging === 'whiteCard' ? '#fff' : null }}>DROP TO DISCARD</DiscardButton>
+          <DiscardButton
+            ref={discardDropRef}
+            style={{
+              background:
+                discardIsOver || userIsDragging === "whiteCard"
+                  ? "#2cce9f"
+                  : null,
+              color:
+                discardIsOver || userIsDragging === "whiteCard" ? "#fff" : null,
+            }}
+          >
+            DROP TO DISCARD
+          </DiscardButton>
         </ButtonWrapper>
       </div>
     </>
-  )
-}
+  );
+};
 
 export default MyCardsDropZone;
