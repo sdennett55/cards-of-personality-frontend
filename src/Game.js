@@ -486,6 +486,20 @@ class Game extends React.PureComponent {
       this.setState({ nameError: "Name taken. Please choose another name." });
       return;
     }
+
+    const doesPlayerExist = this.state.players.find(
+      (player) => player.id === this.socket.id
+    );
+
+    // not sure the main cause, but hoping this prevents
+    // users from entering the game without being set up as a player.
+    if (!doesPlayerExist) {
+      this.setState({
+        nameError: "Looks like you were disconnected. \nPlease refresh the page.",
+      });
+      return;
+    }
+
     localStorage.setItem("cas-name", this.state.myName);
     this.setState((prevState) => {
       // once we update our name, let's update our player in players

@@ -77,7 +77,7 @@ const getPlayerName = ({ index, myName, players, socket }) => {
     return players[index].name;
   }
 
-  return `Player ${index + 1}`;
+  return `NEW USER`;
 }
 
 const getBlackCardLength = ({ players, index }) => {

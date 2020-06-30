@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
 import Logo from './logo';
 import styled from 'styled-components';
 import { useDrag } from 'react-dnd';
@@ -161,18 +160,9 @@ const DraggableCard = ({ bgColor, isBroadcastingDrag = true, isFlipBroadcasted, 
       {isFlipped ? text : (
         <Logo />
       )}
-      {!isFlipped && type === 'blackCard' && (
-        <p>Tap to flip and<br/> start the round</p>
-      )}
     </CardElement>
 
   )
 }
-// DraggableCard.propTypes = {
-//   opaqueOnPickup: PropTypes.bool,
-// }
-// DraggableCard.defaultProps = {
-//   opaqueOnPickup: true,
-// }
 
 export default DraggableCard;

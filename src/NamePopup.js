@@ -104,6 +104,7 @@ const HelpPopup = styled.div`
 const PopupInnerWrap = styled.div`
   display: flex;
   flex-direction: column;
+  max-width: 218px;
 `;
 
 const ErrorMsg = styled.p`
