@@ -29,6 +29,7 @@ export const BackIcon = () => (
     width="24"
     height="24"
     viewBox="0 0 24 24"
+    style={{transform: 'rotate(-180deg)'}}
   >
     <path d="M12 2c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm2 12l-4.5 4.5 1.527 1.5 5.973-6-5.973-6-1.527 1.5 4.5 4.5z" />
   </svg>
@@ -60,7 +61,7 @@ export const Confetti = () => {
           width: "170%",
           height: "100%",
           zIndex: 1,
-          transform: "rotate(0deg) translate(-50%, -50%)"
+          transform: "rotate(0deg) translate(-50%, -50%)",
         }}
         width={1920}
       >
@@ -83,7 +84,7 @@ export const Confetti = () => {
                 className="ld ld-fall"
                 style={{
                   animationDelay: "-0.7470992967912595s",
-                  animationDuration: "2s"
+                  animationDuration: "2s",
                 }}
               >
                 <rect
@@ -101,7 +102,7 @@ export const Confetti = () => {
                 className="ld ld-fall"
                 style={{
                   animationDelay: "-1.4579212511984165s",
-                  animationDuration: "2s"
+                  animationDuration: "2s",
                 }}
               >
                 <rect
@@ -119,7 +120,7 @@ export const Confetti = () => {
                 className="ld ld-fall"
                 style={{
                   animationDelay: "-1.646560186619931s",
-                  animationDuration: "2s"
+                  animationDuration: "2s",
                 }}
               >
                 <rect
@@ -137,7 +138,7 @@ export const Confetti = () => {
                 className="ld ld-fall"
                 style={{
                   animationDelay: "-0.09466551055122574s",
-                  animationDuration: "2s"
+                  animationDuration: "2s",
                 }}
               >
                 <rect
@@ -155,7 +156,7 @@ export const Confetti = () => {
                 className="ld ld-fall"
                 style={{
                   animationDelay: "-0.15446009320468024s",
-                  animationDuration: "2s"
+                  animationDuration: "2s",
                 }}
               >
                 <rect
@@ -173,7 +174,7 @@ export const Confetti = () => {
                 className="ld ld-fall"
                 style={{
                   animationDelay: "-0.5738872174155385s",
-                  animationDuration: "2s"
+                  animationDuration: "2s",
                 }}
               >
                 <rect
@@ -191,7 +192,7 @@ export const Confetti = () => {
                 className="ld ld-fall"
                 style={{
                   animationDelay: "-0.141055090989739s",
-                  animationDuration: "2s"
+                  animationDuration: "2s",
                 }}
               >
                 <rect
@@ -209,7 +210,7 @@ export const Confetti = () => {
                 className="ld ld-fall"
                 style={{
                   animationDelay: "-1.829981476087561s",
-                  animationDuration: "4s"
+                  animationDuration: "4s",
                 }}
               >
                 <rect
@@ -227,7 +228,7 @@ export const Confetti = () => {
                 className="ld ld-fall"
                 style={{
                   animationDelay: "-3.9565762604952512s",
-                  animationDuration: "2s"
+                  animationDuration: "2s",
                 }}
               >
                 <rect
@@ -245,7 +246,7 @@ export const Confetti = () => {
                 className="ld ld-fall"
                 style={{
                   animationDelay: "-0.7659655618660128s",
-                  animationDuration: "2s"
+                  animationDuration: "2s",
                 }}
               >
                 <rect
@@ -263,7 +264,7 @@ export const Confetti = () => {
                 className="ld ld-fall"
                 style={{
                   animationDelay: "-0.8771358321204001s",
-                  animationDuration: "2s"
+                  animationDuration: "2s",
                 }}
               >
                 <rect
@@ -281,7 +282,7 @@ export const Confetti = () => {
                 className="ld ld-fall"
                 style={{
                   animationDelay: "-1.2969254611136622s",
-                  animationDuration: "4s"
+                  animationDuration: "4s",
                 }}
               >
                 <rect
@@ -299,7 +300,7 @@ export const Confetti = () => {
                 className="ld ld-fall"
                 style={{
                   animationDelay: "-1.6360366684262928s",
-                  animationDuration: "4s"
+                  animationDuration: "4s",
                 }}
               >
                 <rect
@@ -317,7 +318,7 @@ export const Confetti = () => {
                 className="ld ld-fall"
                 style={{
                   animationDelay: "-1.8922942102492648s",
-                  animationDuration: "4s"
+                  animationDuration: "4s",
                 }}
               >
                 <rect
@@ -335,7 +336,7 @@ export const Confetti = () => {
                 className="ld ld-fall"
                 style={{
                   animationDelay: "-0.8345914247479413s",
-                  animationDuration: "2s"
+                  animationDuration: "2s",
                 }}
               >
                 <rect
@@ -353,7 +354,7 @@ export const Confetti = () => {
                 className="ld ld-fall"
                 style={{
                   animationDelay: "-0.005727121274387681s",
-                  animationDuration: "2s"
+                  animationDuration: "2s",
                 }}
               >
                 <rect
@@ -371,7 +372,7 @@ export const Confetti = () => {
                 className="ld ld-fall"
                 style={{
                   animationDelay: "-1.423841286913516s",
-                  animationDuration: "2s"
+                  animationDuration: "2s",
                 }}
               >
                 <rect
@@ -389,7 +390,7 @@ export const Confetti = () => {
                 className="ld ld-fall"
                 style={{
                   animationDelay: "-0.8402238975998677s",
-                  animationDuration: "2s"
+                  animationDuration: "2s",
                 }}
               >
                 <rect
@@ -407,7 +408,7 @@ export const Confetti = () => {
                 className="ld ld-fall"
                 style={{
                   animationDelay: "-1.717028752015708s",
-                  animationDuration: "2s"
+                  animationDuration: "2s",
                 }}
               >
                 <rect
@@ -425,7 +426,7 @@ export const Confetti = () => {
                 className="ld ld-fall"
                 style={{
                   animationDelay: "-1.922335006088033s",
-                  animationDuration: "4s"
+                  animationDuration: "4s",
                 }}
               >
                 <rect
@@ -443,7 +444,7 @@ export const Confetti = () => {
                 className="ld ld-fall"
                 style={{
                   animationDelay: "-3.914737327332583s",
-                  animationDuration: "4s"
+                  animationDuration: "4s",
                 }}
               >
                 <rect
@@ -461,7 +462,7 @@ export const Confetti = () => {
                 className="ld ld-fall"
                 style={{
                   animationDelay: "-3.341456023608722s",
-                  animationDuration: "4s"
+                  animationDuration: "4s",
                 }}
               >
                 <rect
@@ -479,7 +480,7 @@ export const Confetti = () => {
                 className="ld ld-fall"
                 style={{
                   animationDelay: "-0.2902468654198831s",
-                  animationDuration: "2s"
+                  animationDuration: "2s",
                 }}
               >
                 <rect
@@ -497,7 +498,7 @@ export const Confetti = () => {
                 className="ld ld-fall"
                 style={{
                   animationDelay: "-0.17088379492074646s",
-                  animationDuration: "2s"
+                  animationDuration: "2s",
                 }}
               >
                 <rect
@@ -529,7 +530,7 @@ export const Confetti = () => {
                 className="ld ld-fall"
                 style={{
                   animationDelay: "-0.7470992967912595s",
-                  animationDuration: "2s"
+                  animationDuration: "2s",
                 }}
               >
                 <rect
@@ -547,7 +548,7 @@ export const Confetti = () => {
                 className="ld ld-fall"
                 style={{
                   animationDelay: "-1.4579212511984165s",
-                  animationDuration: "2s"
+                  animationDuration: "2s",
                 }}
               >
                 <rect
@@ -565,7 +566,7 @@ export const Confetti = () => {
                 className="ld ld-fall"
                 style={{
                   animationDelay: "-1.646560186619931s",
-                  animationDuration: "2s"
+                  animationDuration: "2s",
                 }}
               >
                 <rect
@@ -583,7 +584,7 @@ export const Confetti = () => {
                 className="ld ld-fall"
                 style={{
                   animationDelay: "-0.09466551055122574s",
-                  animationDuration: "2s"
+                  animationDuration: "2s",
                 }}
               >
                 <rect
@@ -601,7 +602,7 @@ export const Confetti = () => {
                 className="ld ld-fall"
                 style={{
                   animationDelay: "-0.15446009320468024s",
-                  animationDuration: "2s"
+                  animationDuration: "2s",
                 }}
               >
                 <rect
@@ -619,7 +620,7 @@ export const Confetti = () => {
                 className="ld ld-fall"
                 style={{
                   animationDelay: "-0.5738872174155385s",
-                  animationDuration: "2s"
+                  animationDuration: "2s",
                 }}
               >
                 <rect
@@ -637,7 +638,7 @@ export const Confetti = () => {
                 className="ld ld-fall"
                 style={{
                   animationDelay: "-0.141055090989739s",
-                  animationDuration: "2s"
+                  animationDuration: "2s",
                 }}
               >
                 <rect
@@ -655,7 +656,7 @@ export const Confetti = () => {
                 className="ld ld-fall"
                 style={{
                   animationDelay: "-1.829981476087561s",
-                  animationDuration: "4s"
+                  animationDuration: "4s",
                 }}
               >
                 <rect
@@ -673,7 +674,7 @@ export const Confetti = () => {
                 className="ld ld-fall"
                 style={{
                   animationDelay: "-3.9565762604952512s",
-                  animationDuration: "2s"
+                  animationDuration: "2s",
                 }}
               >
                 <rect
@@ -691,7 +692,7 @@ export const Confetti = () => {
                 className="ld ld-fall"
                 style={{
                   animationDelay: "-0.7659655618660128s",
-                  animationDuration: "2s"
+                  animationDuration: "2s",
                 }}
               >
                 <rect
@@ -709,7 +710,7 @@ export const Confetti = () => {
                 className="ld ld-fall"
                 style={{
                   animationDelay: "-0.8771358321204001s",
-                  animationDuration: "2s"
+                  animationDuration: "2s",
                 }}
               >
                 <rect
@@ -727,7 +728,7 @@ export const Confetti = () => {
                 className="ld ld-fall"
                 style={{
                   animationDelay: "-1.2969254611136622s",
-                  animationDuration: "4s"
+                  animationDuration: "4s",
                 }}
               >
                 <rect
@@ -745,7 +746,7 @@ export const Confetti = () => {
                 className="ld ld-fall"
                 style={{
                   animationDelay: "-1.6360366684262928s",
-                  animationDuration: "4s"
+                  animationDuration: "4s",
                 }}
               >
                 <rect
@@ -763,7 +764,7 @@ export const Confetti = () => {
                 className="ld ld-fall"
                 style={{
                   animationDelay: "-1.8922942102492648s",
-                  animationDuration: "4s"
+                  animationDuration: "4s",
                 }}
               >
                 <rect
@@ -781,7 +782,7 @@ export const Confetti = () => {
                 className="ld ld-fall"
                 style={{
                   animationDelay: "-0.8345914247479413s",
-                  animationDuration: "2s"
+                  animationDuration: "2s",
                 }}
               >
                 <rect
@@ -799,7 +800,7 @@ export const Confetti = () => {
                 className="ld ld-fall"
                 style={{
                   animationDelay: "-0.005727121274387681s",
-                  animationDuration: "2s"
+                  animationDuration: "2s",
                 }}
               >
                 <rect
@@ -817,7 +818,7 @@ export const Confetti = () => {
                 className="ld ld-fall"
                 style={{
                   animationDelay: "-1.423841286913516s",
-                  animationDuration: "2s"
+                  animationDuration: "2s",
                 }}
               >
                 <rect
@@ -835,7 +836,7 @@ export const Confetti = () => {
                 className="ld ld-fall"
                 style={{
                   animationDelay: "-0.8402238975998677s",
-                  animationDuration: "2s"
+                  animationDuration: "2s",
                 }}
               >
                 <rect
@@ -853,7 +854,7 @@ export const Confetti = () => {
                 className="ld ld-fall"
                 style={{
                   animationDelay: "-1.717028752015708s",
-                  animationDuration: "2s"
+                  animationDuration: "2s",
                 }}
               >
                 <rect
@@ -871,7 +872,7 @@ export const Confetti = () => {
                 className="ld ld-fall"
                 style={{
                   animationDelay: "-1.922335006088033s",
-                  animationDuration: "4s"
+                  animationDuration: "4s",
                 }}
               >
                 <rect
@@ -889,7 +890,7 @@ export const Confetti = () => {
                 className="ld ld-fall"
                 style={{
                   animationDelay: "-3.914737327332583s",
-                  animationDuration: "4s"
+                  animationDuration: "4s",
                 }}
               >
                 <rect
@@ -907,7 +908,7 @@ export const Confetti = () => {
                 className="ld ld-fall"
                 style={{
                   animationDelay: "-3.341456023608722s",
-                  animationDuration: "4s"
+                  animationDuration: "4s",
                 }}
               >
                 <rect
@@ -925,7 +926,7 @@ export const Confetti = () => {
                 className="ld ld-fall"
                 style={{
                   animationDelay: "-0.2902468654198831s",
-                  animationDuration: "2s"
+                  animationDuration: "2s",
                 }}
               >
                 <rect
@@ -943,7 +944,7 @@ export const Confetti = () => {
                 className="ld ld-fall"
                 style={{
                   animationDelay: "-0.17088379492074646s",
-                  animationDuration: "2s"
+                  animationDuration: "2s",
                 }}
               >
                 <rect
@@ -962,3 +963,11 @@ export const Confetti = () => {
     </ConfettiWrap>
   );
 };
+
+export const HelpIcon = () => (
+  <svg viewBox="0 0 512 512" width="20" height="20">
+    <circle cx={256} cy={378.5} r={25} />
+    <path d="M256 0C114.516 0 0 114.497 0 256c0 141.484 114.497 256 256 256 141.484 0 256-114.497 256-256C512 114.516 397.503 0 256 0zm0 472c-119.377 0-216-96.607-216-216 0-119.377 96.607-216 216-216 119.377 0 216 96.607 216 216 0 119.377-96.607 216-216 216z" />
+    <path d="M256 128.5c-44.112 0-80 35.888-80 80 0 11.046 8.954 20 20 20s20-8.954 20-20c0-22.056 17.944-40 40-40s40 17.944 40 40-17.944 40-40 40c-11.046 0-20 8.954-20 20v50c0 11.046 8.954 20 20 20s20-8.954 20-20v-32.531c34.466-8.903 60-40.26 60-77.469 0-44.112-35.888-80-80-80z" />
+  </svg>
+);

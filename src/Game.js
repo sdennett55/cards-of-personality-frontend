@@ -10,6 +10,7 @@ import PlayerDrop from "./player_drop";
 import CardWrap from "./card_wrap";
 import BlankPlayerCard from "./blank_player_card";
 import BlackCardDrop from "./black_card_drop";
+import NamePopup from "./NamePopup";
 // import GeneratePreview from './generate_preview';
 import { ToastContainer, toast, Slide } from "react-toastify";
 import ReactGA from "react-ga";
@@ -165,7 +166,11 @@ class Game extends React.PureComponent {
 
         console.log("new connection!", players);
 
-        this.setState(() => ({ players, showNamePopup: true, socketConnected: true }));
+        this.setState(() => ({
+          players,
+          showNamePopup: true,
+          socketConnected: true,
+        }));
       }
     );
 
@@ -519,7 +524,6 @@ class Game extends React.PureComponent {
   };
 
   copyLink = () => {
-
     // Web Share API for cool browsers
     if (navigator && navigator.share) {
       navigator
@@ -539,19 +543,22 @@ class Game extends React.PureComponent {
 
     // Clear the text selection
     if (window.getSelection) {
-      if (window.getSelection().empty) {  // Chrome
+      if (window.getSelection().empty) {
+        // Chrome
         window.getSelection().empty();
-      } else if (window.getSelection().removeAllRanges) {  // Firefox
+      } else if (window.getSelection().removeAllRanges) {
+        // Firefox
         window.getSelection().removeAllRanges();
       }
-    } else if (document.selection) {  // IE?
+    } else if (document.selection) {
+      // IE?
       document.selection.empty();
     }
 
     // Pop a success toast
     toast.success("Copied to clipboard!", {
-      toastId: 'copy-toast',
-      position: toast.POSITION.TOP_CENTER
+      toastId: "copy-toast",
+      position: toast.POSITION.TOP_CENTER,
     });
   };
 
@@ -562,40 +569,15 @@ class Game extends React.PureComponent {
       <div className="Game">
         <GlobalStyle />
         {this.state.showNamePopup && (
-          <form
-            className="Game-namePopup"
-            onSubmit={(e) => this.handleSubmit(e)}
-          >
-            <div className="Game-namePopup-innerWrap">
-              <InviteLabel htmlFor="invite">Invite a friend</InviteLabel>
-              <Flex>
-                <InviteInput
-                  id="invite"
-                  ref={this.inviteInputRef}
-                  type="text"
-                  value={`${CLIENT_URL}/g/${this.roomId}`}
-                  readOnly
-                />
-                <IconWrap type="button" onClick={this.copyLink}>
-                  <CopyIcon />
-                </IconWrap>
-              </Flex>
-              <NameLabel htmlFor="name">Enter your name</NameLabel>
-              <NameInput
-                type="text"
-                id="name"
-                maxLength="16"
-                onChange={(e) => this.updateMyName(e)}
-                defaultValue={this.state.myName}
-              />
-              {this.state.nameError && (
-                <p className="Game-namePopup-errorMsg">
-                  {this.state.nameError}
-                </p>
-              )}
-              <button type="submit">JOIN GAME</button>
-            </div>
-          </form>
+          <NamePopup
+            handleSubmit={this.handleSubmit}
+            inviteInputRef={this.inviteInputRef}
+            roomId={this.roomId}
+            copyLink={this.copyLink}
+            updateMyName={this.updateMyName}
+            myName={this.state.myName}
+            nameError={this.state.nameError}
+          />
         )}
         <DndProvider
           backend={TouchBackend}
@@ -686,7 +668,14 @@ class Game extends React.PureComponent {
             />
           </Table>
         </DndProvider>
-        <ToastContainer limit={1} autoClose={3000} hideProgressBar closeOnClick transition={Slide} pauseOnFocusLoss={false} />
+        <ToastContainer
+          limit={1}
+          autoClose={2000}
+          hideProgressBar
+          closeOnClick
+          transition={Slide}
+          pauseOnFocusLoss={false}
+        />
       </div>
     );
   }
@@ -772,63 +761,6 @@ const CardsWrap = styled.div`
     width: 100%;
     justify-content: center;
   }
-`;
-
-const IconWrap = styled.button`
-  appearance: none;
-  padding: 0.5em;
-  & svg {
-    display: block;
-  }
-`;
-
-const Flex = styled.div`
-  display: flex;
-  margin-bottom: 2em;
-  background-color: #2cce9f;
-  border-radius: 8px;
-`;
-
-const NameInput = styled.input`
-  appearance: none;
-  font-size: 1em;
-  border: 0;
-  margin: 0 0 1em;
-  padding: 0.25em 0 0.5em;
-  background: transparent;
-  border-bottom: 1px solid white;
-  color: #fff;
-  transition: border-color 0.25s;
-  border-radius: 0;
-`;
-const NameLabel = styled.label`
-  text-align: left;
-  text-transform: uppercase;
-  font-size: 0.813em;
-  color: #c1bdbd;
-`;
-
-const InviteTitle = styled.h2`
-  font-weight: normal;
-  margin-bottom: 0.25em;
-`;
-const InviteInput = styled.input`
-  appearance: none;
-  font-size: 1em;
-  border: 0;
-  background: white;
-  border-radius: 8px 0 0 8px;
-  color: #000;
-  padding: 0.25em 0.5em;
-  direction: rtl;
-`;
-
-const InviteLabel = styled.label`
-  text-align: left;
-  text-transform: uppercase;
-  font-size: 0.813em;
-  color: #c1bdbd;
-  margin-bottom: 0.5em;
 `;
 
 export default withRouter(Game);
