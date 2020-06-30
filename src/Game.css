@@ -53,13 +53,6 @@ button, input {
   overflow: hidden;
   z-index: 1;
 }
-/* @media (max-width: 500px) and (orientation: portrait) {
-  .MyCardsContainer,
-  .SubmittedCardsTable {
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-} */
 .MyCardsContainer.is-open,
 .SubmittedCardsTable.is-open {
   transform: translateX(0) translateZ(0);

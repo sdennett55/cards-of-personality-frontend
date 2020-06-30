@@ -193,7 +193,7 @@ function getMyNameCardsStyle({ myCards, userIsDragging }) {
   return userIsDragging === "whiteCard" ? "#2cce9f" : null;
 }
 
-function getBottomBarText({submittedCards, userIsDragging}) {
+function getBottomBarText({ submittedCards, userIsDragging }) {
   if (submittedCards.length === 7 && userIsDragging === "whiteCard") {
     return "CARDS ARE FULL";
   }
@@ -203,7 +203,7 @@ function getBottomBarText({submittedCards, userIsDragging}) {
     : "Submitted Cards";
 }
 
-function getBottomBarStyles({submittedCards, userIsDragging}) {
+function getBottomBarStyles({ submittedCards, userIsDragging }) {
   if (submittedCards.length === 7 && userIsDragging === "whiteCard") {
     return {
       background: userIsDragging === "whiteCard" ? "#ff2d55" : null,
@@ -233,28 +233,21 @@ const MyCardsDropZone = ({
   const [isSubmittedTableOpen, setSubmittedTableOpen] = useState(false);
   const [{ isOver }, drop] = useDrop({
     accept: "whiteCard",
-    drop: (item, monitor) => {
+    drop: (item) => {
       addCardToMyCards(item);
     },
   });
   const [{ submitIsOver }, submitDropRef] = useDrop({
     accept: "whiteCard",
-    drop: (item, monitor) => {
+    drop: (item) => {
       submitACard(item);
     },
-    collect: (monitor) => ({
-      // we don't need to monitor if user is dragging, because these our each player's cards that no one else can drag.
-      submitIsOver: !!monitor.isOver(),
-    }),
   });
   const [{ discardIsOver }, discardDropRef] = useDrop({
     accept: "whiteCard",
-    drop: (item, monitor) => {
+    drop: (item) => {
       discardACard(item);
     },
-    collect: (monitor) => ({
-      discardIsOver: !!monitor.isOver() && userIsDragging === "whiteCard",
-    }),
   });
 
   return (
@@ -309,9 +302,9 @@ const MyCardsDropZone = ({
                 (isSubmittedTableOpen) => !isSubmittedTableOpen
               )
             }
-            style={getBottomBarStyles({submittedCards, userIsDragging})}
+            style={getBottomBarStyles({ submittedCards, userIsDragging })}
           >
-            {getBottomBarText({submittedCards, userIsDragging})}
+            {getBottomBarText({ submittedCards, userIsDragging })}
           </SubmittedCardsButton>
         </ButtonWrapper>
       </div>
@@ -362,12 +355,8 @@ const MyCardsDropZone = ({
           <DiscardButton
             ref={discardDropRef}
             style={{
-              background:
-                discardIsOver || userIsDragging === "whiteCard"
-                  ? "#2cce9f"
-                  : null,
-              color:
-                discardIsOver || userIsDragging === "whiteCard" ? "#fff" : null,
+              background: userIsDragging === "whiteCard" ? "#2cce9f" : null,
+              color: userIsDragging === "whiteCard" ? "#fff" : null,
             }}
           >
             DROP TO DISCARD
