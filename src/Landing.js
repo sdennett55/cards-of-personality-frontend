@@ -37,6 +37,7 @@ const Landing = ({ title }) => {
           minLength="5"
           maxLength="5"
           text="text"
+          required
         />
         <JoinGameButton type="submit">Join Game</JoinGameButton>
       </Form>
