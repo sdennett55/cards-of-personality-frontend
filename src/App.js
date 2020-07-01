@@ -5,6 +5,9 @@ import CreateADeck from './CreateADeck';
 import EditADeck from './EditADeck';
 import Admin from './Admin';
 import PlayerInfo from './PlayerInfo';
+import EmptyPage from './EmptyPage';
+import CreateGame from './CreateGame';
+import PublicGames from './PublicGames';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 
 const App = () => {
@@ -28,6 +31,15 @@ const App = () => {
         </Route>
         <Route path="/player-info">
           <PlayerInfo />
+        </Route>
+        <Route exact path="/create-game">
+          <CreateGame />
+        </Route>
+        <Route exact path="/games">
+          <PublicGames />
+        </Route>
+        <Route>
+          <EmptyPage />
         </Route>
       </Switch>
     </Router>

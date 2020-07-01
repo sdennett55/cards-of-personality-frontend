@@ -1,34 +1,55 @@
 import React, { useRef, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import axios from "axios";
 import { SERVER_URL } from "./helpers";
 import styled, { createGlobalStyle } from "styled-components";
 
-function handleCreateGame({ history, deck, setErrorMsg, setLoading }) {
-  setLoading(true);
-  createRandomRoom({ history, deck, setErrorMsg, setLoading });
-}
+const MIN_ROOM_NAME_CHARS = 2;
+const MAX_ROOM_NAME_CHARS = 16;
 
-function createRandomRoom({ history, deck, setErrorMsg, setLoading }) {
-  const random = (
-    Math.random().toString(36).substring(2, 15) +
-    Math.random().toString(36).substring(2, 15)
-  ).substr(0, 5);
-
-  // check server to make sure random room doesn't already exist
+function handleJoinGame({
+  e,
+  setLoading,
+  joinGameInputRef,
+  history,
+  setErrorMsg,
+}) {
+  e.preventDefault();
+  if (joinGameInputRef.current.value.length < MIN_ROOM_NAME_CHARS) {
+    setErrorMsg({
+      type: "join",
+      message: `Room name must be at least ${MIN_ROOM_NAME_CHARS} characters long.`,
+    });
+    return;
+  }
+  if (joinGameInputRef.current.value.length > MAX_ROOM_NAME_CHARS) {
+    setErrorMsg({
+      type: "join",
+      message: `Room name must be no longer than ${MAX_ROOM_NAME_CHARS} characters.`,
+    });
+    return;
+  }
+  setLoading("join");
   axios
-    .post(`${SERVER_URL}/api/checkAvailableRooms`, { roomName: random })
+    .post(`${SERVER_URL}/api/checkAvailableRooms`, {
+      roomName: joinGameInputRef.current.value,
+    })
     .then((res) => {
-      setLoading(false);
+      setLoading("");
+
+      // if no response, game doesn't exist, so ask if they want to create it
       if (!res.data) {
-        history.push(`/g/${random}?deck=${deck}`);
+        setErrorMsg({ type: "join" });
       } else {
-        createRandomRoom({ history, deck, setErrorMsg, setLoading });
+        history.push(`/g/${joinGameInputRef.current.value}`);
       }
     })
     .catch((err) => {
-      setErrorMsg("There was an error on the server. Please try again.");
+      setErrorMsg({
+        type: "join",
+        message: "There was an error on the server. Please try again.",
+      });
       console.error(err);
     });
 }
@@ -36,9 +57,8 @@ function createRandomRoom({ history, deck, setErrorMsg, setLoading }) {
 const Landing = ({ title }) => {
   const history = useHistory();
   const joinGameInputRef = useRef(null);
-  const [startGame, setStartGame] = useState(false);
-  const [errorMsg, setErrorMsg] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState({});
+  const [loading, setLoading] = useState("");
   return (
     <LandingWrapper>
       <GlobalStyle />
@@ -52,58 +72,50 @@ const Landing = ({ title }) => {
         </Personality>
       </Heading>
       <Form
-        onSubmit={() => history.push(`/g/${joinGameInputRef.current.value}`)}
+        onSubmit={(e) =>
+          handleJoinGame({
+            e,
+            setLoading,
+            joinGameInputRef,
+            history,
+            setErrorMsg,
+          })
+        }
       >
         <JoinGameLabel htmlFor="joingame">ENTER GAME CODE</JoinGameLabel>
         <JoinGameInput
           ref={joinGameInputRef}
           id="joingame"
-          minLength="5"
-          maxLength="5"
+          minLength={MIN_ROOM_NAME_CHARS}
+          maxLength={MAX_ROOM_NAME_CHARS}
           text="text"
           required
         />
-        <JoinGameButton type="submit">Join Game</JoinGameButton>
+        <GreenButton type="submit" disabled={loading === "join"}>
+          Join Game
+        </GreenButton>
+        {errorMsg.type === "join" && !errorMsg.message ? (
+          <GameExistsMessage>
+            Game doesn't exist. Would you like to{" "}
+            <Link to={`/g/${joinGameInputRef.current.value}`}>create it?</Link>
+          </GameExistsMessage>
+        ) : (
+          errorMsg.type === "join" &&
+          errorMsg.message && <ErrorText>{errorMsg.message}</ErrorText>
+        )}
+        <OrTextWrap>
+          <OrText>OR</OrText>
+        </OrTextWrap>
+        <PublicGamesButton
+          type="button"
+          to="/games"
+        >
+          Public Games
+        </PublicGamesButton>
       </Form>
-      <OrTextWrap>
-        <OrText>OR</OrText>
-      </OrTextWrap>
-      {startGame ? (
-        <>
-          <StartTitle>Choose a Deck</StartTitle>
-          <Flex>
-            <StartGameButtonSFW
-              onClick={() =>
-                handleCreateGame({
-                  history,
-                  deck: "safe-for-work",
-                  setErrorMsg,
-                  setLoading,
-                })
-              }
-              disabled={loading}
-            >
-              Safe for Work
-            </StartGameButtonSFW>
-            <StartGameButton
-              onClick={() =>
-                handleCreateGame({
-                  history,
-                  deck: "not-safe-for-work",
-                  setErrorMsg,
-                  setLoading,
-                })
-              }
-              disabled={loading}
-            >
-              Not Safe for Work
-            </StartGameButton>
-          </Flex>
-          {errorMsg && <ErrorText>{errorMsg}</ErrorText>}
-        </>
-      ) : (
-        <Button onClick={() => setStartGame(true)}>Create Game</Button>
-      )}
+      <CreateGameButton to="/create-game">
+        Create Game
+      </CreateGameButton>
       {/* <AltButton onClick={() => history.push('/create-deck')}>Create Deck</AltButton>
       <AltButton onClick={() => history.push('/edit-deck')}>Edit Deck</AltButton> */}
     </LandingWrapper>
@@ -119,14 +131,6 @@ const GlobalStyle = createGlobalStyle`
     appearance: none;
     border: 0;
   }
-`;
-const Flex = styled.div`
-  display: flex;
-`;
-const StartTitle = styled.h2`
-  color: #fff;
-  margin: 0.5em 0 0;
-  font-weight: normal;
 `;
 const LandingWrapper = styled.div`
   display: flex;
@@ -179,27 +183,15 @@ const ErrorText = styled.p`
   font-size: 0.8rem;
 `;
 
-const Button = styled.button`
-  display: block;
-  appearance: none;
-  background: #2cce9f;
-  color: #000;
-  font-size: 1em;
-  border: 0;
-  padding: 0.7em 1em;
-  border-radius: 8px;
-  margin: 1em 0;
-  font-weight: bold;
-  transition: opacity 0.25s;
+const GameExistsMessage = styled.p`
+  color: #fff;
 
-  &:hover,
-  &:focus,
-  &:disabled {
-    opacity: 0.5;
-    outline: 0;
+  a {
+    color: #2cce9f;
   }
 `;
-const StartGameButton = styled.button`
+
+const CreateGameButton = styled(Link)`
   display: block;
   appearance: none;
   background: rgb(255, 0, 128);
@@ -208,29 +200,10 @@ const StartGameButton = styled.button`
   border: 0;
   padding: 0.7em 1em;
   border-radius: 8px;
-  margin: 1em 0.5em;
+  margin: 1em 0;
   font-weight: bold;
   transition: opacity 0.25s;
-
-  &:hover,
-  &:focus,
-  &:disabled {
-    opacity: 0.5;
-    outline: 0;
-  }
-`;
-const StartGameButtonSFW = styled.button`
-  display: block;
-  appearance: none;
-  background: rgb(64, 224, 208);
-  color: #000;
-  font-size: 1em;
-  border: 0;
-  padding: 0.7em 1em;
-  border-radius: 8px;
-  margin: 1em 0.5em;
-  font-weight: bold;
-  transition: opacity 0.25s;
+  text-decoration: none;
 
   &:hover,
   &:focus,
@@ -245,7 +218,7 @@ const LetterP = styled.span`
 const LetterY = styled.span`
   margin-left: 0.02em;
 `;
-const JoinGameButton = styled.button`
+const GreenButton = styled.button`
   display: block;
   appearance: none;
   background: #2cce9f;
@@ -254,7 +227,7 @@ const JoinGameButton = styled.button`
   border: 0;
   padding: 0.7em 1em;
   border-radius: 8px;
-  margin: 1em 0;
+  margin: 1em 0.5em;
   font-weight: bold;
   transition: opacity 0.25s;
 
@@ -265,11 +238,11 @@ const JoinGameButton = styled.button`
     outline: 0;
   }
 `;
-const AltButton = styled.button`
+const PublicGamesButton = styled(Link)`
   display: block;
   appearance: none;
-  background: #000;
-  color: #2cce9f;
+  background: rgb(64, 224, 208);
+  color: #000;
   font-size: 1em;
   border: 0;
   padding: 0.7em 1em;
@@ -277,6 +250,7 @@ const AltButton = styled.button`
   margin: 1em 0;
   font-weight: bold;
   transition: opacity 0.25s;
+  text-decoration: none;
 
   &:hover,
   &:focus,

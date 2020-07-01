@@ -105,6 +105,14 @@ class Game extends React.PureComponent {
                 blackCards: newBlackCards,
               });
             });
+
+          // check if the room is marked as private by the first user to connect
+          const isPrivate = queryString.parse(this.props.location.search)
+            .private;
+
+          if (isPrivate === '1') {
+            this.socket.emit("set game as private");
+          }
         }
       });
 
@@ -209,32 +217,6 @@ class Game extends React.PureComponent {
     this.socket.on("dropped in player drop", ({ players, blackCards }) => {
       this.setState({ players, blackCards });
     });
-
-    this.socket.on("restart game", (_) => {
-      const newPlayers = this.state.players.map((player) => {
-        const newPlayer = { ...player };
-        if (player.whiteCards && player.whiteCards.length) {
-          delete newPlayer.whiteCards;
-        }
-        if (player.blackCards && player.blackCards.length) {
-          delete newPlayer.blackCards;
-        }
-
-        return newPlayer;
-      });
-      this.setState({
-        whiteCards: [],
-        blackCards: [],
-        submittedCards: [],
-        myCards: [],
-        players: newPlayers,
-      });
-      this.socket.emit("restart game", {
-        whiteCards: [],
-        blackCards: [],
-        players: newPlayers,
-      });
-    });
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -266,7 +248,6 @@ class Game extends React.PureComponent {
     this.socket.off("submitted a card");
     this.socket.off("player rejoins");
     this.socket.off("dropped in player drop");
-    this.socket.off("restart game");
   }
 
   state = {
@@ -481,7 +462,10 @@ class Game extends React.PureComponent {
     }
 
     if (
-      this.state.players.find((player) => player.name === this.state.myName && player.id !== this.socket.id)
+      this.state.players.find(
+        (player) =>
+          player.name === this.state.myName && player.id !== this.socket.id
+      )
     ) {
       this.setState({ nameError: "Name taken. Please choose another name." });
       return;
@@ -495,7 +479,8 @@ class Game extends React.PureComponent {
     // users from entering the game without being set up as a player.
     if (!doesPlayerExist) {
       this.setState({
-        nameError: "Looks like you were disconnected. \nPlease refresh the page.",
+        nameError:
+          "Looks like you were disconnected. \nPlease refresh the page.",
       });
       return;
     }

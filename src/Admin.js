@@ -21,6 +21,8 @@ const Admin = () => {
     return check ? cards.length : 1;
   };
 
+  console.table(data);
+
   return (
     <Wrapper>
       <Title>Active Rooms</Title>
@@ -33,6 +35,7 @@ const Admin = () => {
             <th>Submitted Cards</th>
             <th>Past Players</th>
             <th>Current Players</th>
+            <th>Is Private</th>
           </tr>
         </thead>
         <tbody>
@@ -46,75 +49,88 @@ const Admin = () => {
                   blackCards,
                   playersThatLeft,
                   submittedCards,
+                  isPrivate,
                 },
               ]) => (
-                <tr style={{ opacity: players.length > 0 ? "1" : ".5" }}>
+                <tr key={roomName} style={{ opacity: players.length > 0 ? "1" : ".5" }}>
                   <td>
-                    <LinkElement
-                      to={`/g/${roomName}`}
-                      target="_blank"
-                    >
+                    <LinkElement to={`/g/${roomName}`} target="_blank">
                       {roomName}
                     </LinkElement>
                   </td>
                   <td>
-                    {whiteCards.length > 0 &&
-                      whiteCards
-                        .slice(0, getSlice("white", whiteCards))
-                        .map((whiteCard, index) => (
-                          <tr>
-                            <td>
-                              {whiteCard.text ? whiteCard.text : whiteCard}{" "}
-                              {index === 0 && (
-                                <button
-                                  onClick={() =>
-                                    setToggleWhiteCards((bool) => !bool)
-                                  }
-                                >
-                                  {toggleWhiteCards ? "-" : "+"}
-                                </button>
-                              )}
-                            </td>
-                          </tr>
-                        ))}
+                    <SimpleTable>
+                      <tbody>
+                        {whiteCards.length > 0 &&
+                          whiteCards
+                            .slice(0, getSlice("white", whiteCards))
+                            .map((whiteCard, index) => (
+                              <tr key={whiteCard.text || whiteCard}>
+                                <td>
+                                  {whiteCard.text ? whiteCard.text : whiteCard}{" "}
+                                  {index === 0 && (
+                                    <button
+                                      onClick={() =>
+                                        setToggleWhiteCards((bool) => !bool)
+                                      }
+                                    >
+                                      {toggleWhiteCards ? "-" : "+"}
+                                    </button>
+                                  )}
+                                </td>
+                              </tr>
+                            ))}
+                      </tbody>
+                    </SimpleTable>
                   </td>
                   <td>
-                    {blackCards.length > 0 &&
-                      blackCards
-                        .slice(0, getSlice("black", blackCards))
-                        .map((blackCard, index) => (
-                          <tr>
-                            <td>
-                              {blackCard.text ? blackCard.text : blackCard}{" "}
-                              {index === 0 && (
-                                <button
-                                  onClick={() =>
-                                    setToggleBlackCards((bool) => !bool)
-                                  }
-                                >
-                                  {toggleBlackCards ? "-" : "+"}
-                                </button>
-                              )}
-                            </td>
-                          </tr>
-                        ))}
+                    <SimpleTable>
+                      <tbody>
+                        {blackCards.length > 0 &&
+                          blackCards
+                            .slice(0, getSlice("black", blackCards))
+                            .map((blackCard, index) => (
+                              <tr key={blackCard.text || blackCard}>
+                                <td>
+                                  {blackCard.text ? blackCard.text : blackCard}{" "}
+                                  {index === 0 && (
+                                    <button
+                                      onClick={() =>
+                                        setToggleBlackCards((bool) => !bool)
+                                      }
+                                    >
+                                      {toggleBlackCards ? "-" : "+"}
+                                    </button>
+                                  )}
+                                </td>
+                              </tr>
+                            ))}
+                      </tbody>
+                    </SimpleTable>
                   </td>
                   <td>
-                    {submittedCards.length > 0 &&
-                      submittedCards.map((submittedCard) => (
-                        <tr>
-                          <td>{submittedCard.text}</td>
-                        </tr>
-                      ))}
+                    <SimpleTable>
+                      <tbody>
+                        {submittedCards.length > 0 &&
+                          submittedCards.map((submittedCard) => (
+                            <tr key={submittedCard.text}>
+                              <td>{submittedCard.text}</td>
+                            </tr>
+                          ))}
+                      </tbody>
+                    </SimpleTable>
                   </td>
                   <td>
                     {playersThatLeft.length > 0 &&
-                      playersThatLeft.map((player) => <p>{player.name}</p>)}
+                      playersThatLeft.map((player) => (
+                        <p key={player.name}>{player.name}</p>
+                      ))}
                   </td>
                   <td>
                     {players.length > 0 &&
                       players.map((player) => (
                         <LinkElement
+                          key={player.id}
                           to={`/player-info?roomName=${roomName}&id=${player.id}`}
                           target="_blank"
                         >
@@ -122,6 +138,7 @@ const Admin = () => {
                         </LinkElement>
                       ))}
                   </td>
+                  <td>{isPrivate ? "true" : "false"}</td>
                 </tr>
               )
             )}
@@ -130,6 +147,10 @@ const Admin = () => {
     </Wrapper>
   );
 };
+
+const SimpleTable = styled.table`
+  border-collapse: collapse;
+`;
 
 const Table = styled.table`
   width: 100%;
