@@ -1,20 +1,44 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { Helmet } from "react-helmet";
+import axios from "axios";
+import { SERVER_URL } from "./helpers";
 import styled, { createGlobalStyle } from "styled-components";
 
-function handleCreateGame({ history, deck }) {
+function handleCreateGame({ history, deck, setErrorMsg, setLoading }) {
+  setLoading(true);
+  createRandomRoom({ history, deck, setErrorMsg, setLoading });
+}
+
+function createRandomRoom({ history, deck, setErrorMsg, setLoading }) {
   const random = (
     Math.random().toString(36).substring(2, 15) +
     Math.random().toString(36).substring(2, 15)
   ).substr(0, 5);
-  history.push(`/g/${random}?deck=${deck}`);
+
+  // check server to make sure random room doesn't already exist
+  axios
+    .post(`${SERVER_URL}/api/checkAvailableRooms`, { roomName: random })
+    .then((res) => {
+      setLoading(false);
+      if (!res.data) {
+        history.push(`/g/${random}?deck=${deck}`);
+      } else {
+        createRandomRoom({ history, deck, setErrorMsg, setLoading });
+      }
+    })
+    .catch((err) => {
+      setErrorMsg("There was an error on the server. Please try again.");
+      console.error(err);
+    });
 }
 
 const Landing = ({ title }) => {
   const history = useHistory();
   const joinGameInputRef = useRef(null);
   const [startGame, setStartGame] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
+  const [loading, setLoading] = useState(false);
   return (
     <LandingWrapper>
       <GlobalStyle />
@@ -50,19 +74,32 @@ const Landing = ({ title }) => {
           <Flex>
             <StartGameButtonSFW
               onClick={() =>
-                handleCreateGame({ history, deck: "safe-for-work" })
+                handleCreateGame({
+                  history,
+                  deck: "safe-for-work",
+                  setErrorMsg,
+                  setLoading,
+                })
               }
+              disabled={loading}
             >
               Safe for Work
             </StartGameButtonSFW>
             <StartGameButton
               onClick={() =>
-                handleCreateGame({ history, deck: "not-safe-for-work" })
+                handleCreateGame({
+                  history,
+                  deck: "not-safe-for-work",
+                  setErrorMsg,
+                  setLoading,
+                })
               }
+              disabled={loading}
             >
               Not Safe for Work
             </StartGameButton>
           </Flex>
+          {errorMsg && <ErrorText>{errorMsg}</ErrorText>}
         </>
       ) : (
         <Button onClick={() => setStartGame(true)}>Create Game</Button>
@@ -88,7 +125,7 @@ const Flex = styled.div`
 `;
 const StartTitle = styled.h2`
   color: #fff;
-  margin: .5em 0 0;
+  margin: 0.5em 0 0;
   font-weight: normal;
 `;
 const LandingWrapper = styled.div`
@@ -137,6 +174,11 @@ const HeadingText = styled.span`
   }
 `;
 
+const ErrorText = styled.p`
+  color: red;
+  font-size: 0.8rem;
+`;
+
 const Button = styled.button`
   display: block;
   appearance: none;
@@ -160,13 +202,13 @@ const Button = styled.button`
 const StartGameButton = styled.button`
   display: block;
   appearance: none;
-  background: rgb(255,0,128);
+  background: rgb(255, 0, 128);
   color: #000;
   font-size: 1em;
   border: 0;
   padding: 0.7em 1em;
   border-radius: 8px;
-  margin: 1em .5em;
+  margin: 1em 0.5em;
   font-weight: bold;
   transition: opacity 0.25s;
 
@@ -180,13 +222,13 @@ const StartGameButton = styled.button`
 const StartGameButtonSFW = styled.button`
   display: block;
   appearance: none;
-  background: rgb(64,224,208);
+  background: rgb(64, 224, 208);
   color: #000;
   font-size: 1em;
   border: 0;
   padding: 0.7em 1em;
   border-radius: 8px;
-  margin: 1em .5em;
+  margin: 1em 0.5em;
   font-weight: bold;
   transition: opacity 0.25s;
 
