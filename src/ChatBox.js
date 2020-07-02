@@ -256,7 +256,7 @@ const Wrapper = styled.div`
   transform: translateX(100%) translateZ(0);
   transition: transform 0.4s, z-index 0s 0.4s;
   overflow: hidden;
-  z-index: 1;
+  z-index: 999;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 `;
 
