@@ -11,6 +11,23 @@ function handleCreateGame({ history, deck, setError, setLoading, isPrivate }) {
   createRandomRoom({ history, deck, setError, setLoading, isPrivate });
 }
 
+function getQueries({deck, isPrivate}) {
+  let queryString = '';
+
+  if (deck === 'not-safe-for-work') {
+    queryString += `?deck=${deck}`;
+  }
+  if (isPrivate) {
+    if (deck === 'safe-for-work') {
+      queryString += '?private=1'
+    } else if (deck === 'not-safe-for-work') {
+      queryString += '&private=1';
+    }
+  }
+
+  return queryString;
+}
+
 function createRandomRoom({ history, deck, setError, setLoading, isPrivate }) {
   const random = (
     Math.random().toString(36).substring(2, 15) +
@@ -25,7 +42,7 @@ function createRandomRoom({ history, deck, setError, setLoading, isPrivate }) {
       setError("");
       if (!res.data) {
         history.push(
-          `/g/${random}${deck === 'not-safe-for-work' ? `?deck=${deck}` : ''}${isPrivate ? "&private=1" : ""}`
+          `/g/${random}${getQueries({deck, isPrivate})}`
         );
       } else {
         createRandomRoom({ history, deck, setError, setLoading, isPrivate });
