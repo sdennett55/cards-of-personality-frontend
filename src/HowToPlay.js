@@ -5,7 +5,7 @@ const HowToPlay = ({ setIsVisible }) => {
   return (
     <Wrapper>
       <Title>How To Play</Title>
-      <Note>Note: This game assumes you have friends on audio/video chat.</Note>
+      <Note>Note: This game works best with friends on audio/video chat.</Note>
       <TLDR>
         <TLDRText>TL;DR:</TLDRText> Drag white cards to bottom bar. Tapping
         bottom bar advances screens.
