@@ -82,7 +82,7 @@ const Landing = ({ title }) => {
           })
         }
       >
-        <JoinGameLabel htmlFor="joingame">ENTER GAME CODE</JoinGameLabel>
+        <JoinGameLabel htmlFor="joingame">GOT THE GAME CODE?</JoinGameLabel>
         <JoinGameInput
           ref={joinGameInputRef}
           id="joingame"
@@ -285,9 +285,12 @@ const OrText = styled.span`
 const JoinGameInput = styled.input`
   appearance: none;
   border-radius: 8px;
-  padding: 0.5em 0.5em;
+  padding: 0.35em 0.25em;
   border: 2px solid transparent;
   text-align: center;
+  transition: border-color .25s;
+  max-width: 120px;
+  font-size: 1em;
 
   &:focus {
     outline: 0;
