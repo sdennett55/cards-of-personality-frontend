@@ -2,8 +2,11 @@ import React, { useState, useEffect, useRef } from "react";
 import { SendIcon, BackIcon } from "./icons";
 import styled from "styled-components";
 
-function handleSubmit({ e, inputRef, socket, myName }) {
+function handleSubmit({ e, inputRef, socket, myName, setMessages }) {
   e.preventDefault();
+
+  const msg = inputRef.current.value;
+  setMessages((oldMessages) => [...oldMessages, { msg, from: myName }]);
 
   socket.emit("sent message to chat", {
     msg: inputRef.current.value,
@@ -46,19 +49,21 @@ const ChatBox = ({ open, setOpen, socket, myName, setUnreadCount }) => {
     if (socket) {
       socket.on("receive message from chat", function ({ msg, from }) {
         setMessages((oldMessages) => [...oldMessages, { msg, from }]);
-        // @todo: if the latest message is not from from: myName
-        // add to unread message count
-      });
 
+        setUnreadCount((count) => count + 1);
+      });
     }
   }, [socket]);
 
   useEffect(() => {
     if (open) {
       inputRef.current.focus();
-      // setUnreadCount(0);
     }
   }, [open, inputRef]);
+
+  useEffect(() => {
+    setUnreadCount(0);
+  }, [open]);
 
   useEffect(() => {
     const xH = scrollRef.current.scrollHeight;
@@ -106,7 +111,11 @@ const ChatBox = ({ open, setOpen, socket, myName, setUnreadCount }) => {
             ))}
         </MessageList>
       </MessageGroup>
-      <Form onSubmit={(e) => handleSubmit({ e, inputRef, socket, myName })}>
+      <Form
+        onSubmit={(e) =>
+          handleSubmit({ e, inputRef, socket, myName, setMessages })
+        }
+      >
         <Input ref={inputRef} type="text" placeholder="Please be nice!" />
         <SendButton>
           <SendIcon />
