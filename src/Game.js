@@ -21,7 +21,6 @@ import io from "socket.io-client";
 import axios from "axios";
 import queryString from "query-string";
 import { CLIENT_URL, SERVER_URL } from "./helpers";
-import { CopyIcon } from "./icons";
 import "./Game.css";
 import "react-toastify/dist/ReactToastify.min.css";
 
@@ -110,7 +109,7 @@ class Game extends React.PureComponent {
           const isPrivate = queryString.parse(this.props.location.search)
             .private;
 
-          if (isPrivate === '1') {
+          if (isPrivate === "1") {
             this.socket.emit("set game as private");
           }
         }

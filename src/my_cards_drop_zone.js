@@ -7,10 +7,11 @@ import { BackIcon } from "./icons";
 import DraggableCard from "./draggable_card";
 import BlankCard from "./blank_card";
 import CardWrap from "./card_wrap";
+import ChatButton from "./ChatButton";
 import { MAX_PLAYERS } from "./data";
 
 const MyCards = styled.button`
-  width: 100%;
+  width: calc(100% - 50px);
   height: 50px;
   line-height: 50px;
   background-color: #000;
@@ -26,7 +27,7 @@ const MyCards = styled.button`
   }
 
   @media (min-width: 1600px) {
-    border-radius: 8px 8px 0 0;
+    border-radius: 8px 0 0 0;
   }
 `;
 
@@ -252,13 +253,18 @@ const MyCardsDropZone = ({
 
   return (
     <>
-      <MyCards
-        onClick={() => setOpen((isOpen) => !isOpen)}
-        ref={drop}
-        style={{ background: getMyNameCardsStyle({ myCards, userIsDragging }) }}
-      >
-        {getMyNameCards({ myCards, userIsDragging, myName })}
-      </MyCards>
+      <div style={{ display: "flex" }}>
+        <MyCards
+          onClick={() => setOpen((isOpen) => !isOpen)}
+          ref={drop}
+          style={{
+            background: getMyNameCardsStyle({ myCards, userIsDragging }),
+          }}
+        >
+          {getMyNameCards({ myCards, userIsDragging, myName })}
+        </MyCards>
+        <ChatButton socket={socket} myName={myName} />
+      </div>
       <div className={cx("MyCardsContainer", { "is-open": isOpen })}>
         <Wrapper>
           <MenuTitle>{`${myName}'s Cards`}</MenuTitle>
