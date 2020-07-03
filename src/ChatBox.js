@@ -146,10 +146,12 @@ const BackButton = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
+  transition: background .25s;
 
   &:hover,
   &:focus {
     background: rgb(64, 224, 208);
+    outline: 0;
   }
 `;
 
@@ -250,6 +252,13 @@ const SendButton = styled.button`
   align-items: center;
   border-top: 2px solid transparent;
   border-right: 2px solid transparent;
+  transition: background .25s;
+
+  &:hover,
+  &:focus {
+    outline: 0;
+    background: rgb(64, 224, 208);
+  }
 `;
 
 const Wrapper = styled.div`
