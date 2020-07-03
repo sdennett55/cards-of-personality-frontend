@@ -211,7 +211,7 @@ const ChatBubble = styled.div`
   border-radius: 12px;
   padding: 0.5em;
   text-align: left;
-  word-break: break-all;
+  word-break: break-word;
 `;
 
 const Form = styled.form`
