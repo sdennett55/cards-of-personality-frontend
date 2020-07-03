@@ -1,14 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { ChatIcon } from "./icons";
-import ChatBox from "./ChatBox";
 import styled from "styled-components";
 
 const pageTitle = document.title;
 
-const ChatButton = ({socket, myName}) => {
-  const [open, setOpen] = useState(false);
-  const [unreadCount, setUnreadCount] = useState(0);
-
+const ChatButton = ({socket, myName, chatOpen, setChatOpen, unreadCount, setUnreadCount}) => {
   useEffect(() => {
     if (unreadCount) {
       document.title = `(${unreadCount}) ${pageTitle}`;
@@ -18,11 +14,10 @@ const ChatButton = ({socket, myName}) => {
   }, [unreadCount])
   return (
     <>
-      <ChatIconWrap onClick={() => setOpen(true)}>
+      <ChatIconWrap onClick={() => setChatOpen(true)}>
         <ChatIcon />
         {unreadCount > 0 && <Notification>{unreadCount}</Notification>}
       </ChatIconWrap>
-      <ChatBox open={open} setOpen={setOpen} socket={socket} myName={myName} setUnreadCount={setUnreadCount} />
     </>
   );
 };

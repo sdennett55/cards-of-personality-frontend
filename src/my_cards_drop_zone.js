@@ -162,6 +162,13 @@ const ButtonWrapper = styled.div`
   transform: translateZ(0);
 `;
 
+const DropZoneWrap = styled.div`
+  position: sticky;
+  bottom: 0;
+  left: 0;
+  display: flex;
+`;
+
 function getBlankCards(myCards) {
   const length = 7 - myCards.length;
   const arr = Array.from({ length }, (_, i) => i);
@@ -229,6 +236,8 @@ const MyCardsDropZone = ({
   userIsDragging,
   submitACard,
   blackCards,
+  setChatOpen,
+  unreadCount,
 }) => {
   const [isOpen, setOpen] = useState(false);
   const [isSubmittedTableOpen, setSubmittedTableOpen] = useState(false);
@@ -253,7 +262,7 @@ const MyCardsDropZone = ({
 
   return (
     <>
-      <div style={{ display: "flex" }}>
+      <DropZoneWrap>
         <MyCards
           onClick={() => setOpen((isOpen) => !isOpen)}
           ref={drop}
@@ -263,8 +272,8 @@ const MyCardsDropZone = ({
         >
           {getMyNameCards({ myCards, userIsDragging, myName })}
         </MyCards>
-        <ChatButton socket={socket} myName={myName} />
-      </div>
+        <ChatButton socket={socket} myName={myName} setChatOpen={setChatOpen} unreadCount={unreadCount} />
+      </DropZoneWrap>
       <div className={cx("MyCardsContainer", { "is-open": isOpen })}>
         <Wrapper>
           <MenuTitle>{`${myName}'s Cards`}</MenuTitle>
@@ -280,7 +289,7 @@ const MyCardsDropZone = ({
                 color="#fff"
               />
               {myCards.map((card) => (
-                <CardWrap key={card.text} width="150px" margin=".5em">
+                <CardWrap key={card.text}>
                   <DraggableCard
                     isBroadcastingDrag={false}
                     flippedByDefault
@@ -333,7 +342,7 @@ const MyCardsDropZone = ({
                 color="#fff"
               />
               {submittedCards.map((card) => (
-                <CardWrap key={card.text} width="150px" margin=".5em">
+                <CardWrap key={card.text}>
                   <DraggableCard
                     isFlipBroadcasted
                     key={card.text}

@@ -27,17 +27,15 @@ const Wrapper = styled.div`
 `;
 const BlankCard = styled.div`
   position: relative;
-  width: calc(20% - 1em);
-  max-width: 25vh;
+  width: calc(25% - 1em);
   margin: .5em;
 
-  /*
-    some devices with small viewport height like Moto G2
-    need to make the player slots smaller.
-    they can take up full space at this height
-  */
-  @media (min-height: 556px) {
-    width: calc(25% - 1em);
+  @media (max-width: 500px) and (orientation: portrait) {
+    max-width: calc(25vh - 1em - 50px);
+  }
+
+  @media (orientation: landscape) {
+    max-width: calc(50vh - 50px - 4em);
   }
 `;
 

@@ -21,6 +21,7 @@ import io from "socket.io-client";
 import axios from "axios";
 import queryString from "query-string";
 import { CLIENT_URL, SERVER_URL } from "./helpers";
+import ChatBox from "./ChatBox";
 import "./Game.css";
 import "react-toastify/dist/ReactToastify.min.css";
 
@@ -263,6 +264,8 @@ class Game extends React.PureComponent {
     nameError: "",
     winningPlayerIndex: -1,
     socketConnected: false,
+    chatOpen: false,
+    unreadCount: 0,
   };
 
   blackCardRef = React.createRef();
@@ -562,6 +565,14 @@ class Game extends React.PureComponent {
 
   inviteInputRef = React.createRef();
 
+  setChatOpen = bool => {
+    this.setState({chatOpen: bool});
+  }
+
+  setUnreadCount = count => {
+    this.setState({unreadCount: count});
+  }
+
   render() {
     return (
       <div className="Game">
@@ -664,6 +675,8 @@ class Game extends React.PureComponent {
               submittedCards={this.state.submittedCards}
               myCards={this.state.myCards}
               myName={this.state.myName}
+              setChatOpen={this.setChatOpen}
+              unreadCount={this.state.unreadCount}
             />
           </Table>
         </DndProvider>
@@ -675,6 +688,7 @@ class Game extends React.PureComponent {
           transition={Slide}
           pauseOnFocusLoss={false}
         />
+        <ChatBox chatOpen={this.state.chatOpen} setChatOpen={this.setChatOpen} socket={this.socket} myName={this.state.myName} setUnreadCount={this.setUnreadCount} />
       </div>
     );
   }
@@ -708,8 +722,13 @@ const Table = styled.div`
 const Piles = styled.div`
   display: flex;
   width: calc(40% - 0.25em);
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
+
+  > div:first-child {
+    margin-right: 1em;
+  }
+
   @media (min-width: 1600px) {
     margin-right: 2em;
   }
@@ -724,7 +743,7 @@ const PlayerDecks = styled.div`
   display: flex;
   flex-wrap: wrap;
   width: calc(60% - 0.25em);
-  justify-content: flex-start;
+  justify-content: center;
   align-content: center;
   margin-right: -0.5em;
   font-size: 0.7rem;

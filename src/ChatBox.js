@@ -34,17 +34,17 @@ function getBubbleWrapStyles() {
   };
 }
 
-const handleClick = ({ e, wrapperRef, setOpen }) => {
+const handleClick = ({ e, wrapperRef, setChatOpen }) => {
   if (wrapperRef.current.contains(e.target)) {
     // inside click
     return;
   }
-  setOpen(false);
+  setChatOpen(false);
   // outside click
   // ... do whatever on click outside here ...
 };
 
-const ChatBox = ({ open, setOpen, socket, myName, setUnreadCount }) => {
+const ChatBox = ({ chatOpen, setChatOpen, socket, myName, setUnreadCount }) => {
   const inputRef = useRef(null);
   const wrapperRef = useRef(null);
   const scrollRef = useRef(null);
@@ -60,16 +60,16 @@ const ChatBox = ({ open, setOpen, socket, myName, setUnreadCount }) => {
   }, [socket]);
 
   useEffect(() => {
-    if (open) {
+    if (chatOpen) {
       inputRef.current.focus();
     }
-  }, [open, inputRef]);
+  }, [chatOpen, inputRef]);
 
   useEffect(() => {
-    if (open && document && !document.hidden) {
+    if (chatOpen && document && !document.hidden) {
       setUnreadCount(0);
     }
-  }, [open, messages]);
+  }, [chatOpen, messages]);
 
   useEffect(() => {
     const xH = scrollRef.current.scrollHeight;
@@ -79,23 +79,23 @@ const ChatBox = ({ open, setOpen, socket, myName, setUnreadCount }) => {
   useEffect(() => {
     // add when mounted
     document.addEventListener("mousedown", (e) =>
-      handleClick({ e, wrapperRef, setOpen })
+      handleClick({ e, wrapperRef, setChatOpen })
     );
     // return function to be called when unmounted
     return () => {
       document.removeEventListener("mousedown", (e) =>
-        handleClick({ e, wrapperRef, setOpen })
+        handleClick({ e, wrapperRef, setChatOpen })
       );
     };
-  }, [setOpen]);
+  }, [setChatOpen]);
 
   return (
     <Wrapper
       ref={wrapperRef}
-      style={{ transform: open ? "translateX(0) translateZ(0)" : null }}
+      style={{ transform: chatOpen ? "translateX(0) translateZ(0)" : null }}
     >
       <Header>
-        <BackButton onClick={() => setOpen(false)}>
+        <BackButton onClick={() => setChatOpen(false)}>
           <BackIcon />
         </BackButton>
         <Title>Party Chat</Title>
@@ -275,7 +275,7 @@ const Wrapper = styled.div`
   position: absolute;
   top: 0;
   right: 0;
-  width: 100%;
+  width: 80%;
   max-width: 400px;
   height: 100%;
   transform: translateX(100%) translateZ(0);

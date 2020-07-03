@@ -18,14 +18,30 @@ const Wrap = styled.div`
   font-size: 13px;
 `;
 
-const CardWrap = React.memo(({ children, innerRef, width, isPickUpPile, ...rest }) => {
+const PickUpPileWrapper = styled.div`
+  position: relative;  
+  width: calc(50% - .5em);
+
+  @media (max-width: 500px) and (orientation: portrait) {
+    max-width: 25vh;
+  }
+`;
+
+const DefaultWrapper = styled.div`
+  position: relative;  
+  width: 150px;
+  margin: .5em;
+`;
+
+const CardWrap = React.memo(({ children, innerRef, isPickUpPile }) => {
   const WrappingElement = isPickUpPile ? PickUpPileWrap : Wrap;
+  const Wrapper = isPickUpPile ? PickUpPileWrapper : DefaultWrapper;
   return (
-    <div style={{ width: width || 'calc(50% - .5em)', position: 'relative', ...rest }}>
+    <Wrapper>
       <WrappingElement ref={innerRef || null}>
         {children}
       </WrappingElement>
-    </div>
+    </Wrapper>
   );
 });
 
