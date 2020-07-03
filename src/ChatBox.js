@@ -139,9 +139,6 @@ const ChatBox = ({ chatOpen, setChatOpen, socket, myName, setUnreadCount }) => {
 const Header = styled.div`
   position: relative;
   background: #fff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   height: 40px;
 `;
 
@@ -222,14 +219,14 @@ const ChatBubble = styled.div`
 const Form = styled.form`
   position: sticky;
   bottom: 0;
-  display: flex;
-  align-items: center;
   width: 100%;
   background: #e8e8e8;
   height: 50px;
 `;
 
 const Input = styled.input`
+  display: inline-block;
+  vertical-align: top;
   appearance: none;
   width: calc(100% - 50px);
   height: 50px;
@@ -260,9 +257,7 @@ const SendButton = styled.button`
   background: #fff;
   border: 0;
   border-radius: 0 8px 0 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  display: inline-block;
   border-top: 2px solid transparent;
   border-right: 2px solid transparent;
   transition: background .25s;
