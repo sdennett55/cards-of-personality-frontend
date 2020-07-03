@@ -11,7 +11,7 @@ const ChatButton = ({socket, myName}) => {
 
   useEffect(() => {
     if (unreadCount) {
-      document.title = `${pageTitle} (${unreadCount})`;
+      document.title = `(${unreadCount}) ${pageTitle}`;
     } else {
       document.title = pageTitle;
     }
