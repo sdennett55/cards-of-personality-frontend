@@ -45,6 +45,17 @@ const handleClick = ({ e, wrapperRef, setChatOpen }) => {
   // ... do whatever on click outside here ...
 };
 
+const getOverlayStyles = ({ chatOpen }) => {
+  if (chatOpen) {
+    return {
+      pointerEvents: "auto",
+      opacity: "1",
+    };
+  }
+
+  return null;
+};
+
 const ChatBox = ({ chatOpen, setChatOpen, socket, myName, setUnreadCount }) => {
   const inputRef = useRef(null);
   const wrapperRef = useRef(null);
@@ -91,50 +102,68 @@ const ChatBox = ({ chatOpen, setChatOpen, socket, myName, setUnreadCount }) => {
   }, [setChatOpen]);
 
   return (
-    <Swipeable
-      innerRef={el => wrapperRef.current = el}
-      onSwipedRight={(eventData) => { setChatOpen(false) }}
-    >
-      <Wrapper
-        style={{ transform: chatOpen ? "translateX(0) translateZ(0)" : null }}
+    <>
+      <Overlay style={getOverlayStyles({ chatOpen })} />
+      <Swipeable
+        innerRef={(el) => (wrapperRef.current = el)}
+        onSwipedRight={(eventData) => {
+          setChatOpen(false);
+        }}
       >
-        <Header>
-          <BackButton onClick={() => setChatOpen(false)}>
-            <BackIcon />
-          </BackButton>
-          <Title>Party Chat</Title>
-        </Header>
-        <MessageGroup ref={scrollRef}>
-          <MessageList>
-            {messages &&
-              messages.length > 0 &&
-              messages.map(({ msg, from }, index) => (
-                <ChatBubbleWrap
-                  key={index}
-                  style={from === myName ? getBubbleWrapStyles() : null}
-                >
-                  <PlayerName>{from}</PlayerName>
-                  <ChatBubble style={from === myName ? getMyStyles() : null}>
-                    {msg}
-                  </ChatBubble>
-                </ChatBubbleWrap>
-              ))}
-          </MessageList>
-        </MessageGroup>
-        <Form
-          onSubmit={(e) =>
-            handleSubmit({ e, inputRef, socket, myName, setMessages })
-          }
+        <Wrapper
+          style={{ transform: chatOpen ? "translateX(0) translateZ(0)" : null }}
         >
-          <Input ref={inputRef} type="text" placeholder="Please be nice!" />
-          <SendButton>
-            <SendIcon />
-          </SendButton>
-        </Form>
-      </Wrapper>
-    </Swipeable>
+          <Header>
+            <BackButton onClick={() => setChatOpen(false)}>
+              <BackIcon />
+            </BackButton>
+            <Title>Party Chat</Title>
+          </Header>
+          <MessageGroup ref={scrollRef}>
+            <MessageList>
+              {messages &&
+                messages.length > 0 &&
+                messages.map(({ msg, from }, index) => (
+                  <ChatBubbleWrap
+                    key={index}
+                    style={from === myName ? getBubbleWrapStyles() : null}
+                  >
+                    <PlayerName>{from}</PlayerName>
+                    <ChatBubble style={from === myName ? getMyStyles() : null}>
+                      {msg}
+                    </ChatBubble>
+                  </ChatBubbleWrap>
+                ))}
+            </MessageList>
+          </MessageGroup>
+          <Form
+            onSubmit={(e) =>
+              handleSubmit({ e, inputRef, socket, myName, setMessages })
+            }
+          >
+            <Input ref={inputRef} type="text" placeholder="Please be nice!" />
+            <SendButton>
+              <SendIcon />
+            </SendButton>
+          </Form>
+        </Wrapper>
+      </Swipeable>
+    </>
   );
 };
+
+const Overlay = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.9);
+  z-index: 999;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.25s;
+`;
 
 const Header = styled.div`
   position: relative;
@@ -154,7 +183,7 @@ const BackButton = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: background .25s;
+  transition: background 0.25s;
 
   &:hover,
   &:focus {
@@ -249,7 +278,7 @@ const SendButton = styled.button`
   display: inline-block;
   border-top: 2px solid transparent;
   border-right: 2px solid transparent;
-  transition: background .25s;
+  transition: background 0.25s;
 
   &:hover,
   &:focus {
