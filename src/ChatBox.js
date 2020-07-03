@@ -217,8 +217,6 @@ const ChatBubble = styled.div`
 `;
 
 const Form = styled.form`
-  position: sticky;
-  bottom: 0;
   width: 100%;
   background: #e8e8e8;
   height: 50px;
