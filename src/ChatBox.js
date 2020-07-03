@@ -6,6 +6,11 @@ function handleSubmit({ e, inputRef, socket, myName, setMessages }) {
   e.preventDefault();
 
   const msg = inputRef.current.value;
+  
+  if (!msg.trim()) {
+    return;
+  }
+
   setMessages((oldMessages) => [...oldMessages, { msg, from: myName }]);
 
   socket.emit("sent message to chat", {
