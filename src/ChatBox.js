@@ -233,6 +233,7 @@ const Input = styled.input`
   border: 0;
   border-top: 2px solid transparent;
   border-left: 2px solid transparent;
+  font-size: 1em;
 
   &:hover,
   &:focus {
