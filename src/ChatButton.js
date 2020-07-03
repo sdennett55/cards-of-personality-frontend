@@ -1,11 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ChatIcon } from "./icons";
 import ChatBox from "./ChatBox";
 import styled from "styled-components";
 
+const pageTitle = document.title;
+
 const ChatButton = ({socket, myName}) => {
   const [open, setOpen] = useState(false);
   const [unreadCount, setUnreadCount] = useState(0);
+
+  useEffect(() => {
+    if (unreadCount) {
+      document.title = `${pageTitle} (${unreadCount})`;
+    } else {
+      document.title = pageTitle;
+    }
+  }, [unreadCount])
   return (
     <>
       <ChatIconWrap onClick={() => setOpen(true)}>
