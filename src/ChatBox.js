@@ -104,8 +104,8 @@ const ChatBox = ({ chatOpen, setChatOpen, socket, myName, setUnreadCount }) => {
           </BackButton>
           <Title>Party Chat</Title>
         </Header>
-        <MessageGroup>
-          <MessageList ref={scrollRef}>
+        <MessageGroup ref={scrollRef}>
+          <MessageList>
             {messages &&
               messages.length > 0 &&
               messages.map(({ msg, from }, index) => (
@@ -171,22 +171,19 @@ const Title = styled.h3`
 const MessageList = styled.ul`
   list-style: none;
   margin: 0;
-  margin-top: auto;
   padding: 0;
   text-align: right;
   display: flex;
   flex-direction: column;
-  ${"" /* transform: rotate(180deg);
-  direction: rtl; */}
-  max-height: calc(100vh - 90px);
-  height: 100vh;
   padding: 1em;
   flex-grow: 1;
-  background: #e5e5e5;
-  overflow: auto;
 `;
 
-const MessageGroup = styled.div``;
+const MessageGroup = styled.div`
+  position: relative;
+  overflow: auto;
+  margin-top: auto;
+`;
 
 const ChatBubbleWrap = styled.li`
   display: inline-flex;
@@ -194,12 +191,6 @@ const ChatBubbleWrap = styled.li`
   align-items: flex-start;
   flex-direction: column;
   margin: 0.5em 0;
-  ${"" /* transform: rotate(180deg);
-  direction: ltr; */}
-
-  &:first-child {
-    margin-top: auto;
-  }
 `;
 
 const PlayerName = styled.p`
@@ -268,6 +259,7 @@ const SendButton = styled.button`
 `;
 
 const Wrapper = styled.div`
+  background: #e5e5e5;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
