@@ -6,7 +6,6 @@ function handleSubmit({ e, inputRef, socket, myName, setMessages }) {
   e.preventDefault();
 
   const msg = inputRef.current.value;
-  
   if (!msg.trim()) {
     return;
   }
@@ -67,8 +66,10 @@ const ChatBox = ({ open, setOpen, socket, myName, setUnreadCount }) => {
   }, [open, inputRef]);
 
   useEffect(() => {
-    setUnreadCount(0);
-  }, [open]);
+    if (open && document && !document.hidden) {
+      setUnreadCount(0);
+    }
+  }, [open, messages]);
 
   useEffect(() => {
     const xH = scrollRef.current.scrollHeight;
