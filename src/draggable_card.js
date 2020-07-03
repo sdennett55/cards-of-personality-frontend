@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Logo from './logo';
 import styled from 'styled-components';
+import { LogoIconInCard } from './icons';
 import { useDrag } from 'react-dnd';
 
 const CardElement = styled.div`
@@ -14,7 +15,7 @@ const CardElement = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 1em;
+  padding: 1.25em;
   overflow: hidden;
   user-select: none;
   @media screen and (min-width: 1100px) {
@@ -155,10 +156,10 @@ const DraggableCard = ({ bgColor, isBroadcastingDrag = true, isFlipBroadcasted, 
           return !isFlipped
         });
       }
-    }} ref={drag} style={{ zIndex: (isDragging ? 999 : '0'), ...getTransform(), backgroundColor: bgColor, color }}>
+    }} ref={drag} style={{ zIndex: (isDragging ? 999 : '0'), ...getTransform(), backgroundColor: bgColor, color, justifyContent: isFlipped ? '' : 'flex-start' }}>
 
       {isFlipped ? text : (
-        <Logo />
+        <LogoIconInCard style={{alignSelf: 'flex-end', maxWidth: '200px'}} topTextInverse={type.includes('white')} />
       )}
     </CardElement>
 

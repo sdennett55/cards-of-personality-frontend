@@ -61,7 +61,6 @@ const PublicGames = () => {
 const GlobalStyle = createGlobalStyle`
   body {
     text-align: center;
-    color: #fff;
   }
   button,
   input {
@@ -80,6 +79,7 @@ const Table = styled.table`
   max-width: 600px;
   text-align: left;
   border-collapse: collapse;
+  color: #fff;
 
   thead {
     color: #000;

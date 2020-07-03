@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { SendIcon, BackIcon } from "./icons";
-import {useSwipeable} from "react-swipeable";
+import { Swipeable } from "react-swipeable";
 import styled from "styled-components";
 
 function handleSubmit({ e, inputRef, socket, myName, setMessages }) {
@@ -36,7 +36,7 @@ function getBubbleWrapStyles() {
 }
 
 const handleClick = ({ e, wrapperRef, setChatOpen }) => {
-  if (wrapperRef && wrapperRef.current && wrapperRef.current.contains(e.target)) {
+  if (wrapperRef?.current?.contains(e.target)) {
     // inside click
     return;
   }
@@ -45,20 +45,17 @@ const handleClick = ({ e, wrapperRef, setChatOpen }) => {
   // ... do whatever on click outside here ...
 };
 
-const swipeConfig = {};
-
 const ChatBox = ({ chatOpen, setChatOpen, socket, myName, setUnreadCount }) => {
   const inputRef = useRef(null);
   const wrapperRef = useRef(null);
   const scrollRef = useRef(null);
   const [messages, setMessages] = useState([]);
-  const handlers = useSwipeable({ onSwipedRight: (eventData) => { setChatOpen(false) }, ...swipeConfig })
   useEffect(() => {
     if (socket) {
       socket.on("receive message from chat", function ({ msg, from }) {
         setMessages((oldMessages) => [...oldMessages, { msg, from }]);
 
-        setUnreadCount((count) => count + 1);
+        setUnreadCount(1);
       });
     }
   }, [socket]);
@@ -94,45 +91,48 @@ const ChatBox = ({ chatOpen, setChatOpen, socket, myName, setUnreadCount }) => {
   }, [setChatOpen]);
 
   return (
-    <Wrapper
-      ref={wrapperRef}
-      style={{ transform: chatOpen ? "translateX(0) translateZ(0)" : null }}
-      {...handlers}
+    <Swipeable
+      innerRef={el => wrapperRef.current = el}
+      onSwipedRight={(eventData) => { setChatOpen(false) }}
     >
-      <Header>
-        <BackButton onClick={() => setChatOpen(false)}>
-          <BackIcon />
-        </BackButton>
-        <Title>Party Chat</Title>
-      </Header>
-      <MessageGroup>
-        <MessageList ref={scrollRef}>
-          {messages &&
-            messages.length > 0 &&
-            messages.map(({ msg, from }, index) => (
-              <ChatBubbleWrap
-                key={index}
-                style={from === myName ? getBubbleWrapStyles() : null}
-              >
-                <PlayerName>{from}</PlayerName>
-                <ChatBubble style={from === myName ? getMyStyles() : null}>
-                  {msg}
-                </ChatBubble>
-              </ChatBubbleWrap>
-            ))}
-        </MessageList>
-      </MessageGroup>
-      <Form
-        onSubmit={(e) =>
-          handleSubmit({ e, inputRef, socket, myName, setMessages })
-        }
+      <Wrapper
+        style={{ transform: chatOpen ? "translateX(0) translateZ(0)" : null }}
       >
-        <Input ref={inputRef} type="text" placeholder="Please be nice!" />
-        <SendButton>
-          <SendIcon />
-        </SendButton>
-      </Form>
-    </Wrapper>
+        <Header>
+          <BackButton onClick={() => setChatOpen(false)}>
+            <BackIcon />
+          </BackButton>
+          <Title>Party Chat</Title>
+        </Header>
+        <MessageGroup>
+          <MessageList ref={scrollRef}>
+            {messages &&
+              messages.length > 0 &&
+              messages.map(({ msg, from }, index) => (
+                <ChatBubbleWrap
+                  key={index}
+                  style={from === myName ? getBubbleWrapStyles() : null}
+                >
+                  <PlayerName>{from}</PlayerName>
+                  <ChatBubble style={from === myName ? getMyStyles() : null}>
+                    {msg}
+                  </ChatBubble>
+                </ChatBubbleWrap>
+              ))}
+          </MessageList>
+        </MessageGroup>
+        <Form
+          onSubmit={(e) =>
+            handleSubmit({ e, inputRef, socket, myName, setMessages })
+          }
+        >
+          <Input ref={inputRef} type="text" placeholder="Please be nice!" />
+          <SendButton>
+            <SendIcon />
+          </SendButton>
+        </Form>
+      </Wrapper>
+    </Swipeable>
   );
 };
 

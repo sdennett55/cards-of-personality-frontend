@@ -3,6 +3,7 @@ import { useHistory, Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import axios from "axios";
 import { SERVER_URL } from "./helpers";
+import {LogoIcon} from "./icons";
 import styled, { createGlobalStyle } from "styled-components";
 
 const MIN_ROOM_NAME_CHARS = 2;
@@ -66,10 +67,7 @@ const Landing = ({ title }) => {
         <title>{title}</title>
       </Helmet>
       <Heading>
-        <HeadingText>Cards of</HeadingText>{" "}
-        <Personality>
-          <LetterP>P</LetterP>ersonalit<LetterY>y</LetterY>
-        </Personality>
+        <LogoIcon />
       </Heading>
       <Form
         onSubmit={(e) =>
@@ -139,16 +137,13 @@ const LandingWrapper = styled.div`
   align-items: center;
   min-height: 100%;
   background-color: #000;
+  padding: 2em;
 `;
 const Heading = styled.h1`
+  width: 100%;
   position: relative;
   margin: 0 0 1rem;
   padding: 0 1rem;
-  font-size: 4em;
-
-  @media (min-width: 560px) {
-    font-size: 7em;
-  }
 `;
 const Personality = styled.span`
   background: linear-gradient(

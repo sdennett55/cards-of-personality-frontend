@@ -21,6 +21,7 @@ const Wrap = styled.div`
 const PickUpPileWrapper = styled.div`
   position: relative;  
   width: calc(50% - .5em);
+  max-width: calc(100vh - 50px - 6em);
 
   @media (max-width: 500px) and (orientation: portrait) {
     max-width: 25vh;

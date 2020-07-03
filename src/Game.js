@@ -570,7 +570,12 @@ class Game extends React.PureComponent {
   }
 
   setUnreadCount = count => {
-    this.setState({unreadCount: count});
+    if (count) {
+      this.setState(prevState => ({unreadCount: prevState.unreadCount + 1}));
+      return;
+    }
+
+    this.setState({unreadCount: 0});
   }
 
   render() {
