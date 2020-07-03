@@ -20,6 +20,7 @@
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
+    "react-swipeable": "^5.5.1",
     "react-toastify": "^6.0.6",
     "socket.io-client": "^2.3.0",
     "styled-components": "^5.0.1",

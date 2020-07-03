@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { SendIcon, BackIcon } from "./icons";
+import {useSwipeable} from "react-swipeable";
 import styled from "styled-components";
 
 function handleSubmit({ e, inputRef, socket, myName, setMessages }) {
@@ -35,7 +36,7 @@ function getBubbleWrapStyles() {
 }
 
 const handleClick = ({ e, wrapperRef, setChatOpen }) => {
-  if (wrapperRef.current.contains(e.target)) {
+  if (wrapperRef && wrapperRef.current && wrapperRef.current.contains(e.target)) {
     // inside click
     return;
   }
@@ -44,11 +45,14 @@ const handleClick = ({ e, wrapperRef, setChatOpen }) => {
   // ... do whatever on click outside here ...
 };
 
+const swipeConfig = {};
+
 const ChatBox = ({ chatOpen, setChatOpen, socket, myName, setUnreadCount }) => {
   const inputRef = useRef(null);
   const wrapperRef = useRef(null);
   const scrollRef = useRef(null);
   const [messages, setMessages] = useState([]);
+  const handlers = useSwipeable({ onSwipedRight: (eventData) => { setChatOpen(false) }, ...swipeConfig })
   useEffect(() => {
     if (socket) {
       socket.on("receive message from chat", function ({ msg, from }) {
@@ -93,6 +97,7 @@ const ChatBox = ({ chatOpen, setChatOpen, socket, myName, setUnreadCount }) => {
     <Wrapper
       ref={wrapperRef}
       style={{ transform: chatOpen ? "translateX(0) translateZ(0)" : null }}
+      {...handlers}
     >
       <Header>
         <BackButton onClick={() => setChatOpen(false)}>
