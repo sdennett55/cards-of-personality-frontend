@@ -136,7 +136,7 @@ const ChatBox = ({ chatOpen, setChatOpen, socket, myName, setUnreadCount }) => {
   );
 };
 
-const Header = styled.header`
+const Header = styled.div`
   position: relative;
   background: #fff;
   display: flex;
@@ -226,6 +226,7 @@ const Form = styled.form`
   align-items: center;
   width: 100%;
   background: #e8e8e8;
+  height: 50px;
 `;
 
 const Input = styled.input`
