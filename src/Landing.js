@@ -104,16 +104,19 @@ const Landing = ({ title }) => {
         <OrTextWrap>
           <OrText>OR</OrText>
         </OrTextWrap>
-        <PublicGamesButton
+        <BlueButton
           type="button"
           to="/games"
         >
           Public Games
-        </PublicGamesButton>
+        </BlueButton>
       </Form>
-      <CreateGameButton to="/create-game">
+      <OrangeButton to="/create-game">
         Create Game
-      </CreateGameButton>
+      </OrangeButton>
+      <PinkButton to="/how-to-play">
+        How To Play
+      </PinkButton>
       {/* <AltButton onClick={() => history.push('/create-deck')}>Create Deck</AltButton>
       <AltButton onClick={() => history.push('/edit-deck')}>Edit Deck</AltButton> */}
     </LandingWrapper>
@@ -145,33 +148,6 @@ const Heading = styled.h1`
   margin: 0 0 1rem;
   padding: 0 1rem;
 `;
-const Personality = styled.span`
-  background: linear-gradient(
-    to right,
-    rgb(64, 224, 208),
-    rgb(255, 140, 0),
-    rgb(255, 0, 128)
-  );
-  -webkit-text-fill-color: transparent;
-  -webkit-background-clip: text;
-  letter-spacing: -1.2px;
-  text-shadow: 1px 1px 1xp rgba(0, 0, 0, 0);
-`;
-
-const HeadingText = styled.span`
-  position: absolute;
-  top: -0.05em;
-  left: 2.3em;
-  text-transform: uppercase;
-  font-size: 0.37em;
-  letter-spacing: 0.1em;
-  font-weight: normal;
-  color: #fff;
-
-  @media (min-width: 560px) {
-    left: 2em;
-  }
-`;
 
 const ErrorText = styled.p`
   color: red;
@@ -186,10 +162,10 @@ const GameExistsMessage = styled.p`
   }
 `;
 
-const CreateGameButton = styled(Link)`
+const OrangeButton = styled(Link)`
   display: block;
+  background: rgb(255,140,0);
   appearance: none;
-  background: rgb(255, 0, 128);
   color: #000;
   font-size: 1em;
   border: 0;
@@ -207,6 +183,42 @@ const CreateGameButton = styled(Link)`
     outline: 0;
   }
 `;
+const PinkButton = styled(Link)`
+  appearance: none;
+  background: rgb(255, 0, 128);
+  color: #000;
+  font-size: 1em;
+  border: 0;
+  padding: 0.7em 1em;
+  border-radius: 8px;
+  margin: 1em 0;
+  font-weight: bold;
+  transition: opacity 0.25s;
+  text-decoration: none;
+
+  @media screen and (max-width: 501px) and (orientation: portrait) {
+    position: absolute;
+    top: -6px;
+    left: -76px;
+    width: 250px;
+    transform: rotate(-25deg);
+  }
+
+  @media screen and (max-height: 501px) {
+    position: absolute;
+    top: -6px;
+    left: -76px;
+    width: 250px;
+    transform: rotate(-25deg);
+  }
+
+  &:hover,
+  &:focus,
+  &:disabled {
+    opacity: 0.5;
+    outline: 0;
+  }
+`
 const LetterP = styled.span`
   margin-right: -0.04em;
 `;
@@ -233,7 +245,7 @@ const GreenButton = styled.button`
     outline: 0;
   }
 `;
-const PublicGamesButton = styled(Link)`
+const BlueButton = styled(Link)`
   display: block;
   appearance: none;
   background: rgb(64, 224, 208);

@@ -1,7 +1,8 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-const HowToPlay = ({ setIsVisible }) => {
+const HowToPlay = ({ isPage, setIsVisible }) => {
   return (
     <Wrapper>
       <Title>How To Play</Title>
@@ -40,9 +41,15 @@ const HowToPlay = ({ setIsVisible }) => {
           First player to have 7 black cards in their player slot wins.{" "}
         </li>
       </List>
-      <Button type="button" onClick={() => setIsVisible(false)}>
-        Got it!
-      </Button>
+      {isPage ? (
+        <LinkButton to="/">
+          Got it!
+        </LinkButton>
+      ) : (
+        <Button type="button" onClick={() => setIsVisible(false)}>
+          Got it!
+        </Button>
+      )}
     </Wrapper>
   );
 };
@@ -69,6 +76,7 @@ const Wrapper = styled.div`
   max-width: 600px;
   overflow: auto;
   padding: 2em 0;
+  text-align: center;
 `;
 
 const Title = styled.h2`
@@ -91,6 +99,7 @@ const List = styled.ol`
 `;
 const Button = styled.button`
   appearance: none;
+  font-weight: bold;
   background: #2cce9f;
   color: #000;
   font-size: 1em;
@@ -101,6 +110,30 @@ const Button = styled.button`
   transition: opacity 0.25s;
   margin-top: 1em;
   background-color: rgb(255, 0, 128);
+
+  &:hover,
+  &:focus {
+    opacity: 0.5;
+  }
+  &:focus {
+    outline: 0;
+    border-color: #2cce9f;
+  }
+`;
+const LinkButton = styled(Link)`
+  display: inline-block;
+  font-weight: bold;
+  appearance: none;
+  background: #2cce9f;
+  color: #000;
+  font-size: 1em;
+  border: 0;
+  padding: 0.7em 1em;
+  border-radius: 8px;
+  transition: opacity 0.25s;
+  margin: 1em 0 0;
+  background-color: rgb(255, 0, 128);
+  text-decoration: none;
 
   &:hover,
   &:focus {

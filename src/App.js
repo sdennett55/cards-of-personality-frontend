@@ -8,6 +8,7 @@ import PlayerInfo from './PlayerInfo';
 import EmptyPage from './EmptyPage';
 import CreateGame from './CreateGame';
 import PublicGames from './PublicGames';
+import HowToPlay from './HowToPlay';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 
 const App = () => {
@@ -37,6 +38,9 @@ const App = () => {
         </Route>
         <Route exact path="/games">
           <PublicGames />
+        </Route>
+        <Route exact path="/how-to-play">
+          <HowToPlay isPage />
         </Route>
         <Route>
           <EmptyPage />
