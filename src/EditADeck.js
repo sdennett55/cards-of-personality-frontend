@@ -120,7 +120,7 @@ const EditADeck = ({ title }) => {
           setInitialDecks(res.data);
         })
     } else {
-      axios.get(`${SERVER_URL}/api/getTable${location}`)
+      axios.get(`${SERVER_URL}/api/getCardsFromDeck${location}`)
         .then(res => {
           if (res.data === 'no result') {
             return setDeckExists('no result');
