@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Redirect, useLocation, Link } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
-import { CopyIcon } from './icons';
+import queryString from "query-string";
 import {SERVER_URL} from './helpers';
 import InputWithLabel from './InputWithLabel';
 import styled, { createGlobalStyle } from 'styled-components';
@@ -11,6 +11,8 @@ const GlobalStyle = createGlobalStyle`
   body {
     text-align: center;
     padding: 0 1em;
+    background: #000;
+    color: #fff;
   }
   button,
   input {
@@ -49,7 +51,7 @@ const getCardsLength = ({ type, deckTable }) => {
   return `${cardLength} ${type} card${cardLength !== 1 ? 's' : ''}`;
 }
 
-const addCard = ({ e, setIsLoading, deckTable, type, text, setDeckTable, location, setError, setWhiteCard, setBlackCard }) => {
+const addCard = ({ e, setIsLoading, deckTable, type, text, setDeckTable, location, setError, setWhiteCard, setBlackCard, defaultLocation }) => {
   e.preventDefault();
 
   if (!text.trim().length) {
@@ -63,7 +65,8 @@ const addCard = ({ e, setIsLoading, deckTable, type, text, setDeckTable, locatio
 
   setIsLoading(true);
   const deckName = location.replace('/', '');
-  axios.post(`${SERVER_URL}/api/addCard/`, { type, text, deckName })
+  const secret = queryString.parse(defaultLocation.search).secret;
+  axios.post(`${SERVER_URL}/api/addCard/`, { type, text, deckName, secret })
     .then(res => {
       // if successful, update state
       // const data = cleanUpData(res.data);
@@ -84,7 +87,6 @@ const addCard = ({ e, setIsLoading, deckTable, type, text, setDeckTable, locatio
     .catch(err => setError(err))
     .finally(info => {
       setIsLoading(false);
-      console.log('finally ', info);
     })
 };
 
@@ -110,7 +112,9 @@ const EditADeck = ({ title }) => {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [publicDecksInputVal, setPublicDecksInputVal] = useState(false);
-  const location = useLocation().pathname.replace('/edit-deck', '');
+  const defaultLocation = useLocation();
+  const location = defaultLocation.pathname.replace('/edit-deck', '');
+
   useEffect(() => {
     // If we haven't chosen a deck and are just hitting the "/edit-deck" page
     if (!location || location === '/') {
@@ -125,7 +129,6 @@ const EditADeck = ({ title }) => {
           if (res.data === 'no result') {
             return setDeckExists('no result');
           }
-          console.log('asdf', res.data);
           setDeckTable(res.data);
           setDeckExists('result found');
         })
@@ -133,7 +136,7 @@ const EditADeck = ({ title }) => {
 
   }, [location])
   return (
-    <>
+    <Page>
       <GlobalStyle />
       <Helmet>
         <title>{title}</title>
@@ -146,7 +149,7 @@ const EditADeck = ({ title }) => {
             <>
               <p>This deck has {getCardsLength({ type: 'white', deckTable })} and {getCardsLength({ type: 'black', deckTable })}.</p>
 
-              <form onSubmit={e => addCard({ e, setIsLoading, deckTable, type: 'white', text: whiteCard, initialDecks, setFilteredDecks, setDeckTable, location, setError, setWhiteCard })}>
+              <form onSubmit={e => addCard({ e, setIsLoading, deckTable, type: 'white', text: whiteCard, initialDecks, setFilteredDecks, setDeckTable, location, setError, setWhiteCard, defaultLocation })}>
                 <InputWithLabel
                   type="white"
                   whiteCard={whiteCard}
@@ -159,7 +162,7 @@ const EditADeck = ({ title }) => {
               </form>
               {error && error.includes('white') && <ErrorText>{error}</ErrorText>}
 
-              <form onSubmit={e => addCard({ e, setIsLoading, deckTable, type: 'black', text: blackCard, initialDecks, setFilteredDecks, setDeckTable, location, setError, setBlackCard })}>
+              <form onSubmit={e => addCard({ e, setIsLoading, deckTable, type: 'black', text: blackCard, initialDecks, setFilteredDecks, setDeckTable, location, setError, setBlackCard, defaultLocation })}>
                 <InputWithLabel
                   type="black"
                   blackCard={blackCard}
@@ -198,10 +201,17 @@ const EditADeck = ({ title }) => {
             </Wrapper>
           </>
         )}
-    </>
+    </Page>
   )
 }
 
+const Page = styled.div`
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
 const MainHeading = styled.h1`
   text-transform: capitalize;
 `;
@@ -224,9 +234,10 @@ const Input = styled.input`
   margin: 0;
   padding: .5em 0 .3em;
   background: transparent;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid #fff;
   transition: border-color .25s;
   border-radius: 0;
+  color: #fff;
 
   &:hover,
   &:focus {
@@ -261,7 +272,7 @@ const StyledLink = styled(Link)`
 
   &:hover,
   &:focus {
-    color: #000;
+    color: #fff;
   }
 `;
 

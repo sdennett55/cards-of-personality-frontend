@@ -1,23 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
-import { CopyIcon } from './icons';
-import {SERVER_URL} from './helpers';
+import { SERVER_URL } from './helpers';
 import axios from 'axios';
+import PrivacyCheck from './PrivacyCheck';
+import ChooseADeck from './ChooseADeck';
 import styled, { createGlobalStyle } from 'styled-components';
-import InputWithLabel from './InputWithLabel';
 
 const handleKeyUp = ({ e, setNameOfDeck }) => {
   const val = e.target.value.trim().replace(/\s+/g, '-');
   setNameOfDeck(val);
 }
 
-const handleSubmit = ({ e, setSuccess, nameOfDeck, setError }) => {
+const handleSubmit = ({ e, setSuccess, nameOfDeck, setError, isPrivate, deck, }) => {
   e.preventDefault();
   if (nameOfDeck.trim().length === 0) {
     return setError('Error: Please enter the name of your deck.')
   }
-  axios.post(`${SERVER_URL}/api/createDeck`, { deckName: nameOfDeck })
+  axios.post(`${SERVER_URL}/api/createDeck`, { deckName: nameOfDeck, isPrivate, hasSFWCards: deck === 'safe-for-work', hasNSFWCards: deck === 'not-safe-for-work', })
     .then(res => {
       if (res.data.includes('Error')) {
         return setError(res.data);
@@ -31,31 +31,36 @@ const CreateADeck = ({ title }) => {
   const [nameOfDeck, setNameOfDeck] = useState('');
   const [isSuccess, setSuccess] = useState(false);
   const [error, setError] = useState('');
+  const [isPrivate, setIsPrivate] = useState(false);
+  const [deck, setDeck] = useState("");
+  const [loading, setLoading] = useState(false);
   return (
-    <>
+    <Page>
       <GlobalStyle />
       <Helmet>
         <title>{title}</title>
       </Helmet>
-      <Heading>Create A Deck</Heading>
-      <form onSubmit={e => handleSubmit({ e, setSuccess, nameOfDeck, setError })}>
+      <Form onSubmit={e => handleSubmit({ e, setSuccess, nameOfDeck, setError, isPrivate, deck })}>
         <Wrapper>
-        <Label htmlFor="nameOfDeck">Name of your deck</Label>
-        <Input id="nameOfDeck" type="text" onKeyUp={e => handleKeyUp({ e, setNameOfDeck })} />
-        <ErrorText>{error}</ErrorText>
-        <Button type="submit">Create</Button>
+          <Label htmlFor="nameOfDeck">Name of your deck</Label>
+          <Input id="nameOfDeck" type="text" onKeyUp={e => handleKeyUp({ e, setNameOfDeck })} />
+          <ErrorText>{error}</ErrorText>
         </Wrapper>
-      </form>
+        <ChooseADeck title="Add the default SFW or NSFW cards" setDeck={setDeck} loading={loading} deck={deck} toggle />
+        <PrivacyCheck setIsPrivate={setIsPrivate} title="deck" toastText="If checked, this game will not be listed under public games." />
+        <Button type="submit">Create Deck</Button>
+      </Form>
       {isSuccess && (
         <Redirect to={`edit-deck/${nameOfDeck}`} push />
       )}
-    </>
+    </Page>
   )
 }
 
 const GlobalStyle = createGlobalStyle`
   body {
     text-align: center;
+    padding: 0;
   }
   button,
   input {
@@ -63,19 +68,22 @@ const GlobalStyle = createGlobalStyle`
     border: 0;
   }
 `
-const CopyInput = styled.input`
-  display: block;
-  margin: 1em 0;
-  direction: rtl;
-`;
-const Flex = styled.div`
+const Page = styled.div`
   display: flex;
+  flex-direction: column;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  color: #000;
+  background: #000;
+  min-height: 100%;
+`;
+const Form = styled.form`
+  display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 `;
-const Heading = styled.h1`
-`;
-
 const ErrorText = styled.p`
   color: red;
   font-size: .8rem;
@@ -87,9 +95,10 @@ const Input = styled.input`
   margin: 0;
   padding: .5em 0 .3em;
   background: transparent;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid #fff;
   transition: border-color .25s;
   border-radius: 0;
+  color: #fff;
 
   &:hover,
   &:focus {
@@ -104,6 +113,7 @@ const Label = styled.label`
   font-size: .813em;
   display: block;
   font-weight: bold;
+  color: #fff;
 `;
 
 const Button = styled.button`
@@ -117,6 +127,7 @@ const Button = styled.button`
   border-radius: 8px;
   margin: 0 auto;
   font-weight: bold;
+  margin-top: 1em;
 
   &:hover,
   &:focus,
@@ -132,7 +143,7 @@ const Wrapper = styled.div`
   width: 100%;
   max-width: 270px;
   justify-content: center;
-  margin: 2em auto;
+  margin: auto;
 `;
 
 export default CreateADeck;

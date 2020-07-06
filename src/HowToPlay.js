@@ -1,10 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import styled from "styled-components";
+import styled, {createGlobalStyle} from "styled-components";
 
 const HowToPlay = ({ isPage, setIsVisible }) => {
   return (
     <Wrapper>
+      <GlobalStyle />
       <Title>How To Play</Title>
       <Note>Note: This game works best with friends on audio/video chat.</Note>
       <TLDR>
@@ -46,13 +47,20 @@ const HowToPlay = ({ isPage, setIsVisible }) => {
           Got it!
         </LinkButton>
       ) : (
-        <Button type="button" onClick={() => setIsVisible(false)}>
-          Got it!
-        </Button>
-      )}
+          <Button type="button" onClick={() => setIsVisible(false)}>
+            Got it!
+          </Button>
+        )}
     </Wrapper>
   );
 };
+
+const GlobalStyle = createGlobalStyle`
+  body {
+    background: #000;
+    color: #fff;
+  }
+`;
 
 const TLDR = styled.p`
   margin: 2rem auto;
@@ -61,7 +69,7 @@ const TLDR = styled.p`
 `;
 
 const Note = styled.p`
-  margin: 1rem 2rem 2em;
+  margin: 1em 2em 0;
   font-style: italic;
   font-size: 1rem;
 `;
@@ -72,7 +80,13 @@ const TLDRText = styled.span`
 `;
 
 const Wrapper = styled.div`
-  max-height: 100vh;
+  display: flex;
+  min-height: 100%;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin: 0 auto;
+  padding: 2em;
   max-width: 600px;
   overflow: auto;
   padding: 2em 0;
@@ -80,7 +94,7 @@ const Wrapper = styled.div`
 `;
 
 const Title = styled.h2`
-  margin: 0 0 1rem;
+  margin: 0;
   font-style: italic;
   font-weight: bold;
   color: rgb(255, 0, 128);
