@@ -80,7 +80,7 @@ const CreateGame = () => {
       <GlobalStyle />
       <MainHeading>Create game</MainHeading>
       <ChooseADeck title="Choose a default deck" setDeck={setDeck} loading={loading} deck={deck} toggle />
-      <Subtitle>Choose a community deck <BETAText>BETA</BETAText></Subtitle>
+      <Subtitle>Choose a <NoWrap>community deck<BETAText>BETA</BETAText></NoWrap></Subtitle>
       {publicDecks && (
         <List>
           {publicDecks.map(({ name }) => (
@@ -132,6 +132,10 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
+const NoWrap = styled.span`
+  white-space: nowrap;
+`;
+
 const List = styled.ul`
   list-style: none;
   padding: 0;
@@ -151,6 +155,7 @@ const BETAText = styled.sup`
   color: #2cce9f;
   font-size: .5em;
   font-weight: bold;
+  margin-left: .25em;
 `;
 
 const ListItem = styled.li`
@@ -244,6 +249,7 @@ const GreenButton = styled.button`
 
 const Flex = styled.div`
   display: flex;
+  align-items: center;
 `;
 
 export default CreateGame;
