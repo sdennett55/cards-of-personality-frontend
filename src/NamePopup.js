@@ -57,12 +57,12 @@ const NamePopup = ({
               <JoinGameButton type="submit">JOIN GAME</JoinGameButton>
             </PopupInnerWrap>
           </form>
-          <HowToPlayButton type="button" onClick={handleHowToPlay}>
+          {/* <HowToPlayButton type="button" onClick={handleHowToPlay}>
             <HelpIconWrap>
               <HelpIcon />
             </HelpIconWrap>{" "}
             HOW TO PLAY
-          </HowToPlayButton>
+          </HowToPlayButton> */}
         </>
       )}
     </PopupElement>

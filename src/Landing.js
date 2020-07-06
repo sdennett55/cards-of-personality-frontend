@@ -117,6 +117,9 @@ const Landing = ({ title }) => {
       <PinkButton to="/how-to-play">
         How To Play
       </PinkButton>
+      <WhiteButton to="/create-deck">
+        Create Deck <BETAText>BETA</BETAText>
+      </WhiteButton>
       {/* <AltButton onClick={() => history.push('/create-deck')}>Create Deck</AltButton>
       <AltButton onClick={() => history.push('/edit-deck')}>Edit Deck</AltButton> */}
     </LandingWrapper>
@@ -126,12 +129,23 @@ const Landing = ({ title }) => {
 const GlobalStyle = createGlobalStyle`
   body {
     text-align: center;
+    border: 1em solid;
+    border-image: linear-gradient(90deg, rgb(64,224,208), rgb(255,140,0), rgb(255,0,128) ) 1;
+    background: #000;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
   button,
   input {
     appearance: none;
     border: 0;
   }
+`;
+const BETAText = styled.sup`
+  color: #2cce9f;
+  font-size: .7em;
+  font-weight: bold;
 `;
 const LandingWrapper = styled.div`
   display: flex;
@@ -198,17 +212,17 @@ const PinkButton = styled(Link)`
 
   @media screen and (max-width: 501px) and (orientation: portrait) {
     position: absolute;
-    top: -6px;
-    left: -76px;
-    width: 250px;
+    top: -16px;
+    left: -140px;
+    width: 360px;
     transform: rotate(-25deg);
   }
 
   @media screen and (max-height: 501px) {
     position: absolute;
-    top: -6px;
-    left: -76px;
-    width: 250px;
+    top: -16px;
+    left: -140px;
+    width: 360px;
     transform: rotate(-25deg);
   }
 
@@ -237,6 +251,27 @@ const GreenButton = styled.button`
   margin: 1em 0.5em;
   font-weight: bold;
   transition: opacity 0.25s;
+
+  &:hover,
+  &:focus,
+  &:disabled {
+    opacity: 0.5;
+    outline: 0;
+  }
+`;
+const WhiteButton = styled(Link)`
+  display: block;
+  appearance: none;
+  background: #fff;
+  color: #000;
+  font-size: 1em;
+  border: 0;
+  padding: 0.7em 1em;
+  border-radius: 8px;
+  margin: 1em 0.5em;
+  font-weight: bold;
+  transition: opacity 0.25s;
+  text-decoration: none;
 
   &:hover,
   &:focus,

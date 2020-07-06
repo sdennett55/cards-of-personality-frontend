@@ -8,9 +8,14 @@ const Input = styled.input`
   margin: 0 0 1em;
   padding: .5em 0 .3em;
   background: transparent;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid #fff;
   transition: border-color .25s;
   border-radius: 0;
+  color: #fff;
+
+  ::placeholder {
+    color: rgba(255, 255, 255, .8);
+  }
 
   &:hover,
   &:focus {
@@ -25,12 +30,35 @@ const Label = styled.label`
   font-size: .813em;
   display: block;
   font-weight: bold;
+  color: #2cce9f;
 `;
 
-const Button = styled.button`
+const BlackButton = styled.button`
   display: block;
   appearance: none;
-  background: #2cce9f;
+  color: #000;
+  font-size: 1em;
+  border: 0;
+  padding: .7em 1em;
+  border-radius: 8px;
+  margin: 0 auto;
+  font-weight: bold;
+  background: #000;
+  border: 2px solid #2cce9f;
+  color: #2cce9f;
+
+  &:hover,
+  &:focus,
+  &:disabled {
+    opacity: .5;
+    outline:0;
+  }
+`;
+
+const WhiteButton = styled.button`
+  display: block;
+  appearance: none;
+  background: #fff;
   color: #000;
   font-size: 1em;
   border: 0;
@@ -59,6 +87,7 @@ const Wrapper = styled.div`
 const InputWithLabel = ({ buttonText, labelText, onChange, type, placeholderText, blackCard, whiteCard, isLoading }) => {
   const inputRef = React.useRef(null);
   const hasMounted = React.useRef(false);
+  const Button = type === 'white' ? WhiteButton : BlackButton;
 
   React.useEffect(() => {
     if (hasMounted.current && inputRef) {

@@ -1,10 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import styled from "styled-components";
+import styled, {createGlobalStyle} from "styled-components";
 
 const EmptyPage = () => {
   return (
     <Page>
+      <GlobalStyle />
       <Text>Not sure how you got here, but this page doesn't exist.</Text>
       <Text>
         <LinkElem to="/">Back to homepage.</LinkElem>
@@ -13,18 +14,22 @@ const EmptyPage = () => {
   );
 };
 
-const Page = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  background: #000;
-  color: #fff;
-  padding: 2em;
-  font-size: 2em;
-  text-align: center;
+const GlobalStyle = createGlobalStyle`
+  body {
+    text-align: center;
+    padding: 2em;
+    background: #000;
+    color: #fff;
+    border: 1em solid;
+    border-image: linear-gradient(90deg, rgb(64,224,208), rgb(255,140,0), rgb(255,0,128) ) 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
 `;
+const Page = styled.div`
+  font-size: 2em;
+`
 const Text = styled.p`
   margin: .5em 0;
 `;

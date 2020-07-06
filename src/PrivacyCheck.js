@@ -1,11 +1,12 @@
 import React from 'react';
 import { ToastContainer, toast, Slide } from "react-toastify";
 import { HelpIcon } from "./icons";
-import styled from "styled-components";
+import styled, { createGlobalStyle } from "styled-components";
 
 const PrivacyCheck = ({ setIsPrivate, title, toastText }) => {
   return (
     <>
+      <GlobalStyle />
       <Divider>
         <Flex>
           <PublicCheckbox
@@ -16,6 +17,7 @@ const PrivacyCheck = ({ setIsPrivate, title, toastText }) => {
           <PublicLabel htmlFor="checkbox">
             Make {title} private{" "}
             <IconWrap
+              type="button"
               onClick={() =>
                 toast.info(
                   toastText,
@@ -42,6 +44,19 @@ const PrivacyCheck = ({ setIsPrivate, title, toastText }) => {
     </>
   )
 };
+
+const GlobalStyle = createGlobalStyle`
+  .Toastify__toast--info {
+    background: #2cce9f;
+    border-radius: 8px;
+    color: #000;
+    margin: 2em;
+    font: inherit;
+  }
+  .Toastify__close-button {
+    color: #000;
+  }
+`;
 
 const Divider = styled.div`
   margin: 1em 0;

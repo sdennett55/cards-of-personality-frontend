@@ -705,6 +705,12 @@ const GlobalStyle = createGlobalStyle`
     position: fixed;
     width: 100%;
   }
+  body {
+    height: 100%;
+    background: #e5e5e5;
+    border: 0;
+    padding: 0;
+  }
   .Toastify__toast--success {
     background: #2cce9f;
     border-radius: 8px;

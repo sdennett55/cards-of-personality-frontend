@@ -52,6 +52,7 @@ const StartTitle = styled.h2`
   color: #fff;
   margin: 0.5em 0 0;
   font-weight: normal;
+  font-size: 1.5em;
 `;
 const PinkButton = styled.button`
   display: block;

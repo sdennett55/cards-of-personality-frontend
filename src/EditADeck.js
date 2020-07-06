@@ -2,22 +2,38 @@ import React, { useState, useEffect } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import queryString from "query-string";
-import {SERVER_URL} from './helpers';
+import { SERVER_URL } from './helpers';
 import InputWithLabel from './InputWithLabel';
 import styled, { createGlobalStyle } from 'styled-components';
 import axios from 'axios';
+import { ToastContainer, toast, Slide } from "react-toastify";
 
 const GlobalStyle = createGlobalStyle`
   body {
     text-align: center;
-    padding: 0 1em;
+    padding: 2em;
     background: #000;
     color: #fff;
+    border: 1em solid;
+    border-image: linear-gradient(90deg, rgb(64,224,208), rgb(255,140,0), rgb(255,0,128) ) 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
   button,
   input {
     appearance: none;
     border: 0;
+  }
+  .Toastify__toast--info {
+    background: #2cce9f;
+    border-radius: 8px;
+    color: #000;
+    margin: 2em;
+    font: inherit;
+  }
+  .Toastify__close-button {
+    color: #000;
   }
 `;
 
@@ -44,11 +60,16 @@ const handleKeyUp = ({ e, initialDecks, setFilteredDecks, setPublicDecksInputVal
 
 const getCardsLength = ({ type, deckTable }) => {
   if (!deckTable && !deckTable.length) {
-    return 0;
+    return <GreenText>0</GreenText>;
   }
 
   const cardLength = deckTable.filter(card => card.type === type).length;
-  return `${cardLength} ${type} card${cardLength !== 1 ? 's' : ''}`;
+  return (
+    <>
+      <GreenText>{cardLength}</GreenText>
+      {` ${type} card${cardLength !== 1 ? 's' : ''}`}
+    </>
+  )
 }
 
 const addCard = ({ e, setIsLoading, deckTable, type, text, setDeckTable, location, setError, setWhiteCard, setBlackCard, defaultLocation }) => {
@@ -90,14 +111,14 @@ const addCard = ({ e, setIsLoading, deckTable, type, text, setDeckTable, locatio
     })
 };
 
-const Title = ({location}) => {
+const Title = ({ location }) => {
   if (location && location !== '/') {
     return (
-      <MainHeading>Add Cards to the <NameOfDeck>{location.replace(/\/|-/g, ' ')}</NameOfDeck> Deck</MainHeading>
+      <MainHeading>Add cards to the <NameOfDeck>{location.replace(/\/|-/g, ' ')}</NameOfDeck> deck</MainHeading>
     )
   } else {
     return (
-      <MainHeading>Add Cards to a Deck</MainHeading>
+      <MainHeading>Edit a deck</MainHeading>
     )
   }
 }
@@ -124,14 +145,36 @@ const EditADeck = ({ title }) => {
           setInitialDecks(res.data);
         })
     } else {
-      axios.get(`${SERVER_URL}/api/getCardsFromDeck${location}`)
-        .then(res => {
-          if (res.data === 'no result') {
-            return setDeckExists('no result');
-          }
-          setDeckTable(res.data);
-          setDeckExists('result found');
-        })
+      const secret = queryString.parse(defaultLocation.search).secret;
+      async function checkSecret() {
+        try {
+          // check for the deck secret first
+          await axios.post(`${SERVER_URL}/api/getDeckSecret`, { secret, deckName: location.replace('/', '') });
+          // if secret is legit, keep going and get cards from the deck
+          axios.get(`${SERVER_URL}/api/getCardsFromDeck${location}`)
+            .then(res => {
+              if (res.data === 'no result') {
+                return setDeckExists('no result');
+              }
+              if (!secret) {
+                return setError('You don\'t have permissions to edit this deck.');
+              }
+              if (res.data.includes('Error')) {
+                return setError(res.data);
+              }
+              setDeckTable(res.data);
+              setDeckExists('result found');
+              // Pop a success toast
+              toast.info("Note: Bookmark or save this page. You can only update this deck with this exact link. Only send to people you trust.", {
+                toastId: "copy-link-info",
+                position: toast.POSITION.TOP_CENTER,
+              });
+            })
+        } catch (err) {
+          return setError(err.response.data);
+        }
+      }
+      checkSecret();
     }
 
   }, [location])
@@ -147,32 +190,32 @@ const EditADeck = ({ title }) => {
         <>
           {deckExists === 'result found' ? (
             <>
-              <p>This deck has {getCardsLength({ type: 'white', deckTable })} and {getCardsLength({ type: 'black', deckTable })}.</p>
+              <p><em>This deck has {getCardsLength({ type: 'white', deckTable })} and {getCardsLength({ type: 'black', deckTable })}</em></p>
 
-              <form onSubmit={e => addCard({ e, setIsLoading, deckTable, type: 'white', text: whiteCard, initialDecks, setFilteredDecks, setDeckTable, location, setError, setWhiteCard, defaultLocation })}>
+              <Form onSubmit={e => addCard({ e, setIsLoading, deckTable, type: 'white', text: whiteCard, initialDecks, setFilteredDecks, setDeckTable, location, setError, setWhiteCard, defaultLocation })}>
                 <InputWithLabel
                   type="white"
                   whiteCard={whiteCard}
-                  buttonText="ADD"
+                  buttonText="ADD WHITE CARD"
                   labelText="Add a White Card"
                   onChange={setWhiteCard}
                   placeholderText="e.g. Spontaneous combustion"
                   isLoading={isLoading}
                 />
-              </form>
+              </Form>
               {error && error.includes('white') && <ErrorText>{error}</ErrorText>}
 
-              <form onSubmit={e => addCard({ e, setIsLoading, deckTable, type: 'black', text: blackCard, initialDecks, setFilteredDecks, setDeckTable, location, setError, setBlackCard, defaultLocation })}>
+              <Form onSubmit={e => addCard({ e, setIsLoading, deckTable, type: 'black', text: blackCard, initialDecks, setFilteredDecks, setDeckTable, location, setError, setBlackCard, defaultLocation })}>
                 <InputWithLabel
                   type="black"
                   blackCard={blackCard}
-                  buttonText="ADD"
+                  buttonText="ADD BLACK CARD"
                   labelText="Add a Black Card"
                   onChange={setBlackCard}
                   placeholderText="e.g. Abraham Lincoln once said _______."
                   isLoading={isLoading}
                 />
-              </form>
+              </Form>
               {error && error.includes('black') && <ErrorText>{error}</ErrorText>}
             </>
           ) : deckExists === 'no result' ? (
@@ -180,27 +223,38 @@ const EditADeck = ({ title }) => {
               <p>Deck not found. Would you like to create one?</p>
               <Link to="/create-deck">Create Deck</Link>
             </>
+          ) : error && error.includes('permissions') || error.includes('exist') ? (
+            <ErrorText>{error}</ErrorText>
           ) : (
-                <p>Loading...</p>
-              )}
+                  <p>Loading...</p>
+                )}
         </>
       ) : (
-          <>
-            <p>Are you looking to edit a specific deck?</p>
-            <Wrapper>
-              <Label htmlFor="searchPublicDecks">Search Public Decks</Label>
-              <Input type="text" onKeyUp={e => handleKeyUp({ e, initialDecks, setFilteredDecks, setPublicDecksInputVal })} />
+
+          <Wrapper>
+            <Label htmlFor="searchPublicDecks">Search Public Decks</Label>
+            <Input type="text" onKeyUp={e => handleKeyUp({ e, initialDecks, setFilteredDecks, setPublicDecksInputVal })} />
+            {filteredDecks && filteredDecks.length > 0 && (
               <ResultsList>
-                {filteredDecks && filteredDecks.map(({ name }) => (
-                  <li><StyledLink to={`/edit-deck/${name}`}>{name}</StyledLink></li>
+                {filteredDecks.map(({ name }) => (
+                  <li><StyledLink to={`/edit-deck/${name}`}>{name.replace(/-/g, ' ')}</StyledLink></li>
                 ))}
                 {publicDecksInputVal && filteredDecks && !filteredDecks.length && (
                   <li>No results found.</li>
                 )}
               </ResultsList>
-            </Wrapper>
-          </>
+            )}
+          </Wrapper>
+
         )}
+      <ToastContainer
+        limit={1}
+        autoClose={false}
+        hideProgressBar
+        closeOnClick
+        transition={Slide}
+        pauseOnFocusLoss={false}
+      />
     </Page>
   )
 }
@@ -212,20 +266,31 @@ const Page = styled.div`
   justify-content: center;
   align-items: center;
 `;
+const Form = styled.form`
+  width: 100%;
+  max-width: 270px;
+`;
+const GreenText = styled.span`
+  color: #2cce9f;
+`
 const MainHeading = styled.h1`
-  text-transform: capitalize;
+  color: #fff;
+  margin: 0;
+  font-weight: normal;
+  font-size: 2em;
 `;
 const NameOfDeck = styled.em`
-  background: rgba(44, 206, 159, 1);
+  background: linear-gradient(90deg,rgb(64,224,208),rgb(255,140,0),rgb(255,0,128) );
   border-radius: 8px;
   padding: 0 .25em 0;
-  text-shadow: 1px 1px 1px #fff;
+  color: #000;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 100%;
   display: inline-block;
   vertical-align: bottom;
+  text-transform: capitalize;
 `;
 const Input = styled.input`
   appearance: none;
@@ -253,6 +318,7 @@ const Label = styled.label`
   font-weight: bold;
 `;
 const Wrapper = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -262,17 +328,27 @@ const Wrapper = styled.div`
 `;
 const ResultsList = styled.ul`
   list-style: none;
-  padding: 0;
+  padding: 1em 0;
+  position: absolute;
+  top: calc(100% - 1px);
+  width: 100%;
+  border: 1px solid #2cce9f;
+  margin: 0;
+  border-radius: 0 0 8px 8px;
+  max-height: 139px;
+  overflow: auto;
 `;
 const StyledLink = styled(Link)`
   display: block;
   color: #2cce9f;
   padding: .5em;
   transition: color .25s;
+  text-transform: capitalize;
 
   &:hover,
   &:focus {
     color: #fff;
+    text-decoration: none;
   }
 `;
 

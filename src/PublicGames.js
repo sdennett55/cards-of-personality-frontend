@@ -21,7 +21,7 @@ const PublicGames = () => {
       });
   }, []);
   return (
-    <Modal>
+    <Page>
       <GlobalStyle />
       <StartTitle>Public Games</StartTitle>
       <Table>
@@ -54,13 +54,20 @@ const PublicGames = () => {
       </Table>
       {error && <ErrorText>{error}</ErrorText>}
       <WhiteButton to="/">Back</WhiteButton>
-    </Modal>
+    </Page>
   );
 };
 
 const GlobalStyle = createGlobalStyle`
   body {
     text-align: center;
+    background: #000;
+    border: 1em solid;
+    border-image: linear-gradient(90deg,rgb(64,224,208),rgb(255,140,0),rgb(255,0,128) ) 1;
+    padding: 2em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
   button,
   input {
@@ -75,7 +82,7 @@ const ErrorText = styled.p`
 `;
 
 const Table = styled.table`
-  width: calc(100% - 2em);
+  width: 100%;
   max-width: 600px;
   text-align: left;
   border-collapse: collapse;
@@ -109,15 +116,9 @@ const Table = styled.table`
   }
 `;
 
-const Modal = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
+const Page = styled.div`
   min-height: 100%;
   overflow: auto;
-  background: #000;
-  z-index: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -174,6 +175,7 @@ const StartTitle = styled.h2`
   color: #fff;
   margin: 1em;
   font-weight: normal;
+  font-size: 2em;
 `;
 
 export default PublicGames;

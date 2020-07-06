@@ -6,7 +6,7 @@ const HowToPlay = ({ isPage, setIsVisible }) => {
   return (
     <Wrapper>
       <GlobalStyle />
-      <Title>How To Play</Title>
+      <Title>How to play</Title>
       <Note>Note: This game works best with friends on audio/video chat.</Note>
       <TLDR>
         <TLDRText>TL;DR:</TLDRText> Drag white cards to bottom bar. Tapping
@@ -57,8 +57,15 @@ const HowToPlay = ({ isPage, setIsVisible }) => {
 
 const GlobalStyle = createGlobalStyle`
   body {
+    text-align: center;
     background: #000;
     color: #fff;
+    border: 1em solid;
+    border-image: linear-gradient(90deg,rgb(64,224,208),rgb(255,140,0),rgb(255,0,128) ) 1;
+    padding: 2em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
 `;
 
@@ -86,29 +93,28 @@ const Wrapper = styled.div`
   align-items: center;
   flex-direction: column;
   margin: 0 auto;
-  padding: 2em;
   max-width: 600px;
   overflow: auto;
-  padding: 2em 0;
   text-align: center;
 `;
 
 const Title = styled.h2`
   margin: 0;
-  font-style: italic;
-  font-weight: bold;
+  font-weight: normal;
   color: rgb(255, 0, 128);
   font-size: 2em;
-  text-transform: uppercase;
 `;
 
 const List = styled.ol`
   text-align: left;
-  margin: 0 2em;
   padding-left: 1em;
+  margin-top: 0;
 
   li {
-    margin: 0.5em 0;
+    margin: 1em 0;
+    &:first-child {
+      margin-top: 0;
+    }
   }
 `;
 const Button = styled.button`

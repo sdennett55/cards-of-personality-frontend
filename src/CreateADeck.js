@@ -6,13 +6,14 @@ import axios from 'axios';
 import PrivacyCheck from './PrivacyCheck';
 import ChooseADeck from './ChooseADeck';
 import styled, { createGlobalStyle } from 'styled-components';
+import { Link } from "react-router-dom";
 
 const handleKeyUp = ({ e, setNameOfDeck }) => {
   const val = e.target.value.trim().replace(/\s+/g, '-');
   setNameOfDeck(val);
 }
 
-const handleSubmit = ({ e, setSuccess, nameOfDeck, setError, isPrivate, deck, }) => {
+const handleSubmit = ({ e, nameOfDeck, setError, isPrivate, deck, setSecret, }) => {
   e.preventDefault();
   if (nameOfDeck.trim().length === 0) {
     return setError('Error: Please enter the name of your deck.')
@@ -22,7 +23,9 @@ const handleSubmit = ({ e, setSuccess, nameOfDeck, setError, isPrivate, deck, })
       if (res.data.includes('Error')) {
         return setError(res.data);
       }
-      setSuccess(true);
+ 
+      // redirect on success
+      setSecret(res.data);
       setError('');
     })
 }
@@ -33,25 +36,37 @@ const CreateADeck = ({ title }) => {
   const [error, setError] = useState('');
   const [isPrivate, setIsPrivate] = useState(false);
   const [deck, setDeck] = useState("");
+  const [secret, setSecret] = useState("");
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (secret) {
+      setSuccess(true);
+    }
+  }, [secret]);
+
   return (
     <Page>
       <GlobalStyle />
       <Helmet>
         <title>{title}</title>
       </Helmet>
-      <Form onSubmit={e => handleSubmit({ e, setSuccess, nameOfDeck, setError, isPrivate, deck })}>
+      <Form onSubmit={e => handleSubmit({ e, setSuccess, nameOfDeck, setError, isPrivate, deck, setSecret })}>
         <Wrapper>
+          <MainHeading>Create a deck</MainHeading>
           <Label htmlFor="nameOfDeck">Name of your deck</Label>
-          <Input id="nameOfDeck" type="text" onKeyUp={e => handleKeyUp({ e, setNameOfDeck })} />
+          <Input id="nameOfDeck" type="text" onKeyUp={e => handleKeyUp({ e, setNameOfDeck })} maxLength="20" />
           <ErrorText>{error}</ErrorText>
         </Wrapper>
         <ChooseADeck title="Add the default SFW or NSFW cards" setDeck={setDeck} loading={loading} deck={deck} toggle />
-        <PrivacyCheck setIsPrivate={setIsPrivate} title="deck" toastText="If checked, this game will not be listed under public games." />
-        <Button type="submit">Create Deck</Button>
+        <PrivacyCheck setIsPrivate={setIsPrivate} title="deck" toastText="If checked, this deck will not be listed under community decks." />
+        <Flex>
+          <WhiteButton to="/">Back</WhiteButton>
+          <Button type="submit">Create Deck</Button>
+        </Flex>
       </Form>
       {isSuccess && (
-        <Redirect to={`edit-deck/${nameOfDeck}`} push />
+        <Redirect to={`edit-deck/${nameOfDeck}?secret=${secret}`} push />
       )}
     </Page>
   )
@@ -60,7 +75,14 @@ const CreateADeck = ({ title }) => {
 const GlobalStyle = createGlobalStyle`
   body {
     text-align: center;
-    padding: 0;
+    padding: 2em;
+    background: #000;
+    color: #fff;
+    border: 1em solid;
+    border-image: linear-gradient(90deg, rgb(64,224,208), rgb(255,140,0), rgb(255,0,128) ) 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
   button,
   input {
@@ -68,6 +90,13 @@ const GlobalStyle = createGlobalStyle`
     border: 0;
   }
 `
+const MainHeading = styled.h1`
+  color: #fff;
+  margin: 0;
+  font-weight: normal;
+  font-size: 2em;
+  margin-bottom: 1em;
+`;
 const Page = styled.div`
   display: flex;
   flex-direction: column;
@@ -100,6 +129,15 @@ const Input = styled.input`
   border-radius: 0;
   color: #fff;
 
+  &:-webkit-autofill,
+  &:-webkit-autofill:hover,
+  &:-webkit-autofill:focus,
+  &:-webkit-autofill:active {
+    -webkit-text-fill-color: #fff;
+    -webkit-box-shadow: 0 0 0px 1000px #000 inset;
+    transition: background-color 5000s ease-in-out 0s;
+  }
+
   &:hover,
   &:focus {
     outline: 0;
@@ -125,7 +163,7 @@ const Button = styled.button`
   border: 0;
   padding: .7em 1em;
   border-radius: 8px;
-  margin: 0 auto;
+  margin: 1em 0.5em;
   font-weight: bold;
   margin-top: 1em;
 
@@ -144,6 +182,32 @@ const Wrapper = styled.div`
   max-width: 270px;
   justify-content: center;
   margin: auto;
+`;
+
+const Flex = styled.div`
+  display: flex;
+  align-items: center;
+`;
+const WhiteButton = styled(Link)`
+  display: block;
+  appearance: none;
+  background: #fff;
+  color: #000;
+  font-size: 1em;
+  border: 0;
+  padding: 0.7em 1em;
+  border-radius: 8px;
+  margin: 1em 0.5em;
+  font-weight: bold;
+  transition: opacity 0.25s;
+  text-decoration: none;
+
+  &:hover,
+  &:focus,
+  &:disabled {
+    opacity: 0.5;
+    outline: 0;
+  }
 `;
 
 export default CreateADeck;

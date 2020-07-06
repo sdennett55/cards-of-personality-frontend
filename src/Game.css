@@ -14,10 +14,12 @@ svg {
 }
 
 html,
-body,
 #root,
 .Game {
   height: 100%;
+}
+body {
+  min-height: 100%;
 }
 
 body {
