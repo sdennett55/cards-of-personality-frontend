@@ -32,6 +32,9 @@ button {
   cursor: pointer;
   font-size: 16px;
 }
+button::-moz-focus-inner {
+  border: 0;
+}
 button, input {
   font-family: 'Roboto Condensed', Arial, sans-serif;
 }

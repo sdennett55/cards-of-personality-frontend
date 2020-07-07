@@ -84,7 +84,7 @@ const CreateGame = () => {
       {publicDecks && (
         <List>
           {publicDecks.map(({ name }) => (
-            <ListItem>
+            <ListItem key={name}>
               <PublicDeckButton onClick={() => handlePublicDeckClick({ name, deck, setDeck })} style={{ color: name === deck ? '#2cce9f' : null }}>
                 {name.replace(/-/g, ' ')}
               </PublicDeckButton>

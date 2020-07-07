@@ -124,7 +124,7 @@ const IconWrap = styled.button`
   font-size: 1em;
   border: 0;
   padding: 0.7em 1em;
-  border-radius: 8px;
+  border-radius: 0 8px 8px 0;
   margin: 0 auto;
   transition: opacity 0.25s;
 
@@ -144,7 +144,6 @@ const IconWrap = styled.button`
 const Flex = styled.div`
   display: flex;
   margin-bottom: 2em;
-  background-color: #2cce9f;
   border-radius: 8px;
 `;
 
