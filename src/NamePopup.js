@@ -203,6 +203,7 @@ const InviteInput = styled.input`
   border-radius: 8px 0 0 8px;
   color: #000;
   padding: 0.25em 0.5em;
+  margin: 0;
   direction: rtl;
 
   &:focus {
