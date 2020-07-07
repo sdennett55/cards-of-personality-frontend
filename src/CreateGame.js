@@ -14,14 +14,14 @@ function handleCreateGame({ history, deck, setError, setLoading, isPrivate }) {
 function getQueries({ deck, isPrivate }) {
   let queryString = '';
 
-  if (deck || deck === 'not-safe-for-work') {
+  if (deck) {
     queryString += `?deck=${deck}`;
   }
   if (isPrivate) {
-    if (deck === 'safe-for-work') {
-      queryString += '?private=1'
-    } else if (deck === 'not-safe-for-work') {
-      queryString += '&private=1';
+    if (deck) {
+      queryString += '&private=1'
+    } else {
+      queryString += '?private=1';
     }
   }
 
