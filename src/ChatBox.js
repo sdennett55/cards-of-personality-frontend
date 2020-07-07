@@ -85,7 +85,7 @@ const ChatBox = ({ chatOpen, setChatOpen, socket, myName, setUnreadCount }) => {
 
   useEffect(() => {
     const xH = scrollRef.current.scrollHeight;
-    scrollRef.current.scrollTo(0, xH);
+    scrollRef.current.scrollTop = xH;
   }, [messages]);
 
   useEffect(() => {
