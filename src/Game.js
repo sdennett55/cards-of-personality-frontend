@@ -543,17 +543,18 @@ class Game extends React.PureComponent {
 
   copyLink = () => {
     // Web Share API for cool browsers
-    if (navigator && navigator.share) {
-      navigator
-        .share({
-          title: "Cards of Personality Game",
-          url: this.inviteInputRef.current,
-        })
-        .then(() => {
-          console.log("Thanks for sharing!");
-        })
-        .catch(console.error);
-    }
+    // @TODO: This is crashing chrome for some reason
+    // if (navigator && navigator.share) {
+    //   navigator
+    //     .share({
+    //       title: "Cards of Personality Game",
+    //       url: this.inviteInputRef.current,
+    //     })
+    //     .then(() => {
+    //       console.log("Thanks for sharing!");
+    //     })
+    //     .catch(console.error);
+    // }
 
     // Generic copy to clipboard
     this.inviteInputRef.current.select();
