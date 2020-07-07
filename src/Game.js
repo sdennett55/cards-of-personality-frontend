@@ -16,7 +16,7 @@ import { ToastContainer, toast, Slide } from "react-toastify";
 import ReactGA from "react-ga";
 import { MAX_PLAYERS } from "./data";
 import { withRouter } from "react-router-dom";
-import styled, { createGlobalStyle } from "styled-components";
+import styled, { createGlobalStyle, keyframes } from "styled-components";
 import io from "socket.io-client";
 import axios from "axios";
 import queryString from "query-string";
@@ -64,6 +64,15 @@ class Game extends React.PureComponent {
     if (process.env.NODE_ENV === "production") {
       this.initializeReactGA();
     }
+
+    this.setState({
+      cardDimensions: {
+        width: this.whiteCardRef.current.offsetWidth,
+        height: this.whiteCardRef.current.offsetHeight,
+        top: this.whiteCardRef.current.getBoundingClientRect().top,
+        left: this.whiteCardRef.current.getBoundingClientRect().left,
+      },
+    });
 
     if (!this.socket) {
       // start socket connection
@@ -119,10 +128,6 @@ class Game extends React.PureComponent {
       const newPlayers = [...this.state.players, { socket: null }];
 
       this.setState({
-        cardDimensions: {
-          width: this.blackCardRef.current.offsetWidth,
-          height: this.blackCardRef.current.offsetHeight,
-        },
         players: newPlayers,
       });
     }
@@ -176,7 +181,6 @@ class Game extends React.PureComponent {
 
         this.setState(() => ({
           players,
-          showNamePopup: true,
           socketConnected: true,
         }));
       }
@@ -217,6 +221,14 @@ class Game extends React.PureComponent {
     this.socket.on("dropped in player drop", ({ players, blackCards }) => {
       this.setState({ players, blackCards });
     });
+
+    this.socket.on("draw seven white cards update", ({ players, whiteCards, sevenWhiteCards }) => {
+      this.setState({
+        players,
+        whiteCards,
+        myCards: sevenWhiteCards,
+      })
+    })
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -268,7 +280,7 @@ class Game extends React.PureComponent {
     unreadCount: 0,
   };
 
-  blackCardRef = React.createRef();
+  whiteCardRef = React.createRef();
 
   initializeReactGA = () => {
     ReactGA.initialize("UA-171045081-1");
@@ -506,6 +518,11 @@ class Game extends React.PureComponent {
         id: this.socket.id,
       });
 
+      // grab seven white cards when showNamePopup goes away
+      const newWhiteCards = [...this.state.whiteCards];
+      const sevenWhiteCards = newWhiteCards.splice(0, 7);
+      this.socket.emit("draw seven white cards", { sevenWhiteCards, socketId: this.socket.id, newWhiteCards });
+
       ReactGA.event({
         category: "Game",
         action: "Submitted A Name",
@@ -566,17 +583,18 @@ class Game extends React.PureComponent {
   inviteInputRef = React.createRef();
 
   setChatOpen = bool => {
-    this.setState({chatOpen: bool});
+    this.setState({ chatOpen: bool });
   }
 
   setUnreadCount = count => {
     if (count) {
-      this.setState(prevState => ({unreadCount: prevState.unreadCount + 1}));
+      this.setState(prevState => ({ unreadCount: prevState.unreadCount + 1 }));
       return;
     }
 
-    this.setState({unreadCount: 0});
+    this.setState({ unreadCount: 0 });
   }
+
 
   render() {
     return (
@@ -601,7 +619,7 @@ class Game extends React.PureComponent {
           <Table>
             <CardsWrap>
               <Piles>
-                <CardWrap isPickUpPile innerRef={this.blackCardRef}>
+                <CardWrap isPickUpPile>
                   <BlackCardDrop
                     addBlackCardBackToPile={this.addBlackCardBackToPile}
                   >
@@ -618,13 +636,12 @@ class Game extends React.PureComponent {
                           key={text}
                           id={index}
                           text={text}
-                          cardDimensions={this.state.cardDimensions}
                           socket={this.socket}
                         />
                       ))}
                   </BlackCardDrop>
                 </CardWrap>
-                <CardWrap isPickUpPile>
+                <CardWrap isPickUpPile innerRef={this.whiteCardRef}>
                   {this.state.whiteCards
                     .slice(
                       Math.max(
@@ -641,6 +658,19 @@ class Game extends React.PureComponent {
                         socket={this.socket}
                       />
                     ))}
+                  {!this.state.showNamePopup && (
+                    <AnimatedDraw cardDimensions={this.state.cardDimensions}>
+                      <DraggableCard
+                        bgColor="#fff"
+                        isBroadcastingDrag={false}
+                        isFlipBroadcasted={false}
+                        color="#000"
+                        type="whiteCard"
+                        setUserIsDragging={this.setUserIsDragging}
+                        isFlippable={false}
+                      />
+                    </AnimatedDraw>
+                  )}
                 </CardWrap>
               </Piles>
               <PlayerDecks className="Table-playerDecks">
@@ -722,6 +752,28 @@ const GlobalStyle = createGlobalStyle`
   .Toastify__close-button {
     color: #000;
   }
+`;
+
+const moveToBottom = (cardDimensions) => keyframes`
+  0% {
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+  99% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate3d(calc(${window ? `${window.innerWidth / 2 - 25}px` : 0} - ${cardDimensions?.left}px - 50%), calc(${window ? `${window.innerHeight - 25}px` : 0} - ${cardDimensions?.top}px - 50%), 0);
+    opacity: 0;
+  }
+`;
+const AnimatedDraw = styled.div`
+  position: fixed;
+  pointer-events: none;
+  z-index: 999;
+  animation: .2s ${props => moveToBottom(props.cardDimensions)} ease-out 7 forwards;
+  width: ${props => props.cardDimensions.width ? `${props.cardDimensions.width}px` : 0}; 
+  height: ${props => props.cardDimensions.height ? `${props.cardDimensions.height}px` : 0}
 `;
 
 const Table = styled.div`

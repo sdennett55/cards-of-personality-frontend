@@ -3,6 +3,7 @@ import Logo from './logo';
 import styled from 'styled-components';
 import { LogoIconInCard } from './icons';
 import { useDrag } from 'react-dnd';
+import {TouchIcon} from "./icons";
 
 const CardElement = styled.div`
   transition: transform .35s, z-index 0s .35s;
@@ -26,6 +27,21 @@ const CardElement = styled.div`
   &.is-dragging {
     background: red;
     transition: none;
+  }
+`;
+
+const TouchIconWrap = styled.div`
+  color: #fff;
+  width: 50px;
+  max-width: 30%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: color .25s;
+
+  ${CardElement}:hover & {
+    color: #2cce9f;
   }
 `;
 
@@ -160,7 +176,14 @@ const DraggableCard = ({ bgColor, isBroadcastingDrag = true, isFlipBroadcasted, 
     }} ref={drag} style={{ zIndex: (isDragging ? 999 : '0'), ...getTransform(), backgroundColor: bgColor, color, justifyContent: isFlipped ? '' : 'flex-start' }}>
 
       {isFlipped ? text : (
-        <LogoIconInCard style={{alignSelf: 'flex-end', maxWidth: '200px'}} topTextInverse={type.includes('white')} />
+        <>
+          <LogoIconInCard style={{alignSelf: 'flex-end', maxWidth: '200px'}} topTextInverse={type.includes('white')} />
+          {type.includes('black') && (
+            <TouchIconWrap>
+              <TouchIcon />
+            </TouchIconWrap>
+          )}
+        </>
       )}
     </CardElement>
 
