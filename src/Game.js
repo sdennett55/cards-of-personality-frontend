@@ -222,12 +222,18 @@ class Game extends React.PureComponent {
       this.setState({ players, blackCards });
     });
 
-    this.socket.on("draw seven white cards update", ({ players, whiteCards, sevenWhiteCards }) => {
+    this.socket.on("draw seven white cards update", ({ players, whiteCards, sevenWhiteCards, socketId }) => {
       this.setState({
         players,
         whiteCards,
-      })
-    })
+      });
+
+      if (this.socket.id === socketId) {
+        this.setState({
+          myCards: sevenWhiteCards,
+        })
+      }
+    });
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -517,19 +523,7 @@ class Game extends React.PureComponent {
         id: this.socket.id,
       });
 
-      // grab seven white cards when showNamePopup goes away
-      const newWhiteCards = [...this.state.whiteCards];
-      const sevenWhiteCards = newWhiteCards.splice(0, 7);
-      // modify the seven white cards so that they have the right shape
-      const modifiedSevenWhiteCards = sevenWhiteCards.map((text, index) => ({
-        bgColor: '#fff',
-        color: '#000',
-        id: index,
-        isFlipped: false,
-        text,
-        type: "whiteCard",
-      }));
-      this.socket.emit("draw seven white cards", { sevenWhiteCards: modifiedSevenWhiteCards, socketId: this.socket.id, newWhiteCards });
+      this.socket.emit("draw seven white cards", { socketId: this.socket.id });
 
       ReactGA.event({
         category: "Game",
@@ -541,7 +535,6 @@ class Game extends React.PureComponent {
         showNamePopup: false,
         players: newPlayers,
         nameError: "",
-        myCards: modifiedSevenWhiteCards,
       };
     });
   };
