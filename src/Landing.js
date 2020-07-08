@@ -115,13 +115,13 @@ const Landing = ({ title }) => {
       </WhiteButton>
       {/* <AltButton onClick={() => history.push('/create-deck')}>Create Deck</AltButton>
       <AltButton onClick={() => history.push('/edit-deck')}>Edit Deck</AltButton> */}
-      <footer>
+      {/* <footer>
         <FooterText>
           Completely free and <InlineLink href="https://github.com/sdennett55/cards-of-personality-frontend" target="_blank" rel="noopener noreferrer">open sourced</InlineLink>. No ads, accounts, or
           subscriptions ever. If you'd like to support continued development you can{" "}
           <InlineLink href="https://www.patreon.com/cardsofpersonality" target="_blank" rel="noopener noreferrer">donate</InlineLink> here. Thanks!
         </FooterText>
-      </footer>
+      </footer> */}
     </LandingWrapper>
   );
 };
