@@ -80,7 +80,7 @@ const CreateGame = () => {
       <GlobalStyle />
       <MainHeading>Create game</MainHeading>
       <ChooseADeck title="Choose a default deck" setDeck={setDeck} loading={loading} deck={deck} toggle />
-      <Subtitle>Choose a <NoWrap>community deck<BETAText>BETA</BETAText></NoWrap></Subtitle>
+      <Subtitle>or choose a <NoWrap>community deck<BETAText>BETA</BETAText></NoWrap></Subtitle>
       {publicDecks && (
         <List>
           {publicDecks.map(({ name }) => (
