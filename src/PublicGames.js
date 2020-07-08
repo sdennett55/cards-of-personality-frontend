@@ -161,6 +161,7 @@ const GreenButton = styled(Link)`
   font-weight: bold;
   transition: opacity 0.25s;
   text-decoration: none;
+  text-align: center;
 
   &:hover,
   &:focus,
