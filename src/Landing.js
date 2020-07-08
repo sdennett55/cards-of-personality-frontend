@@ -115,13 +115,13 @@ const Landing = ({ title }) => {
       </WhiteButton>
       {/* <AltButton onClick={() => history.push('/create-deck')}>Create Deck</AltButton>
       <AltButton onClick={() => history.push('/edit-deck')}>Edit Deck</AltButton> */}
-      {/* <footer>
+      <footer>
         <FooterText>
           Completely free and <InlineLink href="https://github.com/sdennett55/cards-of-personality-frontend" target="_blank" rel="noopener noreferrer">open sourced</InlineLink>. No ads, accounts, or
-          subscriptions ever. If you'd like to support continued development you can{" "}
-          <InlineLink href="https://www.patreon.com/cardsofpersonality" target="_blank" rel="noopener noreferrer">donate</InlineLink> here. Thanks!
+          subscriptions. If you enjoyed the game and want to say thanks you can{" "}
+          <InlineLink href="https://www.buymeacoffee.com/steved" target="_blank" rel="noopener noreferrer">buy me a beer!</InlineLink>
         </FooterText>
-      </footer> */}
+      </footer>
     </LandingWrapper>
   );
 };
@@ -148,7 +148,7 @@ const FooterText = styled.p`
   font-size: .8em;
   font-style: italic;
   margin: 2em 0 0;
-  max-width: 380px;
+  max-width: 360px;
   line-height: 1.3;
 `
 const InlineLink = styled.a`
