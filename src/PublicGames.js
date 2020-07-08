@@ -45,7 +45,7 @@ const PublicGames = () => {
             ))}
             {Object.keys(data).length === 0 && (
               <tr>
-                <td colspan="3" style={{textAlign: 'center', height: '51px'}}>
+                <td colSpan="3" style={{textAlign: 'center', height: '51px'}}>
                   No games available.
                 </td>
               </tr>

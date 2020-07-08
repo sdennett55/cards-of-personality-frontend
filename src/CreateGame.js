@@ -2,26 +2,50 @@ import React, { useState, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 import axios from "axios";
 import { SERVER_URL } from "./helpers";
-import PrivacyCheck from './PrivacyCheck';
-import ChooseADeck from './ChooseADeck';
+import PrivacyCheck from "./PrivacyCheck";
+import ChooseADeck from "./ChooseADeck";
 import styled, { createGlobalStyle } from "styled-components";
 
-function handleCreateGame({ history, deck, setError, setLoading, isPrivate }) {
+function handleCreateGame({
+  e,
+  history,
+  deck,
+  setError,
+  setLoading,
+  isPrivate,
+}) {
+  e.preventDefault();
   setLoading("createGame");
-  createRandomRoom({ history, deck, setError, setLoading, isPrivate });
+
+  axios
+    .post(`${SERVER_URL}/api/getDeck`, { deck })
+    .then((res) => {
+      if (res.data) {
+        setLoading(false);
+        setError("");
+        createRandomRoom({ history, deck, setError, setLoading, isPrivate });
+      } else {
+        setError("This deck could not be found.");
+      }
+    })
+    .catch((err) => {
+      setLoading(false);
+      setError("This deck does not exist.");
+      console.error(err);
+    });
 }
 
 function getQueries({ deck, isPrivate }) {
-  let queryString = '';
+  let queryString = "";
 
   if (deck) {
     queryString += `?deck=${deck}`;
   }
   if (isPrivate) {
     if (deck) {
-      queryString += '&private=1'
+      queryString += "&private=1";
     } else {
-      queryString += '?private=1';
+      queryString += "?private=1";
     }
   }
 
@@ -41,9 +65,7 @@ function createRandomRoom({ history, deck, setError, setLoading, isPrivate }) {
       setLoading(false);
       setError("");
       if (!res.data) {
-        history.push(
-          `/g/${random}${getQueries({ deck, isPrivate })}`
-        );
+        history.push(`/g/${random}${getQueries({ deck, isPrivate })}`);
       } else {
         createRandomRoom({ history, deck, setError, setLoading, isPrivate });
       }
@@ -56,10 +78,10 @@ function createRandomRoom({ history, deck, setError, setLoading, isPrivate }) {
 
 const handlePublicDeckClick = ({ name, deck, setDeck }) => {
   if (deck === name) {
-    return setDeck('');
+    return setDeck("");
   }
   setDeck(name);
-}
+};
 
 const CreateGame = () => {
   const history = useHistory();
@@ -69,52 +91,92 @@ const CreateGame = () => {
   const [error, setError] = useState("");
   const [publicDecks, setPublicDecks] = useState([]);
   useEffect(() => {
-    axios.get(`${SERVER_URL}/api/getPublicDecks`)
-      .then(res => {
-        console.log(res.data);
-        setPublicDecks(res.data);
-      })
+    axios.get(`${SERVER_URL}/api/getPublicDecks`).then((res) => {
+      console.log(res.data);
+      setPublicDecks(res.data);
+    });
   }, []);
   return (
     <Wrapper>
       <GlobalStyle />
       <MainHeading>Create game</MainHeading>
-      <ChooseADeck title="Choose a default deck" setDeck={setDeck} loading={loading} deck={deck} toggle />
-      <Subtitle>or choose a <NoWrap>community deck<BETAText>BETA</BETAText></NoWrap></Subtitle>
-      {publicDecks && (
-        <List>
-          {publicDecks.map(({ name }) => (
-            <ListItem key={name}>
-              <PublicDeckButton onClick={() => handlePublicDeckClick({ name, deck, setDeck })} style={{ color: name === deck ? '#2cce9f' : null }}>
-                {name.replace(/-/g, ' ')}
-              </PublicDeckButton>
-            </ListItem>
-          ))}
-        </List>
-      )}
-      <PrivacyCheck setIsPrivate={setIsPrivate} title="game" toastText="If checked, this game will not be listed under public games." />
-      <Flex>
-        <WhiteButton to="/">Back</WhiteButton>
-        <GreenButton
-          onClick={() =>
-            handleCreateGame({
-              history,
-              deck,
-              setError,
-              setLoading,
-              isPrivate,
-            })
-          }
-        >
-          Create
-        </GreenButton>
-      </Flex>
-      {error && <ErrorText>{error}</ErrorText>}
+      <Form
+        onSubmit={(e) =>
+          handleCreateGame({
+            e,
+            history,
+            deck,
+            setError,
+            setLoading,
+            isPrivate,
+          })
+        }
+      >
+        <ChooseADeck
+          title="Choose a default deck"
+          setDeck={setDeck}
+          loading={loading}
+          deck={deck}
+          toggle
+        />
+        <Subtitle>
+          or choose a{" "}
+          <NoWrap>
+            community deck<BETAText>BETA</BETAText>
+          </NoWrap>
+        </Subtitle>
+        {publicDecks && (
+          <List>
+            {publicDecks.map(({ name }) => (
+              <ListItem key={name}>
+                <PublicDeckButton
+                  type="button"
+                  onClick={() => handlePublicDeckClick({ name, deck, setDeck })}
+                  style={{ color: name === deck ? "#2cce9f" : null }}
+                >
+                  {name.replace(/-/g, " ")}
+                </PublicDeckButton>
+              </ListItem>
+            ))}
+          </List>
+        )}
+        <Subtitle>
+          or choose a{" "}
+          <NoWrap>
+            private deck<BETAText>BETA</BETAText>
+          </NoWrap>
+        </Subtitle>
+        <Divider>
+          <Label htmlFor="nameOfDeck">Name of private deck</Label>
+          <Input
+            id="nameOfDeck"
+            type="text"
+            onKeyUp={(e) => setDeck(e.target.value)}
+            maxLength="20"
+          />
+        </Divider>
+        {error && <ErrorText>{error}</ErrorText>}
+        <PrivacyCheck
+          setIsPrivate={setIsPrivate}
+          title="game"
+          toastText="If checked, this game will not be listed under public games."
+        />
+        <Flex>
+          <WhiteButton to="/">Back</WhiteButton>
+          <GreenButton>Create</GreenButton>
+        </Flex>
+      </Form>
     </Wrapper>
   );
 };
 
 const GlobalStyle = createGlobalStyle`
+  html {
+    position: static;
+    height: 100%;
+    min-height: auto;
+    overflow: visible;
+  }
   body {
     text-align: center;
     background: #000;
@@ -124,12 +186,61 @@ const GlobalStyle = createGlobalStyle`
     display: flex;
     flex-direction: column;
     justify-content: center;
+    height: auto;
   }
   button,
   input {
     appearance: none;
     border: 0;
   }
+`;
+
+const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+const Input = styled.input`
+  appearance: none;
+  font-size: 1em;
+  border: 0;
+  margin: 0;
+  padding: 0.5em 0 0.3em;
+  background: transparent;
+  border-bottom: 1px solid #fff;
+  transition: border-color 0.25s;
+  border-radius: 0;
+  color: #fff;
+
+  &:-webkit-autofill,
+  &:-webkit-autofill:hover,
+  &:-webkit-autofill:focus,
+  &:-webkit-autofill:active {
+    -webkit-text-fill-color: #fff;
+    -webkit-box-shadow: 0 0 0px 1000px #000 inset;
+    transition: background-color 5000s ease-in-out 0s;
+  }
+
+  &:hover,
+  &:focus {
+    outline: 0;
+    border-color: #2cce9f;
+  }
+`;
+
+const Divider = styled.div`
+  margin-bottom: 1em;
+`;
+
+const Label = styled.label`
+  text-align: left;
+  text-transform: uppercase;
+  font-size: 0.813em;
+  display: block;
+  font-weight: bold;
+  color: #fff;
 `;
 
 const NoWrap = styled.span`
@@ -154,9 +265,9 @@ const List = styled.ul`
 
 const BETAText = styled.sup`
   color: #2cce9f;
-  font-size: .5em;
+  font-size: 0.5em;
   font-weight: bold;
-  margin-left: .25em;
+  margin-left: 0.25em;
 `;
 
 const ListItem = styled.li`
@@ -169,9 +280,9 @@ const PublicDeckButton = styled.button`
   font-size: 1em;
   background: 0;
   color: #fff;
-  padding: .5em 0;
+  padding: 0.5em 0;
   text-transform: capitalize;
-  transition: color .25s;
+  transition: color 0.25s;
   width: 100%;
 
   &:hover,
