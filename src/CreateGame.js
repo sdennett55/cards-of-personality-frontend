@@ -149,6 +149,7 @@ const List = styled.ul`
   max-height: 139px;
   overflow: auto;
   margin-bottom: 1em;
+  min-height: 145px;
 `;
 
 const BETAText = styled.sup`
@@ -160,6 +161,7 @@ const BETAText = styled.sup`
 
 const ListItem = styled.li`
   color: #fff;
+  border-bottom: 1px solid rgb(44, 206, 159);
 `;
 
 const PublicDeckButton = styled.button`

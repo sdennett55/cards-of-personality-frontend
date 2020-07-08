@@ -87,11 +87,12 @@ const Table = styled.table`
   text-align: left;
   border-collapse: collapse;
   color: #fff;
+  border: 1px solid rgb(64,224,208);
 
   thead {
     color: #000;
     th {
-      padding: 0.5em;
+      padding: .5em 1em;
       background: rgb(64, 224, 208);
 
       &:first-child {
@@ -109,7 +110,7 @@ const Table = styled.table`
     vertical-align: middle;
   }
   tbody > tr > td {
-    padding: 0.5em;
+    padding: 0.5em 1em;
   }
   p {
     margin: 0.25em 0;
