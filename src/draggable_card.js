@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import Logo from './logo';
 import styled from 'styled-components';
 import { LogoIconInCard } from './icons';
 import { useDrag } from 'react-dnd';

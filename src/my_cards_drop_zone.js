@@ -241,19 +241,19 @@ const MyCardsDropZone = ({
 }) => {
   const [isOpen, setOpen] = useState(false);
   const [isSubmittedTableOpen, setSubmittedTableOpen] = useState(false);
-  const [{ isOver }, drop] = useDrop({
+  const [, drop] = useDrop({
     accept: "whiteCard",
     drop: (item) => {
       addCardToMyCards(item);
     },
   });
-  const [{ submitIsOver }, submitDropRef] = useDrop({
+  const [, submitDropRef] = useDrop({
     accept: "whiteCard",
     drop: (item) => {
       submitACard(item);
     },
   });
-  const [{ discardIsOver }, discardDropRef] = useDrop({
+  const [, discardDropRef] = useDrop({
     accept: "whiteCard",
     drop: (item) => {
       discardACard(item);

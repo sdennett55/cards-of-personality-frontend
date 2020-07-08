@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useDrop } from 'react-dnd';
 
@@ -10,14 +9,11 @@ const BlackCardDropElem = styled.div`
 `;
 
 const BlackCardDrop = ({addBlackCardBackToPile, children}) => {
-  const [{ isOver }, drop] = useDrop({
+  const [, drop] = useDrop({
     accept: 'blackCardFromPlayer',
-    drop: (item, monitor) => {
+    drop: (item) => {
       addBlackCardBackToPile(item);
     },
-    // collect: monitor => ({
-    //   isOver: !!monitor.isOver(),
-    // }),
   });
 
   return (

@@ -250,12 +250,6 @@ const PinkButton = styled(Link)`
     outline: 0;
   }
 `;
-const LetterP = styled.span`
-  margin-right: -0.04em;
-`;
-const LetterY = styled.span`
-  margin-left: 0.02em;
-`;
 const GreenButton = styled.button`
   display: block;
   appearance: none;

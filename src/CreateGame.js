@@ -13,6 +13,7 @@ function handleCreateGame({
   setError,
   setLoading,
   isPrivate,
+  reactGA
 }) {
   e.preventDefault();
   setLoading("createGame");
@@ -23,7 +24,7 @@ function handleCreateGame({
       if (res.data) {
         setLoading(false);
         setError("");
-        createRandomRoom({ history, deck, setError, setLoading, isPrivate });
+        createRandomRoom({ history, deck, setError, setLoading, isPrivate, reactGA });
       } else {
         setError("This deck could not be found.");
       }
@@ -52,7 +53,7 @@ function getQueries({ deck, isPrivate }) {
   return queryString;
 }
 
-function createRandomRoom({ history, deck, setError, setLoading, isPrivate }) {
+function createRandomRoom({ history, deck, setError, setLoading, isPrivate, reactGA }) {
   const random = (
     Math.random().toString(36).substring(2, 15) +
     Math.random().toString(36).substring(2, 15)
@@ -64,10 +65,17 @@ function createRandomRoom({ history, deck, setError, setLoading, isPrivate }) {
     .then((res) => {
       setLoading(false);
       setError("");
+
       if (!res.data) {
+        reactGA.event({
+          category: "Game",
+          action: `Created a new game called ${random}`,
+          label: random,
+        });
+
         history.push(`/g/${random}${getQueries({ deck, isPrivate })}`);
       } else {
-        createRandomRoom({ history, deck, setError, setLoading, isPrivate });
+        createRandomRoom({ history, deck, setError, setLoading, isPrivate, reactGA });
       }
     })
     .catch((err) => {
@@ -83,7 +91,7 @@ const handlePublicDeckClick = ({ name, deck, setDeck }) => {
   setDeck(name);
 };
 
-const CreateGame = () => {
+const CreateGame = ({ reactGA }) => {
   const history = useHistory();
   const [deck, setDeck] = useState("safe-for-work");
   const [isPrivate, setIsPrivate] = useState(false);
@@ -92,7 +100,6 @@ const CreateGame = () => {
   const [publicDecks, setPublicDecks] = useState([]);
   useEffect(() => {
     axios.get(`${SERVER_URL}/api/getPublicDecks`).then((res) => {
-      console.log(res.data);
       setPublicDecks(res.data);
     });
   }, []);
@@ -109,6 +116,7 @@ const CreateGame = () => {
             setError,
             setLoading,
             isPrivate,
+            reactGA,
           })
         }
       >

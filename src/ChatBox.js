@@ -3,13 +3,19 @@ import { SendIcon, BackIcon } from "./icons";
 import { Swipeable } from "react-swipeable";
 import styled from "styled-components";
 
-function handleSubmit({ e, inputRef, socket, myName, setMessages }) {
+function handleSubmit({ e, inputRef, socket, myName, setMessages, reactGA }) {
   e.preventDefault();
 
   const msg = inputRef.current.value;
   if (!msg.trim()) {
     return;
   }
+
+  reactGA.event({
+    category: "Game",
+    action: "Sent a chat message",
+    label: msg,
+  });
 
   setMessages((oldMessages) => [...oldMessages, { msg, from: myName }]);
 
@@ -56,7 +62,7 @@ const getOverlayStyles = ({ chatOpen }) => {
   return null;
 };
 
-const ChatBox = ({ chatOpen, setChatOpen, socket, myName, setUnreadCount }) => {
+const ChatBox = ({ chatOpen, setChatOpen, socket, myName, setUnreadCount, reactGA }) => {
   const inputRef = useRef(null);
   const wrapperRef = useRef(null);
   const scrollRef = useRef(null);
@@ -69,7 +75,7 @@ const ChatBox = ({ chatOpen, setChatOpen, socket, myName, setUnreadCount }) => {
         setUnreadCount(1);
       });
     }
-  }, [socket]);
+  }, [socket, setUnreadCount]);
 
   useEffect(() => {
     if (chatOpen) {
@@ -81,7 +87,7 @@ const ChatBox = ({ chatOpen, setChatOpen, socket, myName, setUnreadCount }) => {
     if (chatOpen && document && !document.hidden) {
       setUnreadCount(0);
     }
-  }, [chatOpen, messages]);
+  }, [chatOpen, messages, setUnreadCount]);
 
   useEffect(() => {
     const xH = scrollRef.current.scrollHeight;
@@ -138,7 +144,7 @@ const ChatBox = ({ chatOpen, setChatOpen, socket, myName, setUnreadCount }) => {
           </MessageGroup>
           <Form
             onSubmit={(e) =>
-              handleSubmit({ e, inputRef, socket, myName, setMessages })
+              handleSubmit({ e, inputRef, socket, myName, setMessages, reactGA })
             }
           >
             <Input ref={inputRef} type="text" placeholder="Please be nice!" />

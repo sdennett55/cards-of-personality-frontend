@@ -13,14 +13,13 @@ import BlackCardDrop from "./black_card_drop";
 import NamePopup from "./NamePopup";
 // import GeneratePreview from './generate_preview';
 import { ToastContainer, toast, Slide } from "react-toastify";
-import ReactGA from "react-ga";
 import { MAX_PLAYERS } from "./data";
 import { withRouter } from "react-router-dom";
 import styled, { createGlobalStyle, keyframes } from "styled-components";
 import io from "socket.io-client";
 import axios from "axios";
 import queryString from "query-string";
-import { CLIENT_URL, SERVER_URL } from "./helpers";
+import { SERVER_URL } from "./helpers";
 import ChatBox from "./ChatBox";
 import "./Game.css";
 import "react-toastify/dist/ReactToastify.min.css";
@@ -60,11 +59,6 @@ class Game extends React.PureComponent {
   roomId = null;
 
   componentDidMount() {
-    // initialize analytics
-    if (process.env.NODE_ENV === "production") {
-      this.initializeReactGA();
-    }
-
     this.setState({
       cardDimensions: {
         width: this.whiteCardRef.current.offsetWidth,
@@ -73,6 +67,8 @@ class Game extends React.PureComponent {
         left: this.whiteCardRef.current.getBoundingClientRect().left,
       },
     });
+
+    this.props.reactGA.pageview("/g");
 
     if (!this.socket) {
       // start socket connection
@@ -255,6 +251,8 @@ class Game extends React.PureComponent {
   }
 
   componentWillUnmount() {
+    this.socket.off("get initialCards for game");
+    this.socket.off("disconnect");
     this.socket.off("name change");
     this.socket.off("user disconnected");
     this.socket.off("new connection");
@@ -266,6 +264,7 @@ class Game extends React.PureComponent {
     this.socket.off("player rejoins");
     this.socket.off("dropped in player drop");
     this.socket.off("draw seven white cards update");
+    this.socket.off("joined a room");
   }
 
   state = {
@@ -287,11 +286,6 @@ class Game extends React.PureComponent {
   };
 
   whiteCardRef = React.createRef();
-
-  initializeReactGA = () => {
-    ReactGA.initialize("UA-171045081-1");
-    ReactGA.pageview("/game");
-  };
 
   getTheCurrentHost = (index) => this.setState({ currentHost: index });
 
@@ -325,9 +319,7 @@ class Game extends React.PureComponent {
             if (player.blackCards) {
               // if another player already has the blackCard, remove it from them
               player.blackCards = player.blackCards.filter((blackCard) => {
-                if (blackCard.text !== passedInCard.text) {
-                  return blackCard;
-                }
+                return blackCard.text !== passedInCard.text
               });
             }
           }
@@ -429,6 +421,11 @@ class Game extends React.PureComponent {
       myCards: newMyCards,
     });
 
+    this.props.reactGA.event({
+      category: "Game",
+      action: 'Player submitted a card',
+    });
+
     this.socket.emit("submitted a card", {
       socketId: this.socket.id,
       passedInCard,
@@ -524,7 +521,7 @@ class Game extends React.PureComponent {
         id: this.socket.id,
       });
 
-      ReactGA.event({
+      this.props.reactGA.event({
         category: "Game",
         action: "Submitted A Name",
         label: this.state.myName,
@@ -611,7 +608,7 @@ class Game extends React.PureComponent {
             updateMyName={this.updateMyName}
             myName={this.state.myName}
             nameError={this.state.nameError}
-            reactGA={ReactGA}
+            reactGA={this.props.reactGA}
           />
         )}
         <DndProvider
@@ -725,7 +722,7 @@ class Game extends React.PureComponent {
           transition={Slide}
           pauseOnFocusLoss={false}
         />
-        <ChatBox chatOpen={this.state.chatOpen} setChatOpen={this.setChatOpen} socket={this.socket} myName={this.state.myName} setUnreadCount={this.setUnreadCount} />
+        <ChatBox chatOpen={this.state.chatOpen} setChatOpen={this.setChatOpen} socket={this.socket} myName={this.state.myName} setUnreadCount={this.setUnreadCount} reactGA={this.props.reactGA} />
       </div>
     );
   }

@@ -72,7 +72,7 @@ const getCardsLength = ({ type, deckTable }) => {
   )
 }
 
-const addCard = ({ e, setIsLoading, deckTable, type, text, setDeckTable, location, setError, setWhiteCard, setBlackCard, defaultLocation }) => {
+const addCard = ({ e, setIsLoading, deckTable, type, text, setDeckTable, location, setError, setWhiteCard, setBlackCard, defaultLocation, reactGA }) => {
   e.preventDefault();
 
   if (!text.trim().length) {
@@ -99,6 +99,12 @@ const addCard = ({ e, setIsLoading, deckTable, type, text, setDeckTable, locatio
       setDeckTable(deckTable => [...deckTable, { type, text }])
       setError('');
 
+      reactGA.event({
+        category: "Deck",
+        action: `Added a ${type} card to the ${deckName} deck`,
+        label: text,
+      });
+
       if (type === 'black') {
         setBlackCard('');
       } else {
@@ -123,7 +129,7 @@ const Title = ({ location }) => {
   }
 }
 
-const EditADeck = ({ title }) => {
+const EditADeck = ({ title, reactGA }) => {
   const [whiteCard, setWhiteCard] = useState('');
   const [blackCard, setBlackCard] = useState('');
   const [initialDecks, setInitialDecks] = useState([]);
@@ -177,7 +183,7 @@ const EditADeck = ({ title }) => {
       checkSecret();
     }
 
-  }, [location])
+  }, [location, defaultLocation])
   return (
     <Page>
       <GlobalStyle />
@@ -192,7 +198,7 @@ const EditADeck = ({ title }) => {
             <>
               <p><em>This deck has {getCardsLength({ type: 'white', deckTable })} and {getCardsLength({ type: 'black', deckTable })}</em></p>
 
-              <Form onSubmit={e => addCard({ e, setIsLoading, deckTable, type: 'white', text: whiteCard, initialDecks, setFilteredDecks, setDeckTable, location, setError, setWhiteCard, defaultLocation })}>
+              <Form onSubmit={e => addCard({ e, setIsLoading, deckTable, type: 'white', text: whiteCard, initialDecks, setFilteredDecks, setDeckTable, location, setError, setWhiteCard, defaultLocation, reactGA })}>
                 <InputWithLabel
                   type="white"
                   whiteCard={whiteCard}
@@ -205,7 +211,7 @@ const EditADeck = ({ title }) => {
               </Form>
               {error && error.includes('white') && <ErrorText>{error}</ErrorText>}
 
-              <Form onSubmit={e => addCard({ e, setIsLoading, deckTable, type: 'black', text: blackCard, initialDecks, setFilteredDecks, setDeckTable, location, setError, setBlackCard, defaultLocation })}>
+              <Form onSubmit={e => addCard({ e, setIsLoading, deckTable, type: 'black', text: blackCard, initialDecks, setFilteredDecks, setDeckTable, location, setError, setBlackCard, defaultLocation, reactGA })}>
                 <InputWithLabel
                   type="black"
                   blackCard={blackCard}
@@ -223,7 +229,7 @@ const EditADeck = ({ title }) => {
               <p>Deck not found. Would you like to create one?</p>
               <Link to="/create-deck">Create Deck</Link>
             </>
-          ) : error && error.includes('permissions') || error.includes('exist') ? (
+          ) : error && (error.includes('permissions') || error.includes('exist')) ? (
             <ErrorText>{error}</ErrorText>
           ) : (
                   <p>Loading...</p>

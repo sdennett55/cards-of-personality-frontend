@@ -49,7 +49,7 @@ const PlayerDropWrap = styled.div`
   position: relative;
   width: calc(25% - 1em);
   margin: 0.5em;
-  
+
   @media (max-width: 500px) and (orientation: portrait) {
     max-width: calc(25vh - 50px - 1em)
   }
@@ -89,7 +89,7 @@ const getBlackCardLength = ({ players, index }) => {
 const PlayerDrop = ({ index, winningPlayerIndex, myName, players, socket, addCardToPlayer, userIsDragging, setUserIsDragging }) => {
   const [{ isOver }, drop] = useDrop({
     accept: ['blackCard', 'blackCardFromPlayer'],
-    drop: (item, monitor) => {
+    drop: (item) => {
       addCardToPlayer(item, players[index]);
     },
     collect: monitor => ({

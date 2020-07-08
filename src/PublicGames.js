@@ -11,7 +11,6 @@ const PublicGames = () => {
     axios
       .get(`${SERVER_URL}/api/getPublicRooms`)
       .then((res) => {
-        console.log(res.data);
         setData(res.data);
         setError("");
       })
@@ -35,7 +34,7 @@ const PublicGames = () => {
         <tbody>
           {Object.keys(data).length > 0 &&
             Object.entries(data).map(([roomName, { players }]) => (
-              <tr>
+              <tr key={roomName}>
                 <td>{roomName}</td>
                 <td>{`${players.length}/8`}</td>
                 <FlexCell>
