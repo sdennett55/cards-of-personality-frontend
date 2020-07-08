@@ -107,7 +107,7 @@ const Title = styled.h2`
 
 const List = styled.ol`
   text-align: left;
-  padding-left: 1em;
+  padding-left: 1.25em;
   margin-top: 0;
 
   li {
