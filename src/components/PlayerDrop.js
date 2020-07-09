@@ -37,7 +37,7 @@ const CardElement = styled.div`
   align-items: center;
   padding: 1em;
   border: 2px dashed #000;
-  transition: background .25s;
+  transition: background .25s, transform .25s;
 `;
 
 const Wrap = styled.div`
@@ -87,20 +87,20 @@ const getBlackCardLength = ({ players, index }) => {
 }
 
 const PlayerDrop = ({ index, winningPlayerIndex, myName, players, socket, addCardToPlayer, userIsDragging, setUserIsDragging }) => {
-  const [{ isOver  }, drop] = useDrop({
+  const [{ isOver }, drop] = useDrop({
     accept: ['blackCard', 'blackCardFromPlayer'],
     drop: (item) => {
       addCardToPlayer(item, players[index]);
     },
     collect: monitor => ({
-      isOver: !!monitor.isOver()  && userIsDragging === 'blackCard',
+      isOver: !!monitor.isOver(),
     }),
   })
 
   return (
     <PlayerDropWrap>
       <Wrap ref={drop}>
-        <CardElement style={{ background: userIsDragging === 'blackCard' ? '#2cce9f' : null }}>
+        <CardElement style={{ background: userIsDragging === 'blackCard' || userIsDragging === 'blackCardFromPlayer' ? '#2cce9f' : null, transform: isOver ? 'scale(1.1)' : null }}>
           <PlayerName style={{ margin: 0 }}>{`${getBlackCardLength({ players, index })} ${getPlayerName({ myName, players, index, socket })}`}</PlayerName>
         </CardElement>
         {index === winningPlayerIndex && (
