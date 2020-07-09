@@ -753,12 +753,9 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-const moveToBottom = (cardDimensions) => keyframes`
+const moveToBottom = keyframes`
   0% {
     transform: translate3d(0, 0, 0);
-    opacity: 1;
-  }
-  99% {
     opacity: 1;
   }
   100% {
@@ -770,7 +767,7 @@ const AnimatedDraw = styled.div`
   position: fixed;
   pointer-events: none;
   z-index: 999;
-  animation: .2s ${props => moveToBottom(props.cardDimensions)} linear ${props => props.myCards.length} forwards;
+  animation: .2s ${moveToBottom} linear ${props => props.myCards.length} forwards;
 `;
 
 const Table = styled.div`
