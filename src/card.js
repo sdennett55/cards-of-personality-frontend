@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 const CardElement = styled.div`
@@ -38,11 +37,5 @@ const Card = ({ bgColor, color, text }) => {
 
   )
 }
-// Card.propTypes = {
-//   opaqueOnPickup: PropTypes.bool,
-// }
-// Card.defaultProps = {
-//   opaqueOnPickup: true,
-// }
 
 export default Card;

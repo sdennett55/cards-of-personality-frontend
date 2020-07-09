@@ -1,7 +1,6 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { MAX_PLAYERS } from "./data";
+import { MAX_PLAYERS } from "../constants";
 
 const CardElement = styled.div`
   position: absolute;
@@ -52,11 +51,5 @@ const BlankPlayerCard = ({count, index}) => {
 
   )
 }
-// BlankPlayerCard.propTypes = {
-//   opaqueOnPickup: PropTypes.bool,
-// }
-// BlankPlayerCard.defaultProps = {
-//   opaqueOnPickup: true,
-// }
 
 export default BlankPlayerCard;

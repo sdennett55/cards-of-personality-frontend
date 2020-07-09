@@ -1,6 +1,6 @@
 import React from 'react';
 import { ToastContainer, toast, Slide } from "react-toastify";
-import { HelpIcon } from "./icons";
+import { HelpIcon } from "../icons";
 import styled, { createGlobalStyle } from "styled-components";
 
 const PrivacyCheck = ({ setIsPrivate, title, toastText }) => {

@@ -3699,11 +3699,6 @@ dnd-core@^10.0.2:
     "@react-dnd/invariant" "^2.0.0"
     redux "^4.0.4"
 
-dnd-multi-backend@^5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/dnd-multi-backend/-/dnd-multi-backend-5.0.0.tgz#afa73e541bf434cbf1a46ac717b2b9a580b5f19f"
-  integrity sha512-an4231UOPvipbcVXczXUHf1u3SNSTouSbu6ZLCPJvAO29yIo3C43ddS2evK5aastg2qKWTOlzI52IGq7q5oGGA==
-
 dns-equal@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/dns-equal/-/dns-equal-1.0.0.tgz#b39e7f1da6eb0a75ba9c17324b34753c47e0654d"
@@ -8738,29 +8733,6 @@ react-dev-utils@^10.2.1:
     shell-quote "1.7.2"
     strip-ansi "6.0.0"
     text-table "0.2.0"
-
-react-dnd-html5-backend@^10.0.2:
-  version "10.0.2"
-  resolved "https://registry.yarnpkg.com/react-dnd-html5-backend/-/react-dnd-html5-backend-10.0.2.tgz#15cb9d2b923f43576a136df854e288cb5969784c"
-  integrity sha512-ny17gUdInZ6PIGXdzfwPhoztRdNVVvjoJMdG80hkDBamJBeUPuNF2Wv4D3uoQJLjXssX1+i9PhBqc7EpogClwQ==
-  dependencies:
-    dnd-core "^10.0.2"
-
-react-dnd-multi-backend@^5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/react-dnd-multi-backend/-/react-dnd-multi-backend-5.0.0.tgz#eeb186ac32f46dd2f0ed720b653978d9e1fdfb5c"
-  integrity sha512-Ql8JKAmFnzzKLxOYUTIQVQZeQd1shbZKJiEbkDY5Vte3hY/YFdv+qs2IDxeH2LX2itBYrnEIgWYcRBacPtPeag==
-  dependencies:
-    dnd-multi-backend "^5.0.0"
-    prop-types "^15.7.2"
-    react-dnd-preview "^5.0.0"
-
-react-dnd-preview@^5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/react-dnd-preview/-/react-dnd-preview-5.0.0.tgz#a3a693c27195885a9f7413ccddf46a6fc5ef665a"
-  integrity sha512-TYXOsLUuEQpwAoxjPLWi+3bXsYGUBAslBFChUN6xyH11/ogsrQ9UrBIFf6uON7wmf2azsLAuWglfffXlZXSRsg==
-  dependencies:
-    prop-types "^15.7.2"
 
 react-dnd-touch-backend@^10.0.2:
   version "10.0.2"

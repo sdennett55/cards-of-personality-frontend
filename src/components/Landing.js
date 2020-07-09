@@ -2,8 +2,8 @@ import React, { useRef, useState } from "react";
 import { useHistory, Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import axios from "axios";
-import { SERVER_URL } from "./helpers";
-import {LogoIcon} from "./icons";
+import { SERVER_URL } from "../constants";
+import { LogoIcon } from "../icons";
 import styled, { createGlobalStyle } from "styled-components";
 
 const MIN_ROOM_NAME_CHARS = 2;
@@ -104,24 +104,24 @@ const Landing = ({ title }) => {
         <OrTextWrap>
           <OrText>OR</OrText>
         </OrTextWrap>
-        <BlueButton
-          type="button"
-          to="/games"
-        >
+        <BlueButton type="button" to="/games">
           Public Games
         </BlueButton>
       </Form>
-      <OrangeButton to="/create-game">
-        Create Game
-      </OrangeButton>
-      <PinkButton to="/how-to-play">
-        How To Play
-      </PinkButton>
+      <OrangeButton to="/create-game">Create Game</OrangeButton>
+      <PinkButton to="/how-to-play">How To Play</PinkButton>
       <WhiteButton to="/create-deck">
         Create Deck <BETAText>BETA</BETAText>
       </WhiteButton>
       {/* <AltButton onClick={() => history.push('/create-deck')}>Create Deck</AltButton>
       <AltButton onClick={() => history.push('/edit-deck')}>Edit Deck</AltButton> */}
+      <footer>
+        <FooterText>
+          Completely free and <InlineLink href="https://github.com/sdennett55/cards-of-personality-frontend" target="_blank" rel="noopener noreferrer">open sourced</InlineLink>. No ads, accounts, or
+          subscriptions. If you enjoyed the game and want to say thanks you can{" "}
+          <InlineLink href="https://www.buymeacoffee.com/steved" target="_blank" rel="noopener noreferrer">buy me a beer!</InlineLink>
+        </FooterText>
+      </footer>
     </LandingWrapper>
   );
 };
@@ -135,6 +135,7 @@ const GlobalStyle = createGlobalStyle`
     display: flex;
     flex-direction: column;
     justify-content: center;
+    padding: 0;
   }
   button,
   input {
@@ -142,9 +143,25 @@ const GlobalStyle = createGlobalStyle`
     border: 0;
   }
 `;
+const FooterText = styled.p`
+  color: #fff;
+  font-size: .8em;
+  font-style: italic;
+  margin: 2em 0 0;
+  max-width: 360px;
+  line-height: 1.3;
+`
+const InlineLink = styled.a`
+  color: #2cce9f;
+
+  &:hover,
+  &:focus {
+    text-decoration: none;
+  }
+`;
 const BETAText = styled.sup`
   color: #2cce9f;
-  font-size: .7em;
+  font-size: 0.7em;
   font-weight: bold;
 `;
 const LandingWrapper = styled.div`
@@ -178,14 +195,14 @@ const GameExistsMessage = styled.p`
 
 const OrangeButton = styled(Link)`
   display: block;
-  background: rgb(255,140,0);
+  background: rgb(255, 140, 0);
   appearance: none;
   color: #000;
   font-size: 1em;
   border: 0;
   padding: 0.7em 1em;
   border-radius: 8px;
-  margin: 1em 0;
+  margin: .75em 0;
   font-weight: bold;
   transition: opacity 0.25s;
   text-decoration: none;
@@ -205,7 +222,7 @@ const PinkButton = styled(Link)`
   border: 0;
   padding: 0.7em 1em;
   border-radius: 8px;
-  margin: 1em 0;
+  margin: .75em 0;
   font-weight: bold;
   transition: opacity 0.25s;
   text-decoration: none;
@@ -232,12 +249,6 @@ const PinkButton = styled(Link)`
     opacity: 0.5;
     outline: 0;
   }
-`
-const LetterP = styled.span`
-  margin-right: -0.04em;
-`;
-const LetterY = styled.span`
-  margin-left: 0.02em;
 `;
 const GreenButton = styled.button`
   display: block;
@@ -268,7 +279,7 @@ const WhiteButton = styled(Link)`
   border: 0;
   padding: 0.7em 1em;
   border-radius: 8px;
-  margin: 1em 0.5em;
+  margin: .75em 0.5em;
   font-weight: bold;
   transition: opacity 0.25s;
   text-decoration: none;
@@ -289,7 +300,7 @@ const BlueButton = styled(Link)`
   border: 0;
   padding: 0.7em 1em;
   border-radius: 8px;
-  margin: 1em 0;
+  margin: 1em 0 .75em;
   font-weight: bold;
   transition: opacity 0.25s;
   text-decoration: none;
@@ -330,7 +341,7 @@ const JoinGameInput = styled.input`
   padding: 0.35em 0.25em;
   border: 2px solid transparent;
   text-align: center;
-  transition: border-color .25s;
+  transition: border-color 0.25s;
   max-width: 120px;
   font-size: 1em;
 

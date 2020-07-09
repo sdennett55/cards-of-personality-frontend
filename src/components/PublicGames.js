@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { SERVER_URL } from "./helpers";
+import { SERVER_URL } from "../constants";
 import { Link } from "react-router-dom";
 import styled, { createGlobalStyle } from "styled-components";
 
@@ -11,7 +11,6 @@ const PublicGames = () => {
     axios
       .get(`${SERVER_URL}/api/getPublicRooms`)
       .then((res) => {
-        console.log(res.data);
         setData(res.data);
         setError("");
       })
@@ -35,7 +34,7 @@ const PublicGames = () => {
         <tbody>
           {Object.keys(data).length > 0 &&
             Object.entries(data).map(([roomName, { players }]) => (
-              <tr>
+              <tr key={roomName}>
                 <td>{roomName}</td>
                 <td>{`${players.length}/8`}</td>
                 <FlexCell>
@@ -45,7 +44,7 @@ const PublicGames = () => {
             ))}
             {Object.keys(data).length === 0 && (
               <tr>
-                <td colspan="3" style={{textAlign: 'center', height: '51px'}}>
+                <td colSpan="3" style={{textAlign: 'center', height: '51px'}}>
                   No games available.
                 </td>
               </tr>
@@ -87,11 +86,12 @@ const Table = styled.table`
   text-align: left;
   border-collapse: collapse;
   color: #fff;
+  border: 1px solid rgb(64,224,208);
 
   thead {
     color: #000;
     th {
-      padding: 0.5em;
+      padding: .5em 1em;
       background: rgb(64, 224, 208);
 
       &:first-child {
@@ -109,7 +109,7 @@ const Table = styled.table`
     vertical-align: middle;
   }
   tbody > tr > td {
-    padding: 0.5em;
+    padding: 0.5em 1em;
   }
   p {
     margin: 0.25em 0;
@@ -160,6 +160,7 @@ const GreenButton = styled(Link)`
   font-weight: bold;
   transition: opacity 0.25s;
   text-decoration: none;
+  text-align: center;
 
   &:hover,
   &:focus,

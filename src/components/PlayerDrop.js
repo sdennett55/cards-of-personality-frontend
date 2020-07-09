@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useDrop } from 'react-dnd';
-import { MAX_PLAYERS } from './data';
-import DraggableCard from './draggable_card';
-import { Confetti } from './icons';
+import { MAX_PLAYERS } from '../constants';
+import DraggableCard from './DraggableCard';
+import { Confetti } from '../icons';
 
 const PlayerName = styled.p`
   margin: 0px;
@@ -37,7 +37,7 @@ const CardElement = styled.div`
   align-items: center;
   padding: 1em;
   border: 2px dashed #000;
-  transition: background .25s;
+  transition: background .25s, transform .25s;
 `;
 
 const Wrap = styled.div`
@@ -49,7 +49,7 @@ const PlayerDropWrap = styled.div`
   position: relative;
   width: calc(25% - 1em);
   margin: 0.5em;
-  
+
   @media (max-width: 500px) and (orientation: portrait) {
     max-width: calc(25vh - 50px - 1em)
   }
@@ -89,18 +89,18 @@ const getBlackCardLength = ({ players, index }) => {
 const PlayerDrop = ({ index, winningPlayerIndex, myName, players, socket, addCardToPlayer, userIsDragging, setUserIsDragging }) => {
   const [{ isOver }, drop] = useDrop({
     accept: ['blackCard', 'blackCardFromPlayer'],
-    drop: (item, monitor) => {
+    drop: (item) => {
       addCardToPlayer(item, players[index]);
     },
     collect: monitor => ({
-      isOver: !!monitor.isOver() && userIsDragging === 'blackCard',
+      isOver: !!monitor.isOver(),
     }),
   })
 
   return (
     <PlayerDropWrap>
       <Wrap ref={drop}>
-        <CardElement style={{ background: isOver || userIsDragging === 'blackCard' ? '#2cce9f' : null }}>
+        <CardElement style={{ background: userIsDragging === 'blackCard' || userIsDragging === 'blackCardFromPlayer' ? '#2cce9f' : null, transform: isOver ? 'scale(1.05)' : null }}>
           <PlayerName style={{ margin: 0 }}>{`${getBlackCardLength({ players, index })} ${getPlayerName({ myName, players, index, socket })}`}</PlayerName>
         </CardElement>
         {index === winningPlayerIndex && (

@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import Logo from './logo';
 import styled from 'styled-components';
-import { LogoIconInCard } from './icons';
+import { LogoIconInCard } from '../icons';
 import { useDrag } from 'react-dnd';
-import {TouchIcon} from "./icons";
+import {TouchIcon} from "../icons";
 
 const CardElement = styled.div`
   transition: transform .35s, z-index 0s .35s;

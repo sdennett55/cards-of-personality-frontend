@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { CLIENT_URL } from "./helpers";
-import { CopyIcon, HelpIcon } from "./icons";
+import { CLIENT_URL } from "../constants";
+import { CopyIcon } from "../icons";
 import HowToPlay from "./HowToPlay";
 import styled from "styled-components";
 
@@ -16,14 +16,7 @@ const NamePopup = ({
 }) => {
   const [isVisible, setIsVisible] = useState(false);
   const PopupElement = isVisible ? HelpPopup : Popup;
-  const handleHowToPlay = () => {
-    setIsVisible((toggle) => !toggle);
-    reactGA.event({
-      category: "Game",
-      action: "Opened Help Menu",
-      label: myName,
-    });
-  };
+
   return (
     <PopupElement>
       {isVisible ? (
@@ -57,12 +50,6 @@ const NamePopup = ({
               <JoinGameButton type="submit">JOIN GAME</JoinGameButton>
             </PopupInnerWrap>
           </form>
-          {/* <HowToPlayButton type="button" onClick={handleHowToPlay}>
-            <HelpIconWrap>
-              <HelpIcon />
-            </HelpIconWrap>{" "}
-            HOW TO PLAY
-          </HowToPlayButton> */}
         </>
       )}
     </PopupElement>
@@ -112,11 +99,6 @@ const ErrorMsg = styled.p`
   color: #cc2e2e;
 `;
 
-const HelpIconWrap = styled.span`
-  margin-right: 0.25em;
-  display: flex;
-  justify-content: center;
-`;
 const IconWrap = styled.button`
   appearance: none;
   background: #2cce9f;
@@ -170,29 +152,6 @@ const NameLabel = styled.label`
   text-transform: uppercase;
   font-size: 0.813em;
   color: #c1bdbd;
-`;
-
-const HowToPlayButton = styled.button`
-  display: flex;
-  appearance: none;
-  background: #2cce9f;
-  color: #000;
-  font-size: 1em;
-  border: 0;
-  padding: 0.7em 1em;
-  border-radius: 8px;
-  margin: 2em auto 0;
-  transition: opacity 0.25s;
-  background-color: rgb(255, 0, 128);
-
-  &:hover,
-  &:focus {
-    opacity: 0.5;
-  }
-  &:focus {
-    outline: 0;
-    border-color: #2cce9f;
-  }
 `;
 
 const InviteInput = styled.input`
