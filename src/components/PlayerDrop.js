@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useDrop } from 'react-dnd';
-import { MAX_PLAYERS } from './constants';
-import DraggableCard from './draggable_card';
-import { Confetti } from './icons';
+import { MAX_PLAYERS } from '../constants';
+import DraggableCard from './DraggableCard';
+import { Confetti } from '../icons';
 
 const PlayerName = styled.p`
   margin: 0px;

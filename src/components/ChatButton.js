@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { ChatIcon } from "./icons";
+import { ChatIcon } from "../icons";
 import styled from "styled-components";
 
 const pageTitle = document.title;

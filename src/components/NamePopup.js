@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { CLIENT_URL } from "./constants";
-import { CopyIcon } from "./icons";
+import { CLIENT_URL } from "../constants";
+import { CopyIcon } from "../icons";
 import HowToPlay from "./HowToPlay";
 import styled from "styled-components";
 

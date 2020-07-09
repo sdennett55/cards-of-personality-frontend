@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { SERVER_URL } from "./constants";
+import { SERVER_URL } from "../constants";
 import { Link } from "react-router-dom";
 import styled, { createGlobalStyle } from "styled-components";
 

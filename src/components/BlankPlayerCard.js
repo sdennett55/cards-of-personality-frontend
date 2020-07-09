@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { MAX_PLAYERS } from "./constants";
+import { MAX_PLAYERS } from "../constants";
 
 const CardElement = styled.div`
   position: absolute;

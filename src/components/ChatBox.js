@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { SendIcon, BackIcon } from "./icons";
+import { SendIcon, BackIcon } from "../icons";
 import { Swipeable } from "react-swipeable";
 import styled from "styled-components";
 

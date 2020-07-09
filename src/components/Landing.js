@@ -2,8 +2,8 @@ import React, { useRef, useState } from "react";
 import { useHistory, Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import axios from "axios";
-import { SERVER_URL } from "./constants";
-import { LogoIcon } from "./icons";
+import { SERVER_URL } from "../constants";
+import { LogoIcon } from "../icons";
 import styled, { createGlobalStyle } from "styled-components";
 
 const MIN_ROOM_NAME_CHARS = 2;
