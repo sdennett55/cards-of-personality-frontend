@@ -160,25 +160,27 @@ class Game extends React.PureComponent {
     // send that specific user the latest server states
     this.socket.on(
       "new connection",
-      ({ players, blackCards, whiteCards, submittedCards }) => {
-        if (whiteCards && whiteCards.length > 0) {
-          this.setState({ whiteCards });
+      ({ players, blackCards, whiteCards, submittedCards, socketId }) => {
+        if (this.socket.id === socketId) {
+          if (whiteCards && whiteCards.length > 0) {
+            this.setState({ whiteCards });
+          }
+
+          if (blackCards && blackCards.length > 0) {
+            this.setState({ blackCards });
+          }
+
+          if (submittedCards && submittedCards.length > 0) {
+            this.setState({ submittedCards });
+          }
+
+          console.log("new connection!", players);
+
+          this.setState(() => ({
+            players,
+            socketConnected: true,
+          }));
         }
-
-        if (blackCards && blackCards.length > 0) {
-          this.setState({ blackCards });
-        }
-
-        if (submittedCards && submittedCards.length > 0) {
-          this.setState({ submittedCards });
-        }
-
-        console.log("new connection!", players);
-
-        this.setState(() => ({
-          players,
-          socketConnected: true,
-        }));
       }
     );
 
