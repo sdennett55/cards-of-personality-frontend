@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import styled, {createGlobalStyle} from "styled-components";
+import styled, { createGlobalStyle } from "styled-components";
 
 const HowToPlay = ({ isPage, setIsVisible }) => {
   return (
@@ -14,23 +14,18 @@ const HowToPlay = ({ isPage, setIsVisible }) => {
       </TLDR>
       <List style={{ textAlign: "left" }}>
         <li>
-          Drag 7 white cards to the bottom bar. Each player can have 7 white
-          cards at all times.
-        </li>
-        <li>
-          The first player to enter the room is the judge; they flip the big
+          The first player to enter the room is the judge. They flip the big
           black card and read it out loud to start the round.
         </li>
         <li>
-          Tap the bottom bar to view your deck. Everyone but the judge can
-          submit a single white card that they think fits the black card the
-          best.
+          Tap the bottom bar to view your deck. Everyone but the judge submits a
+          single white card that fits the black card the best.
         </li>
         <li>
-          Once everyone has submitted a card, everyone including the judge goes
-          to the "Submitted Cards" screen by tapping the bottom bar within their
-          deck where the judge proceeds to re-read the black card and then taps
-          on each submitted card one at a time for all to admire or condemn.{" "}
+          Once everyone has submitted a card, everyone goes to the "Submitted
+          Cards" screen by tapping the bottom bar within their deck where the
+          judge proceeds to re-read the black card and then taps on each
+          submitted card one at a time for all to admire or condemn.{" "}
         </li>
         <li>
           The judge announces a winner whereby all submitted white cards should
@@ -38,19 +33,21 @@ const HowToPlay = ({ isPage, setIsVisible }) => {
           screen to their player slot{" "}
         </li>
         <li>
+          Each player that submitted a card must may another white card. Players
+          can have 7 white cards in their deck at all times.
+        </li>
+        <li>
           The next judge then flips the black card to start the next round.
-          First player to have 7 black cards in their player slot wins.{" "}
+          First player to have 7 black cards in their player slot wins!{" "}
         </li>
       </List>
       {isPage ? (
-        <LinkButton to="/">
-          Got it!
-        </LinkButton>
+        <LinkButton to="/">Got it!</LinkButton>
       ) : (
-          <Button type="button" onClick={() => setIsVisible(false)}>
-            Got it!
-          </Button>
-        )}
+        <Button type="button" onClick={() => setIsVisible(false)}>
+          Got it!
+        </Button>
+      )}
     </Wrapper>
   );
 };
