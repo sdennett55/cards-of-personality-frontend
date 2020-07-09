@@ -294,7 +294,7 @@ const SendButton = styled.button`
 `;
 
 const Wrapper = styled.div`
-  background: #e5e5e5;
+  background: #dcdbdb;
   display: flex;
   flex-direction: column;
   justify-content: space-between;

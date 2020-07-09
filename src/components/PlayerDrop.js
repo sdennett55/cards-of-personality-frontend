@@ -100,7 +100,7 @@ const PlayerDrop = ({ index, winningPlayerIndex, myName, players, socket, addCar
   return (
     <PlayerDropWrap>
       <Wrap ref={drop}>
-        <CardElement style={{ background: userIsDragging === 'blackCard' || userIsDragging === 'blackCardFromPlayer' ? '#2cce9f' : null, transform: isOver ? 'scale(1.1)' : null }}>
+        <CardElement style={{ background: userIsDragging === 'blackCard' || userIsDragging === 'blackCardFromPlayer' ? '#2cce9f' : null, transform: isOver ? 'scale(1.05)' : null }}>
           <PlayerName style={{ margin: 0 }}>{`${getBlackCardLength({ players, index })} ${getPlayerName({ myName, players, index, socket })}`}</PlayerName>
         </CardElement>
         {index === winningPlayerIndex && (

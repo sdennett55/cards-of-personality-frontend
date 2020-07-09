@@ -756,7 +756,7 @@ const GlobalStyle = createGlobalStyle`
   }
   body {
     height: 100%;
-    background: #e5e5e5;
+    background: #dcdbdb;
     border: 0;
     padding: 0;
   }
