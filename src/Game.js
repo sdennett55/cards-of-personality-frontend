@@ -762,7 +762,7 @@ const moveToBottom = (cardDimensions) => keyframes`
     opacity: 1;
   }
   100% {
-    transform: translate3d(calc(${window ? `${window.innerWidth / 2 - 25}px` : 0} - ${cardDimensions?.left}px - 50%), calc(${window ? `${window.innerHeight - 25}px` : 0} - ${cardDimensions?.top}px - 50%), 0);
+    transform: translate3d(0, 200%, 0);
     opacity: 0;
   }
 `;
