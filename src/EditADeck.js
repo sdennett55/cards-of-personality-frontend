@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import queryString from "query-string";
-import { SERVER_URL } from './helpers';
+import { SERVER_URL } from './constants';
 import InputWithLabel from './InputWithLabel';
 import styled, { createGlobalStyle } from 'styled-components';
 import axios from 'axios';

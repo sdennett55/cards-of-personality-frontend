@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { SERVER_URL } from "./helpers";
+import { SERVER_URL } from "./constants";
 import styled from "styled-components";
 import queryString from "query-string";
 import axios from "axios";

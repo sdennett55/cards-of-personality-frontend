@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useDrop } from 'react-dnd';
-import { MAX_PLAYERS } from './data';
+import { MAX_PLAYERS } from './constants';
 import DraggableCard from './draggable_card';
 import { Confetti } from './icons';
 

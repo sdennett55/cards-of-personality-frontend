@@ -5,10 +5,10 @@ import { useDrop } from "react-dnd";
 import Card from "./card";
 import { BackIcon } from "./icons";
 import DraggableCard from "./draggable_card";
-import BlankCard from "./blank_card";
-import CardWrap from "./card_wrap";
+import BlankCard from "./BlankCard";
+import CardWrap from "./CardWrap";
 import ChatButton from "./ChatButton";
-import { MAX_PLAYERS } from "./data";
+import { MAX_PLAYERS } from "./constants";
 
 const MyCards = styled.button`
   width: calc(100% - 50px);

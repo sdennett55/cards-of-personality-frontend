@@ -41,7 +41,7 @@ class App extends React.Component {
           <Route path="/edit-deck">
             <EditADeck title="Cards of Personality: Edit Deck" reactGA={ReactGA} />
           </Route>
-          <Route path="/admin">
+          <Route path="/admin ">
             <Admin />
           </Route>
           <Route path="/player-info">

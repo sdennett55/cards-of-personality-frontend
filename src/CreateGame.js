@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 import axios from "axios";
-import { SERVER_URL } from "./helpers";
+import { SERVER_URL } from "./constants";
 import PrivacyCheck from "./PrivacyCheck";
 import ChooseADeck from "./ChooseADeck";
 import styled, { createGlobalStyle } from "styled-components";

@@ -1,25 +1,21 @@
 import React from "react";
-// import PropTypes from 'prop-types';
 import DraggableCard from "./draggable_card";
-// import MultiBackend, { Preview } from 'react-dnd-multi-backend';
-// import HTML5toTouch from 'react-dnd-multi-backend/dist/esm/HTML5toTouch';
 import TouchBackend from "react-dnd-touch-backend";
 import { DndProvider } from "react-dnd";
-import MyCardsDropZone from "./my_cards_drop_zone";
-import PlayerDrop from "./player_drop";
-import CardWrap from "./card_wrap";
-import BlankPlayerCard from "./blank_player_card";
-import BlackCardDrop from "./black_card_drop";
+import MyCardsDropZone from "./MyCardsDropZone";
+import PlayerDrop from "./PlayerDrop";
+import CardWrap from "./CardWrap";
+import BlankPlayerCard from "./BlankPlayerCard";
+import BlackCardDrop from "./BlackCardDrop";
 import NamePopup from "./NamePopup";
-// import GeneratePreview from './generate_preview';
 import { ToastContainer, toast, Slide } from "react-toastify";
-import { MAX_PLAYERS } from "./data";
+import { MAX_PLAYERS } from "./constants";
 import { withRouter } from "react-router-dom";
 import styled, { createGlobalStyle, keyframes } from "styled-components";
 import io from "socket.io-client";
 import axios from "axios";
 import queryString from "query-string";
-import { SERVER_URL } from "./helpers";
+import { SERVER_URL } from "./constants";
 import ChatBox from "./ChatBox";
 import "./Game.css";
 import "react-toastify/dist/ReactToastify.min.css";
@@ -161,26 +157,24 @@ class Game extends React.PureComponent {
     this.socket.on(
       "new connection",
       ({ players, blackCards, whiteCards, submittedCards, socketId }) => {
-        if (this.socket.id === socketId) {
-          if (whiteCards && whiteCards.length > 0) {
-            this.setState({ whiteCards });
-          }
-
-          if (blackCards && blackCards.length > 0) {
-            this.setState({ blackCards });
-          }
-
-          if (submittedCards && submittedCards.length > 0) {
-            this.setState({ submittedCards });
-          }
-
-          console.log("new connection!", players);
-
-          this.setState(() => ({
-            players,
-            socketConnected: true,
-          }));
+        if (whiteCards && whiteCards.length > 0) {
+          this.setState({ whiteCards });
         }
+
+        if (blackCards && blackCards.length > 0) {
+          this.setState({ blackCards });
+        }
+
+        if (submittedCards && submittedCards.length > 0) {
+          this.setState({ submittedCards });
+        }
+
+        console.log("new connection!", players);
+
+        this.setState(() => ({
+          players,
+          socketConnected: true,
+        }));
       }
     );
 

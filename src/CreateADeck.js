@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Redirect } from "react-router-dom";
 import { Helmet } from "react-helmet";
-import { SERVER_URL } from "./helpers";
+import { SERVER_URL } from "./constants";
 import axios from "axios";
 import PrivacyCheck from "./PrivacyCheck";
 import ChooseADeck from "./ChooseADeck";
