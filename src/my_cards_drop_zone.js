@@ -14,11 +14,12 @@ const MyCards = styled.button`
   width: calc(100% - 50px);
   height: 50px;
   line-height: 50px;
-  background-color: #000;
-  color: #fff;
+  font-weight: bold;
+  background-color: #fff;
+  color: #000;
   border: 0;
   padding: 0;
-  transition: background 0.25s;
+  transition: background 0.25s, color 0.25s;
 
   &:hover,
   &:focus {
@@ -103,7 +104,6 @@ const SubmittedCardsButton = styled.button`
   &:hover,
   &:focus {
     background: #2cce9f;
-    color: #fff;
     outline: 0;
   }
 `;
@@ -183,46 +183,84 @@ function getBlankSubmittedCards(cards) {
   return arr;
 }
 
-function getMyNameCards({ myCards, userIsDragging, myName }) {
+function getMyNameCards({ myCards, userIsDragging, myName, isOver }) {
+  if (isOver && myCards.length !== 7) {
+    return "DROP IT!";
+  }
   if (myCards.length === 7 && userIsDragging === "whiteCard") {
     return "YOU ALREADY HAVE 7 CARDS";
   }
-
-  return userIsDragging === "whiteCard"
-    ? `DROP ${7 - myCards.length} WHITE CARDS HERE`
-    : `${myName}'S CARDS (${myCards.length})`;
-}
-
-function getMyNameCardsStyle({ myCards, userIsDragging }) {
-  if (myCards.length === 7 && userIsDragging === "whiteCard") {
-    return "#ff2d55";
+  if (userIsDragging === "whiteCard") {
+    const emptyCardsLength = 7 - myCards.length;
+    if (emptyCardsLength === 1) {
+      return `DROP ${emptyCardsLength} WHITE CARD HERE`
+    }
+    return `DROP ${emptyCardsLength} WHITE CARDS HERE`
   }
 
-  return userIsDragging === "whiteCard" ? "#2cce9f" : null;
+  return `${myName}'S CARDS (${myCards.length})`;
 }
 
-function getBottomBarText({ submittedCards, userIsDragging }) {
+function getMyNameCardsStyle({ myCards, userIsDragging, isOver }) {
+  if (isOver && myCards.length !== 7) {
+    return {
+      background: "#2cce9f",
+    };
+  }
+  if (myCards.length === 7 && userIsDragging === "whiteCard") {
+    return {
+      background: "#ff2d55",
+    };
+  }
+
+  if (userIsDragging === "whiteCard") {
+    return {
+      background: "rgb(64,224,208)",
+    };
+  }
+}
+
+function getBottomBarText({ submittedCards, userIsDragging, isOverSubmit }) {
+  if (isOverSubmit && submittedCards.length !== 7) {
+    return "DROP IT!";
+  }
   if (submittedCards.length === 7 && userIsDragging === "whiteCard") {
     return "CARDS ARE FULL";
   }
 
   return userIsDragging === "whiteCard"
-    ? "DROP TO SUBMIT CARD"
+    ? "DROP TO SUBMIT CARD HERE"
     : "Submitted Cards";
 }
 
-function getBottomBarStyles({ submittedCards, userIsDragging }) {
+function getBottomBarStyles({ submittedCards, userIsDragging, isOverSubmit }) {
+  if (isOverSubmit && submittedCards.length !== 7) {
+    return {
+      background: "#2cce9f",
+    };
+  }
   if (submittedCards.length === 7 && userIsDragging === "whiteCard") {
     return {
       background: userIsDragging === "whiteCard" ? "#ff2d55" : null,
-      color: userIsDragging === "whiteCard" ? "#fff" : null,
     };
   }
 
   return {
-    background: userIsDragging === "whiteCard" ? "#2cce9f" : null,
-    color: userIsDragging === "whiteCard" ? "#fff" : null,
+    background: userIsDragging === "whiteCard" ? "rgb(64,224,208)" : null,
   };
+}
+
+function getDiscardStyles({ userIsDragging, isOverDiscard }) {
+  if (isOverDiscard) {
+    return {
+      background: "#2cce9f",
+    };
+  }
+  if (userIsDragging === "whiteCard") {
+    return {
+      background: "rgb(64,224,208)",
+    };
+  }
 }
 
 const MyCardsDropZone = ({
@@ -241,23 +279,32 @@ const MyCardsDropZone = ({
 }) => {
   const [isOpen, setOpen] = useState(false);
   const [isSubmittedTableOpen, setSubmittedTableOpen] = useState(false);
-  const [, drop] = useDrop({
+  const [{ isOver }, drop] = useDrop({
     accept: "whiteCard",
     drop: (item) => {
       addCardToMyCards(item);
     },
+    collect: (monitor) => ({
+      isOver: !!monitor.isOver(),
+    }),
   });
-  const [, submitDropRef] = useDrop({
+  const [{ isOverSubmit }, submitDropRef] = useDrop({
     accept: "whiteCard",
     drop: (item) => {
       submitACard(item);
     },
+    collect: (monitor) => ({
+      isOverSubmit: !!monitor.isOver(),
+    }),
   });
-  const [, discardDropRef] = useDrop({
+  const [{ isOverDiscard }, discardDropRef] = useDrop({
     accept: "whiteCard",
     drop: (item) => {
       discardACard(item);
     },
+    collect: (monitor) => ({
+      isOverDiscard: !!monitor.isOver(),
+    }),
   });
 
   return (
@@ -266,13 +313,16 @@ const MyCardsDropZone = ({
         <MyCards
           onClick={() => setOpen((isOpen) => !isOpen)}
           ref={drop}
-          style={{
-            background: getMyNameCardsStyle({ myCards, userIsDragging }),
-          }}
+          style={getMyNameCardsStyle({ myCards, userIsDragging, isOver })}
         >
-          {getMyNameCards({ myCards, userIsDragging, myName })}
+          {getMyNameCards({ myCards, userIsDragging, myName, isOver })}
         </MyCards>
-        <ChatButton socket={socket} myName={myName} setChatOpen={setChatOpen} unreadCount={unreadCount} />
+        <ChatButton
+          socket={socket}
+          myName={myName}
+          setChatOpen={setChatOpen}
+          unreadCount={unreadCount}
+        />
       </DropZoneWrap>
       <div className={cx("MyCardsContainer", { "is-open": isOpen })}>
         <Wrapper>
@@ -317,9 +367,13 @@ const MyCardsDropZone = ({
                 (isSubmittedTableOpen) => !isSubmittedTableOpen
               )
             }
-            style={getBottomBarStyles({ submittedCards, userIsDragging })}
+            style={getBottomBarStyles({
+              submittedCards,
+              userIsDragging,
+              isOverSubmit,
+            })}
           >
-            {getBottomBarText({ submittedCards, userIsDragging })}
+            {getBottomBarText({ submittedCards, userIsDragging, isOverSubmit })}
           </SubmittedCardsButton>
         </ButtonWrapper>
       </div>
@@ -369,12 +423,9 @@ const MyCardsDropZone = ({
 
           <DiscardButton
             ref={discardDropRef}
-            style={{
-              background: userIsDragging === "whiteCard" ? "#2cce9f" : null,
-              color: userIsDragging === "whiteCard" ? "#fff" : null,
-            }}
+            style={getDiscardStyles({ userIsDragging, isOverDiscard })}
           >
-            DROP TO DISCARD
+            {isOverDiscard ? "DROP IT!" : "DROP TO DISCARD HERE"}
           </DiscardButton>
         </ButtonWrapper>
       </div>

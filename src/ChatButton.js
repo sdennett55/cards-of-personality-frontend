@@ -26,7 +26,7 @@ const ChatIconWrap = styled.button`
   position: relative;
   appearance: none;
   border: 0;
-  background: rgb(64, 224, 208);
+  background: #000;
   padding: 0.5em;
   width: 50px;
   height: 50px;
@@ -34,7 +34,7 @@ const ChatIconWrap = styled.button`
   justify-content: center;
   align-items: center;
   transition: opacity 0.25s;
-
+  color: #fff;
 
   &:hover,
   &:focus {

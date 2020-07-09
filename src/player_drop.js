@@ -87,20 +87,20 @@ const getBlackCardLength = ({ players, index }) => {
 }
 
 const PlayerDrop = ({ index, winningPlayerIndex, myName, players, socket, addCardToPlayer, userIsDragging, setUserIsDragging }) => {
-  const [{ isOver }, drop] = useDrop({
+  const [{ isOver  }, drop] = useDrop({
     accept: ['blackCard', 'blackCardFromPlayer'],
     drop: (item) => {
       addCardToPlayer(item, players[index]);
     },
     collect: monitor => ({
-      isOver: !!monitor.isOver() && userIsDragging === 'blackCard',
+      isOver: !!monitor.isOver()  && userIsDragging === 'blackCard',
     }),
   })
 
   return (
     <PlayerDropWrap>
       <Wrap ref={drop}>
-        <CardElement style={{ background: isOver || userIsDragging === 'blackCard' ? '#2cce9f' : null }}>
+        <CardElement style={{ background: userIsDragging === 'blackCard' ? '#2cce9f' : null }}>
           <PlayerName style={{ margin: 0 }}>{`${getBlackCardLength({ players, index })} ${getPlayerName({ myName, players, index, socket })}`}</PlayerName>
         </CardElement>
         {index === winningPlayerIndex && (

@@ -218,18 +218,21 @@ class Game extends React.PureComponent {
       this.setState({ players, blackCards });
     });
 
-    this.socket.on("draw seven white cards update", ({ players, whiteCards, sevenWhiteCards, socketId }) => {
-      this.setState({
-        players,
-        whiteCards,
-      });
-
-      if (this.socket.id === socketId) {
+    this.socket.on(
+      "draw seven white cards update",
+      ({ players, whiteCards, sevenWhiteCards, socketId }) => {
         this.setState({
-          myCards: sevenWhiteCards,
-        })
+          players,
+          whiteCards,
+        });
+
+        if (this.socket.id === socketId) {
+          this.setState({
+            myCards: sevenWhiteCards,
+          });
+        }
       }
-    });
+    );
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -283,6 +286,7 @@ class Game extends React.PureComponent {
     socketConnected: false,
     chatOpen: false,
     unreadCount: 0,
+    animationOver: false,
   };
 
   whiteCardRef = React.createRef();
@@ -319,7 +323,7 @@ class Game extends React.PureComponent {
             if (player.blackCards) {
               // if another player already has the blackCard, remove it from them
               player.blackCards = player.blackCards.filter((blackCard) => {
-                return blackCard.text !== passedInCard.text
+                return blackCard.text !== passedInCard.text;
               });
             }
           }
@@ -423,7 +427,7 @@ class Game extends React.PureComponent {
 
     this.props.reactGA.event({
       category: "Game",
-      action: 'Player submitted a card',
+      action: "Player submitted a card",
     });
 
     this.socket.emit("submitted a card", {
@@ -581,19 +585,26 @@ class Game extends React.PureComponent {
 
   inviteInputRef = React.createRef();
 
-  setChatOpen = bool => {
+  setChatOpen = (bool) => {
     this.setState({ chatOpen: bool });
-  }
+  };
 
-  setUnreadCount = count => {
+  setUnreadCount = (count) => {
     if (count) {
-      this.setState(prevState => ({ unreadCount: prevState.unreadCount + 1 }));
+      this.setState((prevState) => ({
+        unreadCount: prevState.unreadCount + 1,
+      }));
       return;
     }
 
     this.setState({ unreadCount: 0 });
-  }
+  };
 
+  setAnimationOver = () => {
+    this.setState({
+      animationOver: true,
+    });
+  };
 
   render() {
     return (
@@ -657,19 +668,25 @@ class Game extends React.PureComponent {
                         socket={this.socket}
                       />
                     ))}
-                  {!this.state.showNamePopup && this.state.myCards.length > 0 && (
-                    <AnimatedDraw cardDimensions={this.state.cardDimensions} myCards={this.state.myCards}>
-                      <DraggableCard
-                        bgColor="#fff"
-                        isBroadcastingDrag={false}
-                        isFlipBroadcasted={false}
-                        color="#000"
-                        type="whiteCard"
-                        setUserIsDragging={this.setUserIsDragging}
-                        isFlippable={false}
-                      />
-                    </AnimatedDraw>
-                  )}
+                  {!this.state.showNamePopup &&
+                    this.state.myCards.length > 0 &&
+                    !this.state.animationOver && (
+                      <AnimatedDraw
+                        cardDimensions={this.state.cardDimensions}
+                        myCards={this.state.myCards}
+                        onAnimationEnd={this.setAnimationOver}
+                      >
+                        <DraggableCard
+                          bgColor="#fff"
+                          isBroadcastingDrag={false}
+                          isFlipBroadcasted={false}
+                          color="#000"
+                          type="whiteCard"
+                          setUserIsDragging={this.setUserIsDragging}
+                          isFlippable={false}
+                        />
+                      </AnimatedDraw>
+                    )}
                 </CardWrap>
               </Piles>
               <PlayerDecks className="Table-playerDecks">
@@ -722,7 +739,14 @@ class Game extends React.PureComponent {
           transition={Slide}
           pauseOnFocusLoss={false}
         />
-        <ChatBox chatOpen={this.state.chatOpen} setChatOpen={this.setChatOpen} socket={this.socket} myName={this.state.myName} setUnreadCount={this.setUnreadCount} reactGA={this.props.reactGA} />
+        <ChatBox
+          chatOpen={this.state.chatOpen}
+          setChatOpen={this.setChatOpen}
+          socket={this.socket}
+          myName={this.state.myName}
+          setUnreadCount={this.setUnreadCount}
+          reactGA={this.props.reactGA}
+        />
       </div>
     );
   }
@@ -762,7 +786,11 @@ const moveToBottom = (cardDimensions) => keyframes`
     opacity: 1;
   }
   100% {
-    transform: translate3d(calc(${window ? `${window.innerWidth / 2 - 25}px` : 0} - ${cardDimensions?.left}px - 50%), calc(${window ? `${window.innerHeight - 25}px` : 0} - ${cardDimensions?.top}px - 50%), 0);
+    transform: translate3d(calc(${
+      window ? `${window.innerWidth / 2 - 25}px` : 0
+    } - ${cardDimensions?.left}px - 50%), calc(${
+  window ? `${window.innerHeight - 25}px` : 0
+} - ${cardDimensions?.top}px - 50%), 0);
     opacity: 0;
   }
 `;
@@ -770,9 +798,12 @@ const AnimatedDraw = styled.div`
   position: fixed;
   pointer-events: none;
   z-index: 999;
-  animation: .2s ${props => moveToBottom(props.cardDimensions)} ease-out ${props => props.myCards.length || 7} forwards;
-  width: ${props => props.cardDimensions.width ? `${props.cardDimensions.width}px` : 0};
-  height: ${props => props.cardDimensions.height ? `${props.cardDimensions.height}px` : 0}
+  animation: 0.2s ${(props) => moveToBottom(props.cardDimensions)} ease-out
+    ${(props) => props.myCards.length || 7} forwards;
+  width: ${(props) =>
+    props.cardDimensions.width ? `${props.cardDimensions.width}px` : 0};
+  height: ${(props) =>
+    props.cardDimensions.height ? `${props.cardDimensions.height}px` : 0};
 `;
 
 const Table = styled.div`
