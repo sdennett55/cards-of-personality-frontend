@@ -657,7 +657,7 @@ class Game extends React.PureComponent {
                         socket={this.socket}
                       />
                     ))}
-                  {!this.state.showNamePopup && (
+                  {!this.state.showNamePopup && this.state.myCards.length > 0 && (
                     <AnimatedDraw cardDimensions={this.state.cardDimensions} myCards={this.state.myCards}>
                       <DraggableCard
                         bgColor="#fff"
@@ -770,7 +770,7 @@ const AnimatedDraw = styled.div`
   position: fixed;
   pointer-events: none;
   z-index: 999;
-  animation: .2s ${props => moveToBottom(props.cardDimensions)} ease-out 7 forwards;
+  animation: .2s ${props => moveToBottom(props.cardDimensions)} ease-out ${props => props.myCards.length || 7} forwards;
   width: ${props => props.cardDimensions.width ? `${props.cardDimensions.width}px` : 0};
   height: ${props => props.cardDimensions.height ? `${props.cardDimensions.height}px` : 0}
 `;
