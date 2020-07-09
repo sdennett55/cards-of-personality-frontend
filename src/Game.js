@@ -658,7 +658,7 @@ class Game extends React.PureComponent {
                       />
                     ))}
                   {!this.state.showNamePopup && (
-                    <AnimatedDraw cardDimensions={this.state.cardDimensions} myCards={this.state.myCards} style={{width: this.state.cardDimensions.width, height: this.state.cardDimensions.height}}>
+                    <AnimatedDraw cardDimensions={this.state.cardDimensions} myCards={this.state.myCards}>
                       <DraggableCard
                         bgColor="#fff"
                         isBroadcastingDrag={false}
@@ -753,13 +753,16 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-const moveToBottom = keyframes`
+const moveToBottom = (cardDimensions) => keyframes`
   0% {
     transform: translate3d(0, 0, 0);
     opacity: 1;
   }
+  99% {
+    opacity: 1;
+  }
   100% {
-    transform: translate3d(0, 200%, 0);
+    transform: translate3d(calc(${window ? `${window.innerWidth / 2 - 25}px` : 0} - ${cardDimensions?.left}px - 50%), calc(${window ? `${window.innerHeight - 25}px` : 0} - ${cardDimensions?.top}px - 50%), 0);
     opacity: 0;
   }
 `;
@@ -767,7 +770,9 @@ const AnimatedDraw = styled.div`
   position: fixed;
   pointer-events: none;
   z-index: 999;
-  animation: .2s ${moveToBottom} linear 7 forwards;
+  animation: .2s ${props => moveToBottom(props.cardDimensions)} ease-out 7 forwards;
+  width: ${props => props.cardDimensions.width ? `${props.cardDimensions.width}px` : 0};
+  height: ${props => props.cardDimensions.height ? `${props.cardDimensions.height}px` : 0}
 `;
 
 const Table = styled.div`
