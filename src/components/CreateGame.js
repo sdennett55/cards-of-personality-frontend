@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
-import { Link, useHistory } from "react-router-dom";
-import axios from "axios";
-import { SERVER_URL } from "../constants";
-import PrivacyCheck from "./PrivacyCheck";
-import ChooseADeck from "./ChooseADeck";
-import styled, { createGlobalStyle } from "styled-components";
+import React, {useState, useEffect} from 'react';
+import {Link, useHistory} from 'react-router-dom';
+import axios from 'axios';
+import {SERVER_URL} from '../constants';
+import PrivacyCheck from './PrivacyCheck';
+import ChooseADeck from './ChooseADeck';
+import styled, {createGlobalStyle} from 'styled-components';
 
 function handleCreateGame({
   e,
@@ -13,47 +13,61 @@ function handleCreateGame({
   setError,
   setLoading,
   isPrivate,
-  reactGA
+  reactGA,
 }) {
   e.preventDefault();
-  setLoading("createGame");
+  setLoading('createGame');
 
   axios
-    .post(`${SERVER_URL}/api/getDeck`, { deck })
+    .post(`${SERVER_URL}/api/getDeck`, {deck})
     .then((res) => {
       if (res.data) {
         setLoading(false);
-        setError("");
-        createRandomRoom({ history, deck, setError, setLoading, isPrivate, reactGA });
+        setError('');
+        createRandomRoom({
+          history,
+          deck,
+          setError,
+          setLoading,
+          isPrivate,
+          reactGA,
+        });
       } else {
-        setError("This deck could not be found.");
+        setError('This deck could not be found.');
       }
     })
     .catch((err) => {
       setLoading(false);
-      setError("This deck does not exist.");
+      setError('This deck does not exist.');
       console.error(err);
     });
 }
 
-function getQueries({ deck, isPrivate }) {
-  let queryString = "";
+function getQueries({deck, isPrivate}) {
+  let queryString = '';
 
   if (deck) {
     queryString += `?deck=${deck}`;
   }
   if (isPrivate) {
     if (deck) {
-      queryString += "&private=1";
+      queryString += '&private=1';
     } else {
-      queryString += "?private=1";
+      queryString += '?private=1';
     }
   }
 
   return queryString;
 }
 
-function createRandomRoom({ history, deck, setError, setLoading, isPrivate, reactGA }) {
+function createRandomRoom({
+  history,
+  deck,
+  setError,
+  setLoading,
+  isPrivate,
+  reactGA,
+}) {
   const random = (
     Math.random().toString(36).substring(2, 15) +
     Math.random().toString(36).substring(2, 15)
@@ -61,45 +75,57 @@ function createRandomRoom({ history, deck, setError, setLoading, isPrivate, reac
 
   // check server to make sure random room doesn't already exist
   axios
-    .post(`${SERVER_URL}/api/checkAvailableRooms`, { roomName: random })
+    .post(`${SERVER_URL}/api/checkAvailableRooms`, {roomName: random})
     .then((res) => {
       setLoading(false);
-      setError("");
+      setError('');
 
       if (!res.data) {
         reactGA.event({
-          category: "Game",
+          category: 'Game',
           action: `Created a new game called ${random}`,
           label: random,
         });
 
-        history.push(`/g/${random}${getQueries({ deck, isPrivate })}`);
+        history.push(`/g/${random}${getQueries({deck, isPrivate})}`);
       } else {
-        createRandomRoom({ history, deck, setError, setLoading, isPrivate, reactGA });
+        createRandomRoom({
+          history,
+          deck,
+          setError,
+          setLoading,
+          isPrivate,
+          reactGA,
+        });
       }
     })
     .catch((err) => {
-      setError("There was an error on the server. Please try again.");
+      setError('There was an error on the server. Please try again.');
       console.error(err);
     });
 }
 
-const handlePublicDeckClick = ({ name, deck, setDeck }) => {
+const handlePublicDeckClick = ({name, deck, setDeck}) => {
   if (deck === name) {
-    return setDeck("");
+    return setDeck('');
   }
   setDeck(name);
 };
 
-const CreateGame = ({ reactGA }) => {
+const handleKeyUp = ({e, setDeck}) => {
+  const val = e.target.value.trim().toLowerCase().replace(/\s+/g, '-');
+  setDeck(val);
+};
+
+const CreateGame = ({reactGA}) => {
   const history = useHistory();
-  const [deck, setDeck] = useState("safe-for-work");
+  const [deck, setDeck] = useState('safe-for-work');
   const [isPrivate, setIsPrivate] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
   const [publicDecks, setPublicDecks] = useState([]);
   useEffect(() => {
-    axios.get(`${SERVER_URL}/api/getPublicDecks`).then((res) => {
+    axios.get(`${SERVER_URL}/api/getApprovedPublicDecks`).then((res) => {
       setPublicDecks(res.data);
     });
   }, []);
@@ -128,28 +154,28 @@ const CreateGame = ({ reactGA }) => {
           toggle
         />
         <Subtitle>
-          or choose a{" "}
+          or choose a{' '}
           <NoWrap>
             community deck<BETAText>BETA</BETAText>
           </NoWrap>
         </Subtitle>
         {publicDecks && (
           <List>
-            {publicDecks.map(({ name }) => (
+            {publicDecks.map(({name}) => (
               <ListItem key={name}>
                 <PublicDeckButton
                   type="button"
-                  onClick={() => handlePublicDeckClick({ name, deck, setDeck })}
-                  style={{ color: name === deck ? "#2cce9f" : null }}
+                  onClick={() => handlePublicDeckClick({name, deck, setDeck})}
+                  style={{color: name === deck ? '#2cce9f' : null}}
                 >
-                  {name.replace(/-/g, " ")}
+                  {name.replace(/-/g, ' ')}
                 </PublicDeckButton>
               </ListItem>
             ))}
           </List>
         )}
         <Subtitle>
-          or choose a{" "}
+          or choose a{' '}
           <NoWrap>
             private deck<BETAText>BETA</BETAText>
           </NoWrap>
@@ -159,8 +185,7 @@ const CreateGame = ({ reactGA }) => {
           <Input
             id="nameOfDeck"
             type="text"
-            onKeyUp={(e) => setDeck(e.target.value)}
-            maxLength="20"
+            onKeyUp={(e) => handleKeyUp({e, setDeck})}
           />
         </Divider>
         {error && <ErrorText>{error}</ErrorText>}

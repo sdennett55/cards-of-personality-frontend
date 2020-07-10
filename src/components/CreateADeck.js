@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from "react";
-import { Redirect } from "react-router-dom";
-import { Helmet } from "react-helmet";
-import { SERVER_URL } from "../constants";
-import axios from "axios";
-import PrivacyCheck from "./PrivacyCheck";
-import ChooseADeck from "./ChooseADeck";
-import styled, { createGlobalStyle } from "styled-components";
-import { Link } from "react-router-dom";
+import React, {useState, useEffect} from 'react';
+import {Redirect} from 'react-router-dom';
+import {Helmet} from 'react-helmet';
+import {SERVER_URL} from '../constants';
+import axios from 'axios';
+import PrivacyCheck from './PrivacyCheck';
+import ChooseADeck from './ChooseADeck';
+import styled, {createGlobalStyle} from 'styled-components';
+import {Link} from 'react-router-dom';
 
-const handleKeyUp = ({ e, setNameOfDeck }) => {
-  const val = e.target.value.trim().replace(/\s+/g, "-");
+const handleKeyUp = ({e, setNameOfDeck}) => {
+  const val = e.target.value.trim().toLowerCase().replace(/\s+/g, '-');
   setNameOfDeck(val);
 };
 
@@ -26,40 +26,41 @@ const handleSubmit = ({
   e.preventDefault();
   setLoading(true);
   if (nameOfDeck.trim().length === 0) {
-    return setError("Error: Please enter the name of your deck.");
+    return setError('Error: Please enter the name of your deck.');
   }
   axios
     .post(`${SERVER_URL}/api/createDeck`, {
       deckName: nameOfDeck,
       isPrivate,
-      hasSFWCards: deck === "safe-for-work",
-      hasNSFWCards: deck === "not-safe-for-work",
+      hasSFWCards: deck === 'safe-for-work',
+      hasNSFWCards: deck === 'not-safe-for-work',
+      approved: false,
     })
     .then((res) => {
       setLoading(false);
-      if (res.data.includes("Error")) {
+      if (res.data.includes('Error')) {
         return setError(res.data);
       }
 
       reactGA.event({
-        category: "Deck",
-        action: "Created a new deck",
+        category: 'Deck',
+        action: 'Created a new deck',
         label: nameOfDeck,
       });
 
       // redirect on success
       setSecret(res.data);
-      setError("");
+      setError('');
     });
 };
 
-const CreateADeck = ({ title, reactGA }) => {
-  const [nameOfDeck, setNameOfDeck] = useState("");
+const CreateADeck = ({title, reactGA}) => {
+  const [nameOfDeck, setNameOfDeck] = useState('');
   const [isSuccess, setSuccess] = useState(false);
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
   const [isPrivate, setIsPrivate] = useState(true);
-  const [deck, setDeck] = useState("");
-  const [secret, setSecret] = useState("");
+  const [deck, setDeck] = useState('');
+  const [secret, setSecret] = useState('');
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -95,7 +96,7 @@ const CreateADeck = ({ title, reactGA }) => {
           <Input
             id="nameOfDeck"
             type="text"
-            onKeyUp={(e) => handleKeyUp({ e, setNameOfDeck })}
+            onKeyUp={(e) => handleKeyUp({e, setNameOfDeck})}
             maxLength="20"
           />
           <ErrorText>{error}</ErrorText>
@@ -111,11 +112,13 @@ const CreateADeck = ({ title, reactGA }) => {
           setIsPrivate={setIsPrivate}
           isPrivate={isPrivate}
           title="deck"
-          toastText="If checked, this deck will not be listed under community decks."
+          toastText="If checked, this deck will not be listed under community decks. All public decks must be approved."
         />
         <Flex>
           <WhiteButton to="/">Back</WhiteButton>
-          <Button type="submit" disabled={loading}>Create Deck</Button>
+          <Button type="submit" disabled={loading}>
+            Create Deck
+          </Button>
         </Flex>
       </Form>
       {isSuccess && (
