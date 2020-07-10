@@ -161,7 +161,7 @@ const CreateGame = ({reactGA}) => {
         </Subtitle>
         {publicDecks && (
           <List>
-            {publicDecks.map(({name}) => (
+            {publicDecks.map(({name, isNSFW}) => (
               <ListItem key={name}>
                 <PublicDeckButton
                   type="button"
@@ -169,6 +169,7 @@ const CreateGame = ({reactGA}) => {
                   style={{color: name === deck ? '#2cce9f' : null}}
                 >
                   {name.replace(/-/g, ' ')}
+                  {isNSFW && <NSFWText>NSFW</NSFWText>}
                 </PublicDeckButton>
               </ListItem>
             ))}
@@ -300,6 +301,13 @@ const List = styled.ul`
 const BETAText = styled.sup`
   color: #2cce9f;
   font-size: 0.5em;
+  font-weight: bold;
+  margin-left: 0.25em;
+`;
+
+const NSFWText = styled.sup`
+  color: #2cce9f;
+  font-size: 0.7em;
   font-weight: bold;
   margin-left: 0.25em;
 `;
