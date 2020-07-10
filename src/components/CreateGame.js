@@ -166,6 +166,7 @@ const CreateGame = ({ reactGA }) => {
         {error && <ErrorText>{error}</ErrorText>}
         <PrivacyCheck
           setIsPrivate={setIsPrivate}
+          isPrivate={isPrivate}
           title="game"
           toastText="If checked, this game will not be listed under public games."
         />

@@ -57,7 +57,7 @@ const CreateADeck = ({ title, reactGA }) => {
   const [nameOfDeck, setNameOfDeck] = useState("");
   const [isSuccess, setSuccess] = useState(false);
   const [error, setError] = useState("");
-  const [isPrivate, setIsPrivate] = useState(false);
+  const [isPrivate, setIsPrivate] = useState(true);
   const [deck, setDeck] = useState("");
   const [secret, setSecret] = useState("");
   const [loading, setLoading] = useState(false);
@@ -109,6 +109,7 @@ const CreateADeck = ({ title, reactGA }) => {
         />
         <PrivacyCheck
           setIsPrivate={setIsPrivate}
+          isPrivate={isPrivate}
           title="deck"
           toastText="If checked, this deck will not be listed under community decks."
         />

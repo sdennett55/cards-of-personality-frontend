@@ -3,7 +3,7 @@ import { ToastContainer, toast, Slide } from "react-toastify";
 import { HelpIcon } from "../icons";
 import styled, { createGlobalStyle } from "styled-components";
 
-const PrivacyCheck = ({ setIsPrivate, title, toastText }) => {
+const PrivacyCheck = ({ setIsPrivate, isPrivate, title, toastText }) => {
   return (
     <>
       <GlobalStyle />
@@ -13,8 +13,9 @@ const PrivacyCheck = ({ setIsPrivate, title, toastText }) => {
             id="checkbox"
             type="checkbox"
             onChange={() => setIsPrivate((bool) => !bool)}
+            checked={isPrivate}
           />
-          <PublicLabel htmlFor="checkbox">
+          <PrivateLabel htmlFor="checkbox">
             Make {title} private{" "}
             <IconWrap
               type="button"
@@ -30,7 +31,7 @@ const PrivacyCheck = ({ setIsPrivate, title, toastText }) => {
             >
               <HelpIcon />
             </IconWrap>
-          </PublicLabel>
+          </PrivateLabel>
         </Flex>
       </Divider>
       <ToastContainer
@@ -66,7 +67,7 @@ const Flex = styled.div`
   display: flex;
 `;
 
-const PublicLabel = styled.label`
+const PrivateLabel = styled.label`
   display: flex;
   align-items: center;
   color: #fff;
