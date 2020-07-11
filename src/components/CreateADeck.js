@@ -30,7 +30,7 @@ const handleSubmit = ({
   }
   axios
     .post(`${SERVER_URL}/api/createDeck`, {
-      deckName: nameOfDeck,
+      deckName: nameOfDeck.trim(),
       isPrivate,
       hasSFWCards: deck === 'safe-for-work',
       hasNSFWCards: deck === 'not-safe-for-work',
@@ -43,9 +43,9 @@ const handleSubmit = ({
       }
 
       reactGA.event({
-        category: 'Deck',
-        action: 'Created a new deck',
-        label: nameOfDeck,
+        category: "Deck",
+        action: "Created a new deck",
+        label: nameOfDeck.trim(),
       });
 
       // redirect on success

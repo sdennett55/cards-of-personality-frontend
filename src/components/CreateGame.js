@@ -83,7 +83,7 @@ function createRandomRoom({
       if (!res.data) {
         reactGA.event({
           category: 'Game',
-          action: `Created a new game called ${random}`,
+          action: `Created a new game`,
           label: random,
         });
 

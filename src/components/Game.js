@@ -424,6 +424,7 @@ class Game extends React.PureComponent {
     this.props.reactGA.event({
       category: "Game",
       action: "Player submitted a card",
+      label: passedInCardIndex.text,
     });
 
     this.socket.emit("submitted a card", {
