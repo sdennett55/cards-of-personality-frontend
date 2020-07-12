@@ -167,9 +167,11 @@ const ButtonWrapper = styled.div`
 `;
 
 const DropZoneWrap = styled.div`
-  position: sticky;
+  position: absolute;
   bottom: 0;
-  left: 0;
+  left: 50%;
+  width: 100%;
+  transform: translateX(-50%);
   display: flex;
 `;
 
