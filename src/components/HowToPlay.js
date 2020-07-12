@@ -1,18 +1,22 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import styled, { createGlobalStyle } from "styled-components";
+import React from 'react';
+import {Link} from 'react-router-dom';
+import styled, {createGlobalStyle} from 'styled-components';
 
-const HowToPlay = ({ isPage, setIsVisible }) => {
+const HowToPlay = ({isPage, setIsVisible}) => {
   return (
     <Wrapper>
       <GlobalStyle />
       <Title>How to play</Title>
-      <Note>Note: This game works best with friends on audio/video chat.</Note>
+      <Note>
+        Note: This game works best with friends on audio/video chat.
+        Also, there's an interactive tutorial you can run once you join
+        a game.
+      </Note>
       <TLDR>
-        <TLDRText>TL;DR:</TLDRText> Drag white cards to bottom bar. Tapping
+        <TLDRText>TL;DR:</TLDRText> Drag and drop white cards on the bottom bar. Tapping
         bottom bar advances screens.
       </TLDR>
-      <List style={{ textAlign: "left" }}>
+      <List style={{textAlign: 'left'}}>
         <li>
           The first player to enter the room is the judge. They flip the big
           black card and read it out loud to start the round.
@@ -25,12 +29,12 @@ const HowToPlay = ({ isPage, setIsVisible }) => {
           Once everyone has submitted a card, everyone goes to the "Submitted
           Cards" screen by tapping the bottom bar within their deck where the
           judge proceeds to re-read the black card and then taps on each
-          submitted card one at a time for all to admire or condemn.{" "}
+          submitted card one at a time for all to admire or condemn.{' '}
         </li>
         <li>
           The judge announces a winner whereby all submitted white cards should
           be discarded and the winner can drag the big black card on the main
-          screen to their player slot{" "}
+          screen to their player slot{' '}
         </li>
         <li>
           Each player that submitted a card must may another white card. Players
@@ -38,7 +42,7 @@ const HowToPlay = ({ isPage, setIsVisible }) => {
         </li>
         <li>
           The next judge then flips the black card to start the next round.
-          First player to have 7 black cards in their player slot wins!{" "}
+          First player to have 7 black cards in their player slot wins!{' '}
         </li>
       </List>
       {isPage ? (

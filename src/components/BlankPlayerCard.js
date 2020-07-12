@@ -38,10 +38,10 @@ const BlankCard = styled.div`
   }
 `;
 
-const BlankPlayerCard = ({count, index}) => {
+const BlankPlayerCard = ({count, index, className}) => {
 
   return (
-    <BlankCard>
+    <BlankCard className={className}>
       <Wrapper>
         <CardElement>
           Player {count < MAX_PLAYERS ? count + index + 1 : index + 1}

@@ -20,6 +20,7 @@
     "react-scripts": "3.4.1",
     "react-swipeable": "^5.5.1",
     "react-toastify": "^6.0.6",
+    "reactour": "^1.18.0",
     "socket.io-client": "^2.3.0",
     "styled-components": "^5.0.1",
     "typeface-roboto-condensed": "^0.0.75"

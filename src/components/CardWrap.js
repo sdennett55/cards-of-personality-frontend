@@ -2,15 +2,15 @@ import React from 'react';
 import styled from 'styled-components';
 
 const Wrap = styled.div`
-  position: relative; 
+  position: relative;
   padding-bottom: 140%;
   color: black;
   border-radius: 8px;
   border: 2px dashed #fff;
   `;
-  
+
   const PickUpPileWrap = styled.div`
-  position: relative; 
+  position: relative;
   padding-bottom: 140%;
   color: black;
   border-radius: 8px;
@@ -19,7 +19,7 @@ const Wrap = styled.div`
 `;
 
 const PickUpPileWrapper = styled.div`
-  position: relative;  
+  position: relative;
   width: calc(50% - .5em);
   max-width: calc(100vh - 50px - 6em);
 
@@ -29,16 +29,16 @@ const PickUpPileWrapper = styled.div`
 `;
 
 const DefaultWrapper = styled.div`
-  position: relative;  
+  position: relative;
   width: 150px;
   margin: .5em;
 `;
 
-const CardWrap = React.memo(({ children, innerRef, isPickUpPile }) => {
+const CardWrap = React.memo(({ children, innerRef, isPickUpPile, className }) => {
   const WrappingElement = isPickUpPile ? PickUpPileWrap : Wrap;
   const Wrapper = isPickUpPile ? PickUpPileWrapper : DefaultWrapper;
   return (
-    <Wrapper>
+    <Wrapper className={className}>
       <WrappingElement ref={innerRef || null}>
         {children}
       </WrappingElement>

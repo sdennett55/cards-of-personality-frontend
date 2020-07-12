@@ -86,7 +86,7 @@ const getBlackCardLength = ({ players, index }) => {
   return '';
 }
 
-const PlayerDrop = ({ index, winningPlayerIndex, myName, players, socket, addCardToPlayer, userIsDragging, setUserIsDragging }) => {
+const PlayerDrop = ({ index, winningPlayerIndex, myName, players, socket, addCardToPlayer, userIsDragging, setUserIsDragging, className }) => {
   const [{ isOver }, drop] = useDrop({
     accept: ['blackCard', 'blackCardFromPlayer'],
     drop: (item) => {
@@ -98,7 +98,7 @@ const PlayerDrop = ({ index, winningPlayerIndex, myName, players, socket, addCar
   })
 
   return (
-    <PlayerDropWrap>
+    <PlayerDropWrap className={className}>
       <Wrap ref={drop}>
         <CardElement style={{ background: userIsDragging === 'blackCard' || userIsDragging === 'blackCardFromPlayer' ? '#2cce9f' : null, transform: isOver ? 'scale(1.05)' : null }}>
           <PlayerName style={{ margin: 0 }}>{`${getBlackCardLength({ players, index })} ${getPlayerName({ myName, players, index, socket })}`}</PlayerName>
