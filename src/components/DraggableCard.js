@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { LogoIconInCard } from '../icons';
 import { useDrag } from 'react-dnd';
 import {TouchIcon} from "../icons";
 
@@ -176,7 +175,7 @@ const DraggableCard = ({ bgColor, isBroadcastingDrag = true, isFlipBroadcasted, 
 
       {isFlipped ? text : (
         <>
-          <LogoIconInCard style={{alignSelf: 'flex-end', maxWidth: '200px'}} topTextInverse={type.includes('white')} />
+          <div className={`LogoInCard ${type === 'whiteCard' ? 'LogoInCard--whiteCard' : ''}`} />
           {type.includes('black') && (
             <TouchIconWrap>
               <TouchIcon />
