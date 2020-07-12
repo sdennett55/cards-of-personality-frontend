@@ -74,7 +74,7 @@ class Game extends React.PureComponent {
       this.roomId = this.props.location.pathname.replace("/g/", "");
 
       // let the server know we've joined a room
-      this.socket.emit("join room", this.roomId);
+      this.socket.emit("join room", {roomId: this.roomId, myName: this.state.myName});
 
       // confirm that we've joined the right room on the client
       this.socket.on("joined a room", (theRoom) => {
