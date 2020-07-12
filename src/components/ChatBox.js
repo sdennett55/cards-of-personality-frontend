@@ -12,7 +12,7 @@ function handleSubmit({ e, inputRef, socket, myName, setMessages, reactGA }) {
   }
 
   reactGA.event({
-    category: "Game",
+    category: "Chat",
     action: "Sent a chat message",
     label: msg,
   });

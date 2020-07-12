@@ -422,7 +422,7 @@ class Game extends React.PureComponent {
     });
 
     this.props.reactGA.event({
-      category: "Game",
+      category: `Game ${this.roomId}`,
       action: "Player submitted a card",
       label: passedInCard.text,
     });
@@ -523,7 +523,7 @@ class Game extends React.PureComponent {
       });
 
       this.props.reactGA.event({
-        category: "Game",
+        category: `Game ${this.roomId}`,
         action: "Submitted A Name",
         label: this.state.myName,
       });
