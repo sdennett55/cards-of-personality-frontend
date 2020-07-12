@@ -65,12 +65,6 @@ export const LogoIconInCard = (props) => (
         <stop offset={0.892} stopColor="#ff1969" />
         <stop offset={1} stopColor="#ff0080" />
       </linearGradient>
-    </defs>
-    <path
-      d="M.06 15.22c-.04 0-.06-.02-.06-.06l.02-8.24c0-.03.02-.05.05-.05h2.3c.74 0 1.32.22 1.75.67.43.45.64 1.06.64 1.82 0 .57-.11 1.06-.34 1.48-.22.42-.52.74-.88.96-.36.22-.75.34-1.18.34h-.9v3.02c0 .04-.02.06-.06.06H.06zm1.4-4.53h.91c.26 0 .48-.12.67-.37s.28-.56.28-.95c0-.31-.08-.57-.25-.77-.17-.2-.4-.3-.7-.3l-.91.01v2.38z"
-      fill="url(#prefix__SVGID_1_)"
-    />
-    <defs>
       <linearGradient
         id="prefix__SVGID_2_"
         gradientUnits="userSpaceOnUse"
@@ -86,12 +80,6 @@ export const LogoIconInCard = (props) => (
         <stop offset={0.892} stopColor="#ff1969" />
         <stop offset={1} stopColor="#ff0080" />
       </linearGradient>
-    </defs>
-    <path
-      d="M5.06 15.22c-.03 0-.05-.02-.05-.06l.01-8.24c0-.03.02-.05.05-.05h3.85c.03 0 .05.02.05.06v1.34c0 .03-.02.05-.05.05H6.47v1.87h2.46c.03 0 .05.02.05.05l.01 1.36c0 .03-.02.05-.05.05H6.47v2.1h2.47c.03 0 .05.02.05.06v1.37c0 .03-.02.05-.05.05H5.06z"
-      fill="url(#prefix__SVGID_2_)"
-    />
-    <defs>
       <linearGradient
         id="prefix__SVGID_3_"
         gradientUnits="userSpaceOnUse"
@@ -107,12 +95,6 @@ export const LogoIconInCard = (props) => (
         <stop offset={0.892} stopColor="#ff1969" />
         <stop offset={1} stopColor="#ff0080" />
       </linearGradient>
-    </defs>
-    <path
-      d="M9.35 15.22c-.03 0-.05-.02-.05-.06l.02-8.24c0-.03.02-.05.05-.05h2.42c.43 0 .83.11 1.19.32.36.21.65.5.87.85.22.36.32.76.32 1.21 0 .3-.04.56-.13.8s-.19.44-.31.6-.23.29-.32.37c.43.48.65 1.04.65 1.69l.01 2.46c0 .04-.02.06-.06.06h-1.36c-.03 0-.05-.01-.05-.04V12.7c0-.29-.1-.54-.31-.75a.997.997 0 00-.75-.32h-.79l-.01 3.53c0 .04-.02.06-.05.06H9.35zm1.41-5.03h1.03a.9.9 0 00.66-.28.9.9 0 00.29-.67.87.87 0 00-.28-.66.947.947 0 00-.67-.28h-1.03v1.89z"
-      fill="url(#prefix__SVGID_3_)"
-    />
-    <defs>
       <linearGradient
         id="prefix__SVGID_4_"
         gradientUnits="userSpaceOnUse"
@@ -128,12 +110,6 @@ export const LogoIconInCard = (props) => (
         <stop offset={0.892} stopColor="#ff1969" />
         <stop offset={1} stopColor="#ff0080" />
       </linearGradient>
-    </defs>
-    <path
-      d="M16.82 15.34c-.43 0-.83-.11-1.18-.33-.36-.22-.64-.51-.85-.88s-.32-.77-.32-1.21v-.55c0-.04.02-.06.06-.06h1.34c.03 0 .05.02.05.06v.55c0 .26.09.49.26.68.18.19.39.28.64.28s.46-.1.64-.29c.18-.19.26-.42.26-.67 0-.3-.19-.55-.58-.77-.13-.07-.33-.18-.6-.34-.27-.15-.53-.3-.77-.43-.44-.26-.77-.58-.98-.97a2.73 2.73 0 01-.32-1.31c0-.45.11-.85.32-1.21.22-.36.5-.64.86-.85.36-.21.74-.31 1.16-.31.42 0 .81.11 1.17.32s.64.5.85.85c.21.36.32.75.32 1.19v.98c0 .03-.02.05-.05.05h-1.34c-.03 0-.05-.02-.05-.05l-.01-.98c0-.28-.09-.51-.26-.68a.832.832 0 00-.62-.26c-.25 0-.46.09-.64.28-.18.19-.26.41-.26.67 0 .26.06.48.17.66.11.18.32.34.61.5.04.02.12.07.23.13.12.06.24.13.38.2.14.08.26.14.37.2s.17.09.2.11c.4.22.72.5.95.82s.35.72.35 1.19A2.399 2.399 0 0118.01 15c-.36.23-.75.34-1.19.34z"
-      fill="url(#prefix__SVGID_4_)"
-    />
-    <defs>
       <linearGradient
         id="prefix__SVGID_5_"
         gradientUnits="userSpaceOnUse"
@@ -149,12 +125,6 @@ export const LogoIconInCard = (props) => (
         <stop offset={0.892} stopColor="#ff1969" />
         <stop offset={1} stopColor="#ff0080" />
       </linearGradient>
-    </defs>
-    <path
-      d="M21.9 15.34c-.43 0-.83-.11-1.18-.33a2.5 2.5 0 01-.86-.88c-.22-.36-.32-.77-.32-1.21l.01-3.8a2.364 2.364 0 011.18-2.06c.36-.22.75-.32 1.18-.32.43 0 .82.11 1.18.32.35.22.63.5.85.86.21.36.32.76.32 1.2l.01 3.8c0 .44-.11.84-.32 1.21-.21.36-.5.66-.85.88-.37.22-.77.33-1.2.33zm0-1.45c.24 0 .45-.1.63-.29s.27-.42.27-.67l-.01-3.8c0-.26-.08-.49-.25-.67a.847.847 0 00-.64-.28.87.87 0 00-.64.27c-.17.18-.26.4-.26.67v3.8c0 .26.09.49.26.68.18.2.39.29.64.29z"
-      fill="url(#prefix__SVGID_5_)"
-    />
-    <defs>
       <linearGradient
         id="prefix__SVGID_6_"
         gradientUnits="userSpaceOnUse"
@@ -170,12 +140,6 @@ export const LogoIconInCard = (props) => (
         <stop offset={0.892} stopColor="#ff1969" />
         <stop offset={1} stopColor="#ff0080" />
       </linearGradient>
-    </defs>
-    <path
-      d="M24.77 15.22c-.06 0-.1-.03-.1-.08l-.01-8.17c0-.06.03-.1.1-.1h1.08l2.03 4.73-.07-4.64c0-.06.04-.1.11-.1h1.19c.05 0 .07.03.07.1l.01 8.18c0 .05-.02.07-.06.07h-1.06l-2.08-4.42.08 4.32c0 .06-.04.1-.11.1h-1.18z"
-      fill="url(#prefix__SVGID_6_)"
-    />
-    <defs>
       <linearGradient
         id="prefix__SVGID_7_"
         gradientUnits="userSpaceOnUse"
@@ -191,12 +155,6 @@ export const LogoIconInCard = (props) => (
         <stop offset={0.892} stopColor="#ff1969" />
         <stop offset={1} stopColor="#ff0080" />
       </linearGradient>
-    </defs>
-    <path
-      d="M29.52 15.16l1.49-8.24c.01-.03.03-.05.06-.05h1.74c.03 0 .05.02.06.05l1.43 8.24c.01.04-.01.06-.05.06h-1.33c-.03 0-.05-.02-.06-.06l-.13-.88H31.1l-.13.88c-.01.04-.03.06-.06.06h-1.33c-.04 0-.06-.02-.06-.06zM31.33 13h1.15l-.49-3.37-.07-.44-.05.44-.54 3.37z"
-      fill="url(#prefix__SVGID_7_)"
-    />
-    <defs>
       <linearGradient
         id="prefix__SVGID_8_"
         gradientUnits="userSpaceOnUse"
@@ -212,12 +170,6 @@ export const LogoIconInCard = (props) => (
         <stop offset={0.892} stopColor="#ff1969" />
         <stop offset={1} stopColor="#ff0080" />
       </linearGradient>
-    </defs>
-    <path
-      d="M34.67 15.22c-.03 0-.05-.02-.05-.06l.01-8.23c0-.04.02-.06.06-.06h1.33c.04 0 .06.02.06.06l-.01 6.82h2.47c.04 0 .06.02.06.06v1.36c0 .04-.02.06-.06.06h-3.87z"
-      fill="url(#prefix__SVGID_8_)"
-    />
-    <defs>
       <linearGradient
         id="prefix__SVGID_9_"
         gradientUnits="userSpaceOnUse"
@@ -233,12 +185,6 @@ export const LogoIconInCard = (props) => (
         <stop offset={0.892} stopColor="#ff1969" />
         <stop offset={1} stopColor="#ff0080" />
       </linearGradient>
-    </defs>
-    <path
-      d="M39.01 15.22c-.04 0-.06-.02-.06-.06l.01-8.24c0-.03.02-.05.05-.05h1.34c.03 0 .05.02.05.05l.01 8.24c0 .04-.02.06-.05.06h-1.35z"
-      fill="url(#prefix__SVGID_9_)"
-    />
-    <defs>
       <linearGradient
         id="prefix__SVGID_10_"
         gradientUnits="userSpaceOnUse"
@@ -254,12 +200,6 @@ export const LogoIconInCard = (props) => (
         <stop offset={0.892} stopColor="#ff1969" />
         <stop offset={1} stopColor="#ff0080" />
       </linearGradient>
-    </defs>
-    <path
-      d="M42.38 15.22c-.03 0-.05-.02-.05-.06V8.32h-1.56c-.04 0-.06-.02-.06-.06l.01-1.34c0-.03.02-.05.05-.05h4.56c.04 0 .06.02.06.05v1.34c0 .04-.02.06-.05.06h-1.57l.01 6.84c0 .04-.02.06-.05.06h-1.35z"
-      fill="url(#prefix__SVGID_10_)"
-    />
-    <defs>
       <linearGradient
         id="prefix__SVGID_11_"
         gradientUnits="userSpaceOnUse"
@@ -276,6 +216,46 @@ export const LogoIconInCard = (props) => (
         <stop offset={1} stopColor="#ff0080" />
       </linearGradient>
     </defs>
+    <path
+      d="M.06 15.22c-.04 0-.06-.02-.06-.06l.02-8.24c0-.03.02-.05.05-.05h2.3c.74 0 1.32.22 1.75.67.43.45.64 1.06.64 1.82 0 .57-.11 1.06-.34 1.48-.22.42-.52.74-.88.96-.36.22-.75.34-1.18.34h-.9v3.02c0 .04-.02.06-.06.06H.06zm1.4-4.53h.91c.26 0 .48-.12.67-.37s.28-.56.28-.95c0-.31-.08-.57-.25-.77-.17-.2-.4-.3-.7-.3l-.91.01v2.38z"
+      fill="url(#prefix__SVGID_1_)"
+    />
+    <path
+      d="M5.06 15.22c-.03 0-.05-.02-.05-.06l.01-8.24c0-.03.02-.05.05-.05h3.85c.03 0 .05.02.05.06v1.34c0 .03-.02.05-.05.05H6.47v1.87h2.46c.03 0 .05.02.05.05l.01 1.36c0 .03-.02.05-.05.05H6.47v2.1h2.47c.03 0 .05.02.05.06v1.37c0 .03-.02.05-.05.05H5.06z"
+      fill="url(#prefix__SVGID_2_)"
+    />
+    <path
+      d="M9.35 15.22c-.03 0-.05-.02-.05-.06l.02-8.24c0-.03.02-.05.05-.05h2.42c.43 0 .83.11 1.19.32.36.21.65.5.87.85.22.36.32.76.32 1.21 0 .3-.04.56-.13.8s-.19.44-.31.6-.23.29-.32.37c.43.48.65 1.04.65 1.69l.01 2.46c0 .04-.02.06-.06.06h-1.36c-.03 0-.05-.01-.05-.04V12.7c0-.29-.1-.54-.31-.75a.997.997 0 00-.75-.32h-.79l-.01 3.53c0 .04-.02.06-.05.06H9.35zm1.41-5.03h1.03a.9.9 0 00.66-.28.9.9 0 00.29-.67.87.87 0 00-.28-.66.947.947 0 00-.67-.28h-1.03v1.89z"
+      fill="url(#prefix__SVGID_3_)"
+    />
+    <path
+      d="M16.82 15.34c-.43 0-.83-.11-1.18-.33-.36-.22-.64-.51-.85-.88s-.32-.77-.32-1.21v-.55c0-.04.02-.06.06-.06h1.34c.03 0 .05.02.05.06v.55c0 .26.09.49.26.68.18.19.39.28.64.28s.46-.1.64-.29c.18-.19.26-.42.26-.67 0-.3-.19-.55-.58-.77-.13-.07-.33-.18-.6-.34-.27-.15-.53-.3-.77-.43-.44-.26-.77-.58-.98-.97a2.73 2.73 0 01-.32-1.31c0-.45.11-.85.32-1.21.22-.36.5-.64.86-.85.36-.21.74-.31 1.16-.31.42 0 .81.11 1.17.32s.64.5.85.85c.21.36.32.75.32 1.19v.98c0 .03-.02.05-.05.05h-1.34c-.03 0-.05-.02-.05-.05l-.01-.98c0-.28-.09-.51-.26-.68a.832.832 0 00-.62-.26c-.25 0-.46.09-.64.28-.18.19-.26.41-.26.67 0 .26.06.48.17.66.11.18.32.34.61.5.04.02.12.07.23.13.12.06.24.13.38.2.14.08.26.14.37.2s.17.09.2.11c.4.22.72.5.95.82s.35.72.35 1.19A2.399 2.399 0 0118.01 15c-.36.23-.75.34-1.19.34z"
+      fill="url(#prefix__SVGID_4_)"
+    />
+    <path
+      d="M21.9 15.34c-.43 0-.83-.11-1.18-.33a2.5 2.5 0 01-.86-.88c-.22-.36-.32-.77-.32-1.21l.01-3.8a2.364 2.364 0 011.18-2.06c.36-.22.75-.32 1.18-.32.43 0 .82.11 1.18.32.35.22.63.5.85.86.21.36.32.76.32 1.2l.01 3.8c0 .44-.11.84-.32 1.21-.21.36-.5.66-.85.88-.37.22-.77.33-1.2.33zm0-1.45c.24 0 .45-.1.63-.29s.27-.42.27-.67l-.01-3.8c0-.26-.08-.49-.25-.67a.847.847 0 00-.64-.28.87.87 0 00-.64.27c-.17.18-.26.4-.26.67v3.8c0 .26.09.49.26.68.18.2.39.29.64.29z"
+      fill="url(#prefix__SVGID_5_)"
+    />
+    <path
+      d="M24.77 15.22c-.06 0-.1-.03-.1-.08l-.01-8.17c0-.06.03-.1.1-.1h1.08l2.03 4.73-.07-4.64c0-.06.04-.1.11-.1h1.19c.05 0 .07.03.07.1l.01 8.18c0 .05-.02.07-.06.07h-1.06l-2.08-4.42.08 4.32c0 .06-.04.1-.11.1h-1.18z"
+      fill="url(#prefix__SVGID_6_)"
+    />
+    <path
+      d="M29.52 15.16l1.49-8.24c.01-.03.03-.05.06-.05h1.74c.03 0 .05.02.06.05l1.43 8.24c.01.04-.01.06-.05.06h-1.33c-.03 0-.05-.02-.06-.06l-.13-.88H31.1l-.13.88c-.01.04-.03.06-.06.06h-1.33c-.04 0-.06-.02-.06-.06zM31.33 13h1.15l-.49-3.37-.07-.44-.05.44-.54 3.37z"
+      fill="url(#prefix__SVGID_7_)"
+    />
+    <path
+      d="M34.67 15.22c-.03 0-.05-.02-.05-.06l.01-8.23c0-.04.02-.06.06-.06h1.33c.04 0 .06.02.06.06l-.01 6.82h2.47c.04 0 .06.02.06.06v1.36c0 .04-.02.06-.06.06h-3.87z"
+      fill="url(#prefix__SVGID_8_)"
+    />
+    <path
+      d="M39.01 15.22c-.04 0-.06-.02-.06-.06l.01-8.24c0-.03.02-.05.05-.05h1.34c.03 0 .05.02.05.05l.01 8.24c0 .04-.02.06-.05.06h-1.35z"
+      fill="url(#prefix__SVGID_9_)"
+    />
+    <path
+      d="M42.38 15.22c-.03 0-.05-.02-.05-.06V8.32h-1.56c-.04 0-.06-.02-.06-.06l.01-1.34c0-.03.02-.05.05-.05h4.56c.04 0 .06.02.06.05v1.34c0 .04-.02.06-.05.06h-1.57l.01 6.84c0 .04-.02.06-.05.06h-1.35z"
+      fill="url(#prefix__SVGID_10_)"
+    />
     <path
       d="M47.22 15.22c-.02 0-.04-.02-.04-.05l.01-3.41-1.61-4.85c-.01-.03 0-.05.04-.05h1.33c.04 0 .06.02.07.05l.89 3.23.9-3.23c.01-.03.03-.05.06-.05h1.34c.03 0 .04.02.04.05l-1.62 4.8.01 3.46c0 .03-.02.05-.05.05h-1.37z"
       fill="url(#prefix__SVGID_11_)"
@@ -300,233 +280,211 @@ export const LogoIcon = () => {
       preserveAspectRatio="xMinYMin"
     >
       <style>{'.prefix__st11{fill:#fff}'}</style>
-      <defs>
-        <linearGradient
-          id="prefix__SVGID_1_"
-          gradientUnits="userSpaceOnUse"
-          x1={0}
-          y1={7.896}
-          x2={50.257}
-          y2={7.896}
-        >
-          <stop offset={0} stopColor="#40e0d0" />
-          <stop offset={0.255} stopColor="#a3b464" />
-          <stop offset={0.5} stopColor="#ff8c00" />
-          <stop offset={0.664} stopColor="#ff5a2e" />
-          <stop offset={0.892} stopColor="#ff1969" />
-          <stop offset={1} stopColor="#ff0080" />
-        </linearGradient>
-      </defs>
+      <linearGradient
+        id="prefix__SVGID_1_"
+        gradientUnits="userSpaceOnUse"
+        x1={0}
+        y1={7.896}
+        x2={50.257}
+        y2={7.896}
+      >
+        <stop offset={0} stopColor="#40e0d0" />
+        <stop offset={0.255} stopColor="#a3b464" />
+        <stop offset={0.5} stopColor="#ff8c00" />
+        <stop offset={0.664} stopColor="#ff5a2e" />
+        <stop offset={0.892} stopColor="#ff1969" />
+        <stop offset={1} stopColor="#ff0080" />
+      </linearGradient>
       <path
         d="M.06 12.08c-.04 0-.06-.02-.06-.06l.02-8.24c0-.03.02-.05.05-.05h2.3c.74 0 1.32.22 1.75.67.43.45.64 1.06.64 1.82 0 .57-.11 1.06-.34 1.48-.22.41-.51.73-.87.96-.36.22-.75.33-1.17.33h-.92v3.02c0 .04-.02.06-.06.06H.06zm1.4-4.54h.91c.26 0 .48-.12.67-.37s.28-.56.28-.95c0-.31-.08-.57-.25-.77-.17-.2-.4-.3-.7-.3l-.91.02v2.37z"
         fill="url(#prefix__SVGID_1_)"
       />
-      <defs>
-        <linearGradient
-          id="prefix__SVGID_2_"
-          gradientUnits="userSpaceOnUse"
-          x1={0}
-          y1={7.896}
-          x2={50.257}
-          y2={7.896}
-        >
-          <stop offset={0} stopColor="#40e0d0" />
-          <stop offset={0.255} stopColor="#a3b464" />
-          <stop offset={0.5} stopColor="#ff8c00" />
-          <stop offset={0.664} stopColor="#ff5a2e" />
-          <stop offset={0.892} stopColor="#ff1969" />
-          <stop offset={1} stopColor="#ff0080" />
-        </linearGradient>
-      </defs>
+      <linearGradient
+        id="prefix__SVGID_2_"
+        gradientUnits="userSpaceOnUse"
+        x1={0}
+        y1={7.896}
+        x2={50.257}
+        y2={7.896}
+      >
+        <stop offset={0} stopColor="#40e0d0" />
+        <stop offset={0.255} stopColor="#a3b464" />
+        <stop offset={0.5} stopColor="#ff8c00" />
+        <stop offset={0.664} stopColor="#ff5a2e" />
+        <stop offset={0.892} stopColor="#ff1969" />
+        <stop offset={1} stopColor="#ff0080" />
+      </linearGradient>
       <path
         d="M5.06 12.08c-.03 0-.05-.02-.05-.06l.01-8.24c0-.03.02-.05.05-.05h3.85c.03 0 .05.02.05.06v1.34c0 .03-.02.05-.05.05H6.47v1.87h2.46c.03 0 .05.02.05.05l.01 1.36c0 .03-.02.05-.05.05H6.47v2.1h2.47c.03 0 .05.02.05.06v1.37c0 .03-.02.05-.05.05H5.06z"
         fill="url(#prefix__SVGID_2_)"
       />
-      <defs>
-        <linearGradient
-          id="prefix__SVGID_3_"
-          gradientUnits="userSpaceOnUse"
-          x1={0}
-          y1={7.896}
-          x2={50.257}
-          y2={7.896}
-        >
-          <stop offset={0} stopColor="#40e0d0" />
-          <stop offset={0.255} stopColor="#a3b464" />
-          <stop offset={0.5} stopColor="#ff8c00" />
-          <stop offset={0.664} stopColor="#ff5a2e" />
-          <stop offset={0.892} stopColor="#ff1969" />
-          <stop offset={1} stopColor="#ff0080" />
-        </linearGradient>
-      </defs>
+      <linearGradient
+        id="prefix__SVGID_3_"
+        gradientUnits="userSpaceOnUse"
+        x1={0}
+        y1={7.896}
+        x2={50.257}
+        y2={7.896}
+      >
+        <stop offset={0} stopColor="#40e0d0" />
+        <stop offset={0.255} stopColor="#a3b464" />
+        <stop offset={0.5} stopColor="#ff8c00" />
+        <stop offset={0.664} stopColor="#ff5a2e" />
+        <stop offset={0.892} stopColor="#ff1969" />
+        <stop offset={1} stopColor="#ff0080" />
+      </linearGradient>
       <path
         d="M9.35 12.08c-.03 0-.05-.02-.05-.06l.02-8.24c0-.03.02-.05.05-.05h2.42c.43 0 .83.11 1.19.32.36.21.65.5.87.85.22.36.32.76.32 1.21 0 .3-.04.56-.13.8s-.19.44-.31.6-.23.29-.32.37c.43.48.65 1.04.65 1.69l.01 2.46c0 .04-.02.06-.06.06h-1.36c-.03 0-.05-.01-.05-.04V9.56c0-.29-.1-.54-.31-.75a.997.997 0 00-.75-.32h-.79l-.01 3.53c0 .04-.02.06-.05.06H9.35zm1.41-5.03h1.03a.9.9 0 00.66-.28.9.9 0 00.29-.67.87.87 0 00-.28-.66.947.947 0 00-.67-.28h-1.03v1.89z"
         fill="url(#prefix__SVGID_3_)"
       />
-      <defs>
-        <linearGradient
-          id="prefix__SVGID_4_"
-          gradientUnits="userSpaceOnUse"
-          x1={0}
-          y1={7.896}
-          x2={50.257}
-          y2={7.896}
-        >
-          <stop offset={0} stopColor="#40e0d0" />
-          <stop offset={0.255} stopColor="#a3b464" />
-          <stop offset={0.5} stopColor="#ff8c00" />
-          <stop offset={0.664} stopColor="#ff5a2e" />
-          <stop offset={0.892} stopColor="#ff1969" />
-          <stop offset={1} stopColor="#ff0080" />
-        </linearGradient>
-      </defs>
+      <linearGradient
+        id="prefix__SVGID_4_"
+        gradientUnits="userSpaceOnUse"
+        x1={0}
+        y1={7.896}
+        x2={50.257}
+        y2={7.896}
+      >
+        <stop offset={0} stopColor="#40e0d0" />
+        <stop offset={0.255} stopColor="#a3b464" />
+        <stop offset={0.5} stopColor="#ff8c00" />
+        <stop offset={0.664} stopColor="#ff5a2e" />
+        <stop offset={0.892} stopColor="#ff1969" />
+        <stop offset={1} stopColor="#ff0080" />
+      </linearGradient>
       <path
         d="M16.82 12.2c-.43 0-.83-.11-1.18-.33-.36-.22-.64-.51-.85-.88s-.32-.77-.32-1.21v-.55c0-.04.02-.06.06-.06h1.34c.03 0 .05.02.05.06v.55c0 .26.09.49.26.68.18.19.39.28.64.28s.46-.1.64-.29c.18-.19.26-.42.26-.67 0-.3-.19-.55-.58-.77-.13-.07-.33-.18-.6-.34-.27-.15-.53-.3-.77-.43-.44-.26-.77-.58-.98-.97a2.73 2.73 0 01-.32-1.31c0-.45.11-.85.32-1.21.22-.36.5-.64.86-.85.36-.21.74-.31 1.16-.31.42 0 .81.11 1.17.32s.64.5.85.85c.21.36.32.75.32 1.19v.98c0 .03-.02.05-.05.05h-1.34c-.03 0-.05-.02-.05-.05l-.01-.98c0-.28-.09-.51-.26-.68a.832.832 0 00-.62-.26c-.25 0-.46.09-.64.28-.18.19-.26.41-.26.67 0 .26.06.48.17.66.11.18.32.34.61.5.04.02.12.07.23.13.12.06.24.13.38.2.14.08.26.14.37.2s.17.09.2.11c.4.22.72.5.95.82s.35.72.35 1.19a2.399 2.399 0 01-1.17 2.09c-.36.23-.75.34-1.19.34z"
         fill="url(#prefix__SVGID_4_)"
       />
-      <defs>
-        <linearGradient
-          id="prefix__SVGID_5_"
-          gradientUnits="userSpaceOnUse"
-          x1={0}
-          y1={7.896}
-          x2={50.257}
-          y2={7.896}
-        >
-          <stop offset={0} stopColor="#40e0d0" />
-          <stop offset={0.255} stopColor="#a3b464" />
-          <stop offset={0.5} stopColor="#ff8c00" />
-          <stop offset={0.664} stopColor="#ff5a2e" />
-          <stop offset={0.892} stopColor="#ff1969" />
-          <stop offset={1} stopColor="#ff0080" />
-        </linearGradient>
-      </defs>
+      <linearGradient
+        id="prefix__SVGID_5_"
+        gradientUnits="userSpaceOnUse"
+        x1={0}
+        y1={7.896}
+        x2={50.257}
+        y2={7.896}
+      >
+        <stop offset={0} stopColor="#40e0d0" />
+        <stop offset={0.255} stopColor="#a3b464" />
+        <stop offset={0.5} stopColor="#ff8c00" />
+        <stop offset={0.664} stopColor="#ff5a2e" />
+        <stop offset={0.892} stopColor="#ff1969" />
+        <stop offset={1} stopColor="#ff0080" />
+      </linearGradient>
       <path
         d="M21.9 12.2c-.43 0-.83-.11-1.18-.33a2.5 2.5 0 01-.86-.88c-.22-.36-.32-.77-.32-1.21l.01-3.8a2.364 2.364 0 011.18-2.06c.36-.22.75-.32 1.18-.32.43 0 .82.11 1.18.32.35.22.63.5.85.86.21.36.32.76.32 1.2l.01 3.8c0 .44-.11.84-.32 1.21-.21.36-.5.66-.85.88-.37.22-.77.33-1.2.33zm0-1.45c.24 0 .45-.1.63-.29s.27-.42.27-.67l-.01-3.8c0-.26-.08-.49-.25-.67a.847.847 0 00-.64-.28.87.87 0 00-.64.27.92.92 0 00-.26.67v3.8c0 .26.09.49.26.68.18.19.39.29.64.29z"
         fill="url(#prefix__SVGID_5_)"
       />
-      <defs>
-        <linearGradient
-          id="prefix__SVGID_6_"
-          gradientUnits="userSpaceOnUse"
-          x1={0}
-          y1={7.896}
-          x2={50.257}
-          y2={7.896}
-        >
-          <stop offset={0} stopColor="#40e0d0" />
-          <stop offset={0.255} stopColor="#a3b464" />
-          <stop offset={0.5} stopColor="#ff8c00" />
-          <stop offset={0.664} stopColor="#ff5a2e" />
-          <stop offset={0.892} stopColor="#ff1969" />
-          <stop offset={1} stopColor="#ff0080" />
-        </linearGradient>
-      </defs>
+      <linearGradient
+        id="prefix__SVGID_6_"
+        gradientUnits="userSpaceOnUse"
+        x1={0}
+        y1={7.896}
+        x2={50.257}
+        y2={7.896}
+      >
+        <stop offset={0} stopColor="#40e0d0" />
+        <stop offset={0.255} stopColor="#a3b464" />
+        <stop offset={0.5} stopColor="#ff8c00" />
+        <stop offset={0.664} stopColor="#ff5a2e" />
+        <stop offset={0.892} stopColor="#ff1969" />
+        <stop offset={1} stopColor="#ff0080" />
+      </linearGradient>
       <path
         d="M24.77 12.08c-.06 0-.1-.03-.1-.08l-.01-8.17c0-.06.03-.1.1-.1h1.08l2.03 4.73-.07-4.64c0-.06.04-.1.11-.1h1.19c.05 0 .07.03.07.1l.01 8.18c0 .05-.02.07-.06.07h-1.06l-2.08-4.42.08 4.32c0 .06-.04.1-.11.1h-1.18z"
         fill="url(#prefix__SVGID_6_)"
       />
-      <defs>
-        <linearGradient
-          id="prefix__SVGID_7_"
-          gradientUnits="userSpaceOnUse"
-          x1={0}
-          y1={7.896}
-          x2={50.257}
-          y2={7.896}
-        >
-          <stop offset={0} stopColor="#40e0d0" />
-          <stop offset={0.255} stopColor="#a3b464" />
-          <stop offset={0.5} stopColor="#ff8c00" />
-          <stop offset={0.664} stopColor="#ff5a2e" />
-          <stop offset={0.892} stopColor="#ff1969" />
-          <stop offset={1} stopColor="#ff0080" />
-        </linearGradient>
-      </defs>
+      <linearGradient
+        id="prefix__SVGID_7_"
+        gradientUnits="userSpaceOnUse"
+        x1={0}
+        y1={7.896}
+        x2={50.257}
+        y2={7.896}
+      >
+        <stop offset={0} stopColor="#40e0d0" />
+        <stop offset={0.255} stopColor="#a3b464" />
+        <stop offset={0.5} stopColor="#ff8c00" />
+        <stop offset={0.664} stopColor="#ff5a2e" />
+        <stop offset={0.892} stopColor="#ff1969" />
+        <stop offset={1} stopColor="#ff0080" />
+      </linearGradient>
       <path
         d="M29.52 12.02l1.49-8.24c.01-.03.03-.05.06-.05h1.74c.03 0 .05.02.06.05l1.43 8.24c.01.04-.01.06-.05.06h-1.33c-.03 0-.05-.02-.06-.06l-.13-.88H31.1l-.13.88c-.01.04-.03.06-.06.06h-1.33c-.04 0-.06-.02-.06-.06zm1.81-2.16h1.15l-.49-3.37-.07-.44-.05.44-.54 3.37z"
         fill="url(#prefix__SVGID_7_)"
       />
-      <defs>
-        <linearGradient
-          id="prefix__SVGID_8_"
-          gradientUnits="userSpaceOnUse"
-          x1={0}
-          y1={7.896}
-          x2={50.257}
-          y2={7.896}
-        >
-          <stop offset={0} stopColor="#40e0d0" />
-          <stop offset={0.255} stopColor="#a3b464" />
-          <stop offset={0.5} stopColor="#ff8c00" />
-          <stop offset={0.664} stopColor="#ff5a2e" />
-          <stop offset={0.892} stopColor="#ff1969" />
-          <stop offset={1} stopColor="#ff0080" />
-        </linearGradient>
-      </defs>
+      <linearGradient
+        id="prefix__SVGID_8_"
+        gradientUnits="userSpaceOnUse"
+        x1={0}
+        y1={7.896}
+        x2={50.257}
+        y2={7.896}
+      >
+        <stop offset={0} stopColor="#40e0d0" />
+        <stop offset={0.255} stopColor="#a3b464" />
+        <stop offset={0.5} stopColor="#ff8c00" />
+        <stop offset={0.664} stopColor="#ff5a2e" />
+        <stop offset={0.892} stopColor="#ff1969" />
+        <stop offset={1} stopColor="#ff0080" />
+      </linearGradient>
       <path
         d="M34.67 12.08c-.03 0-.05-.02-.05-.06l.01-8.23c0-.04.02-.06.06-.06h1.33c.04 0 .06.02.06.06l-.01 6.82h2.47c.04 0 .06.02.06.06v1.36c0 .04-.02.06-.06.06h-3.87z"
         fill="url(#prefix__SVGID_8_)"
       />
-      <defs>
-        <linearGradient
-          id="prefix__SVGID_9_"
-          gradientUnits="userSpaceOnUse"
-          x1={0}
-          y1={7.896}
-          x2={50.257}
-          y2={7.896}
-        >
-          <stop offset={0} stopColor="#40e0d0" />
-          <stop offset={0.255} stopColor="#a3b464" />
-          <stop offset={0.5} stopColor="#ff8c00" />
-          <stop offset={0.664} stopColor="#ff5a2e" />
-          <stop offset={0.892} stopColor="#ff1969" />
-          <stop offset={1} stopColor="#ff0080" />
-        </linearGradient>
-      </defs>
+      <linearGradient
+        id="prefix__SVGID_9_"
+        gradientUnits="userSpaceOnUse"
+        x1={0}
+        y1={7.896}
+        x2={50.257}
+        y2={7.896}
+      >
+        <stop offset={0} stopColor="#40e0d0" />
+        <stop offset={0.255} stopColor="#a3b464" />
+        <stop offset={0.5} stopColor="#ff8c00" />
+        <stop offset={0.664} stopColor="#ff5a2e" />
+        <stop offset={0.892} stopColor="#ff1969" />
+        <stop offset={1} stopColor="#ff0080" />
+      </linearGradient>
       <path
         d="M39.01 12.08c-.04 0-.06-.02-.06-.06l.01-8.24c0-.03.02-.05.05-.05h1.34c.03 0 .05.02.05.05l.01 8.24c0 .04-.02.06-.05.06h-1.35z"
         fill="url(#prefix__SVGID_9_)"
       />
-      <defs>
-        <linearGradient
-          id="prefix__SVGID_10_"
-          gradientUnits="userSpaceOnUse"
-          x1={0}
-          y1={7.896}
-          x2={50.257}
-          y2={7.896}
-        >
-          <stop offset={0} stopColor="#40e0d0" />
-          <stop offset={0.255} stopColor="#a3b464" />
-          <stop offset={0.5} stopColor="#ff8c00" />
-          <stop offset={0.664} stopColor="#ff5a2e" />
-          <stop offset={0.892} stopColor="#ff1969" />
-          <stop offset={1} stopColor="#ff0080" />
-        </linearGradient>
-      </defs>
+      <linearGradient
+        id="prefix__SVGID_10_"
+        gradientUnits="userSpaceOnUse"
+        x1={0}
+        y1={7.896}
+        x2={50.257}
+        y2={7.896}
+      >
+        <stop offset={0} stopColor="#40e0d0" />
+        <stop offset={0.255} stopColor="#a3b464" />
+        <stop offset={0.5} stopColor="#ff8c00" />
+        <stop offset={0.664} stopColor="#ff5a2e" />
+        <stop offset={0.892} stopColor="#ff1969" />
+        <stop offset={1} stopColor="#ff0080" />
+      </linearGradient>
       <path
         d="M42.38 12.08c-.03 0-.05-.02-.05-.06V5.18h-1.56c-.04 0-.06-.02-.06-.06l.01-1.34c0-.03.02-.05.05-.05h4.56c.04 0 .06.02.06.05v1.34c0 .04-.02.06-.05.06h-1.57l.01 6.84c0 .04-.02.06-.05.06h-1.35z"
         fill="url(#prefix__SVGID_10_)"
       />
-      <defs>
-        <linearGradient
-          id="prefix__SVGID_11_"
-          gradientUnits="userSpaceOnUse"
-          x1={0}
-          y1={7.896}
-          x2={50.257}
-          y2={7.896}
-        >
-          <stop offset={0} stopColor="#40e0d0" />
-          <stop offset={0.255} stopColor="#a3b464" />
-          <stop offset={0.5} stopColor="#ff8c00" />
-          <stop offset={0.664} stopColor="#ff5a2e" />
-          <stop offset={0.892} stopColor="#ff1969" />
-          <stop offset={1} stopColor="#ff0080" />
-        </linearGradient>
-      </defs>
+      <linearGradient
+        id="prefix__SVGID_11_"
+        gradientUnits="userSpaceOnUse"
+        x1={0}
+        y1={7.896}
+        x2={50.257}
+        y2={7.896}
+      >
+        <stop offset={0} stopColor="#40e0d0" />
+        <stop offset={0.255} stopColor="#a3b464" />
+        <stop offset={0.5} stopColor="#ff8c00" />
+        <stop offset={0.664} stopColor="#ff5a2e" />
+        <stop offset={0.892} stopColor="#ff1969" />
+        <stop offset={1} stopColor="#ff0080" />
+      </linearGradient>
       <path
         d="M47.22 12.08c-.02 0-.04-.02-.04-.05l.01-3.41-1.61-4.85c-.01-.03 0-.05.04-.05h1.33c.04 0 .06.02.07.05L47.91 7l.9-3.23c.01-.03.03-.05.06-.05h1.34c.03 0 .04.02.04.05l-1.62 4.8.01 3.46c0 .03-.02.05-.05.05h-1.37z"
         fill="url(#prefix__SVGID_11_)"
