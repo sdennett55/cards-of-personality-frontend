@@ -1092,6 +1092,7 @@ const CardsWrap = styled.div`
 
   @media (max-width: 500px) and (orientation: portrait) {
     max-height: none;
+    margin-bottom: 50px;
     flex-direction: column;
     width: 100%;
     justify-content: center;
