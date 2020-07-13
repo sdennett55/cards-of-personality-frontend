@@ -79,8 +79,33 @@ button, input {
   top: 15px;
   right: 15px;
 }
+.reactour__helper .reactour__close::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 40px;
+  height: 40px;
+  transform: translate(-16px, -16px);
+}
 .reactour__helper span[data-tour-elem="badge"] {
   color: inherit;
+}
+
+/* Give prev/next arrows in tutorial more hit area */
+button[data-tour-elem="right-arrow"],
+button[data-tour-elem="left-arrow"] {
+  position: relative;
+}
+button[data-tour-elem="right-arrow"]::after,
+button[data-tour-elem="left-arrow"]::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 40px;
+  height: 40px;
+  transform: translate(-12px, -12px);
 }
 
 .LogoInCard {
