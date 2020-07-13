@@ -932,6 +932,7 @@ class Game extends React.PureComponent {
             myName={this.state.myName}
             setUnreadCount={this.setUnreadCount}
             reactGA={this.props.reactGA}
+            roomId={this.roomId}
           />
         </div>
         <Tour

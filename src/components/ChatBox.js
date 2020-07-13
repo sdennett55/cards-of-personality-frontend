@@ -3,7 +3,7 @@ import { SendIcon, BackIcon } from "../icons";
 import { Swipeable } from "react-swipeable";
 import styled from "styled-components";
 
-function handleSubmit({ e, inputRef, socket, myName, setMessages, reactGA }) {
+function handleSubmit({ e, inputRef, socket, myName, setMessages, reactGA, roomId }) {
   e.preventDefault();
 
   const msg = inputRef.current.value;
@@ -12,7 +12,7 @@ function handleSubmit({ e, inputRef, socket, myName, setMessages, reactGA }) {
   }
 
   reactGA.event({
-    category: "Chat",
+    category: `Game ${roomId}`,
     action: "Sent a chat message",
     label: msg,
   });
@@ -62,7 +62,7 @@ const getOverlayStyles = ({ chatOpen }) => {
   return null;
 };
 
-const ChatBox = ({ chatOpen, setChatOpen, socket, myName, setUnreadCount, reactGA }) => {
+const ChatBox = ({ chatOpen, setChatOpen, socket, myName, setUnreadCount, reactGA, roomId }) => {
   const inputRef = useRef(null);
   const wrapperRef = useRef(null);
   const scrollRef = useRef(null);
@@ -144,7 +144,7 @@ const ChatBox = ({ chatOpen, setChatOpen, socket, myName, setUnreadCount, reactG
           </MessageGroup>
           <Form
             onSubmit={(e) =>
-              handleSubmit({ e, inputRef, socket, myName, setMessages, reactGA })
+              handleSubmit({ e, inputRef, socket, myName, setMessages, reactGA, roomId })
             }
           >
             <Input ref={inputRef} type="text" placeholder="Please be nice!" />
