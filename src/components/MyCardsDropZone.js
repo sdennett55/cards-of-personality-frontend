@@ -319,7 +319,7 @@ const MyCardsDropZone = ({
     <>
       <DropZoneWrap>
         <MyCards
-          onClick={setMyCardsOpen}
+          onClick={() => setMyCardsOpen(true)}
           ref={drop}
           style={getMyNameCardsStyle({myCards, userIsDragging, isOver})}
           className="MyCardsDropBar"
@@ -371,7 +371,7 @@ const MyCardsDropZone = ({
           </BackToTableButton>
           <SubmittedCardsButton
             ref={submitDropRef}
-            onClick={setSubmittedTableOpen}
+            onClick={() => setSubmittedTableOpen(true)}
             style={getBottomBarStyles({
               submittedCards,
               userIsDragging,

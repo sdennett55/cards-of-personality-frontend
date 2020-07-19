@@ -641,7 +641,7 @@ class Game extends React.PureComponent {
   };
 
   setMyCardsOpen = (bool) => {
-    if (bool) {
+    if (bool && typeof bool === 'boolean') {
       return this.setState({
         isMyCardsOpen: bool,
       });
@@ -652,7 +652,7 @@ class Game extends React.PureComponent {
   };
 
   setSubmittedTableOpen = (bool) => {
-    if (bool) {
+    if (bool && typeof bool === 'boolean') {
       return this.setState({
         isSubmittedTableOpen: bool,
       });
