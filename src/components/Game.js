@@ -21,7 +21,7 @@ import Tour from 'reactour';
 import './Game.css';
 import 'react-toastify/dist/ReactToastify.min.css';
 
-export const BlackCard = React.memo(({text, setUserIsDragging, socket}) => {
+export const BlackCard = React.memo(({text, setUserIsDragging, socket, isMyCardsOpen, isSubmittedTableOpen}) => {
   return (
     <DraggableCard
       isFlipBroadcasted
@@ -31,11 +31,14 @@ export const BlackCard = React.memo(({text, setUserIsDragging, socket}) => {
       bgColor="#000"
       color="#fff"
       text={text}
+      screen="main"
+      isMyCardsOpen={isMyCardsOpen}
+      isSubmittedTableOpen={isSubmittedTableOpen}
     />
   );
 });
 
-const PickUpPile = React.memo(({id, text, setUserIsDragging, socket}) => {
+const PickUpPile = React.memo(({id, text, setUserIsDragging, socket, isMyCardsOpen, isSubmittedTableOpen}) => {
   return (
     <DraggableCard
       isFlippable={false}
@@ -46,6 +49,9 @@ const PickUpPile = React.memo(({id, text, setUserIsDragging, socket}) => {
       bgColor="#fff"
       color="#000"
       text={text}
+      screen="main"
+      isMyCardsOpen={isMyCardsOpen}
+      isSubmittedTableOpen={isSubmittedTableOpen}
     />
   );
 });
@@ -828,6 +834,8 @@ class Game extends React.PureComponent {
                             id={index}
                             text={text}
                             socket={this.socket}
+                            isMyCardsOpen={this.state.isMyCardsOpen}
+                            isSubmittedTableOpen={this.state.isSubmittedTableOpen}
                           />
                         ))}
                     </BlackCardDrop>
@@ -847,6 +855,8 @@ class Game extends React.PureComponent {
                           id={index}
                           text={text}
                           socket={this.socket}
+                          isMyCardsOpen={this.state.isMyCardsOpen}
+                          isSubmittedTableOpen={this.state.isSubmittedTableOpen}
                         />
                       ))}
                     {!this.state.showNamePopup &&
@@ -884,6 +894,8 @@ class Game extends React.PureComponent {
                         players={this.state.players}
                         myName={this.state.myName}
                         winningPlayerIndex={this.state.winningPlayerIndex}
+                        isMyCardsOpen={this.state.isMyCardsOpen}
+                        isSubmittedTableOpen={this.state.isSubmittedTableOpen}
                       />
                     ))}
                   {this.getBlankPlayerCards(this.state.players).map(

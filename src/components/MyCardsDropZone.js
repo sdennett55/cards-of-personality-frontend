@@ -355,6 +355,9 @@ const MyCardsDropZone = ({
                     key={card.text}
                     setUserIsDragging={setUserIsDragging}
                     socket={socket}
+                    screen="myCards"
+                    isMyCardsOpen={isMyCardsOpen}
+                    isSubmittedTableOpen={isSubmittedTableOpen}
                     {...card}
                   />
                 </CardWrap>
@@ -408,6 +411,9 @@ const MyCardsDropZone = ({
                     key={card.text}
                     setUserIsDragging={setUserIsDragging}
                     socket={socket}
+                    screen="submittedCards"
+                    isMyCardsOpen={isMyCardsOpen}
+                    isSubmittedTableOpen={isSubmittedTableOpen}
                     {...card}
                   />
                 </CardWrap>
