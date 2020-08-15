@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { SERVER_URL } from "../constants";
 import { Link } from "react-router-dom";
+import Table from "./Table";
 import styled, { createGlobalStyle } from "styled-components";
 
 const PublicGames = () => {
@@ -23,33 +24,24 @@ const PublicGames = () => {
     <Page>
       <GlobalStyle />
       <StartTitle>Public Games</StartTitle>
-      <Table>
-        <thead>
-          <tr>
-            <th>Room Name</th>
-            <th>Players</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          {Object.keys(data).length > 0 &&
-            Object.entries(data).map(([roomName, { players }]) => (
-              <tr key={roomName}>
-                <td>{roomName}</td>
-                <td>{`${players.length}/8`}</td>
-                <FlexCell>
-                  <GreenButton to={`/g/${roomName}`}>Join Game</GreenButton>
-                </FlexCell>
-              </tr>
-            ))}
-            {Object.keys(data).length === 0 && (
-              <tr>
-                <td colSpan="3" style={{textAlign: 'center', height: '51px'}}>
-                  No games available.
-                </td>
-              </tr>
-            )}
-        </tbody>
+      <Table headers={['Room Name', 'Players', '']}>
+        {Object.keys(data).length > 0 &&
+          Object.entries(data).map(([roomName, { players }]) => (
+            <tr key={roomName}>
+              <td>{roomName}</td>
+              <td>{`${players.length}/8`}</td>
+              <FlexCell>
+                <GreenButton to={`/g/${roomName}`}>Join Game</GreenButton>
+              </FlexCell>
+            </tr>
+          ))}
+          {Object.keys(data).length === 0 && (
+            <tr>
+              <td colSpan="3" style={{textAlign: 'center', height: '51px'}}>
+                No games available.
+              </td>
+            </tr>
+          )}
       </Table>
       {error && <ErrorText>{error}</ErrorText>}
       <WhiteButton to="/">Back</WhiteButton>
@@ -78,42 +70,6 @@ const GlobalStyle = createGlobalStyle`
 const ErrorText = styled.p`
   color: red;
   font-size: 0.8rem;
-`;
-
-const Table = styled.table`
-  width: 100%;
-  max-width: 600px;
-  text-align: left;
-  border-collapse: collapse;
-  color: #fff;
-  border: 1px solid rgb(64,224,208);
-
-  thead {
-    color: #000;
-    th {
-      padding: .5em 1em;
-      background: rgb(64, 224, 208);
-
-      &:first-child {
-        border-radius: 4px 0 0 0;
-      }
-      &:last-child {
-        border-radius: 0 4px 0 0;
-      }
-    }
-  }
-  tbody tr:not(:first-child) {
-    border-top: 1px solid #fff;
-  }
-  td {
-    vertical-align: middle;
-  }
-  tbody > tr > td {
-    padding: 0.5em 1em;
-  }
-  p {
-    margin: 0.25em 0;
-  }
 `;
 
 const Page = styled.div`
