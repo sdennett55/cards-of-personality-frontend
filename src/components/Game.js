@@ -1,27 +1,27 @@
 import React from 'react';
 import DraggableCard from './DraggableCard';
 import TouchBackend from 'react-dnd-touch-backend';
-import {DndProvider} from 'react-dnd';
+import { DndProvider } from 'react-dnd';
 import MyCardsDropZone from './MyCardsDropZone';
 import PlayerDrop from './PlayerDrop';
 import CardWrap from './CardWrap';
 import BlankPlayerCard from './BlankPlayerCard';
 import BlackCardDrop from './BlackCardDrop';
 import NamePopup from './NamePopup';
-import {ToastContainer, toast, Slide} from 'react-toastify';
-import {MAX_PLAYERS} from '../constants';
-import {withRouter} from 'react-router-dom';
-import styled, {createGlobalStyle, keyframes} from 'styled-components';
+import { ToastContainer, toast, Slide } from 'react-toastify';
+import { MAX_PLAYERS } from '../constants';
+import { withRouter } from 'react-router-dom';
+import styled, { createGlobalStyle, keyframes } from 'styled-components';
 import io from 'socket.io-client';
 import axios from 'axios';
 import queryString from 'query-string';
-import {SERVER_URL} from '../constants';
+import { SERVER_URL } from '../constants';
 import ChatBox from './ChatBox';
 import Tour from 'reactour';
 import './Game.css';
 import 'react-toastify/dist/ReactToastify.min.css';
 
-export const BlackCard = React.memo(({text, setUserIsDragging, socket, isMyCardsOpen, isSubmittedTableOpen}) => {
+export const BlackCard = React.memo(({ text, setUserIsDragging, socket, isMyCardsOpen, isSubmittedTableOpen }) => {
   return (
     <DraggableCard
       isFlipBroadcasted
@@ -38,7 +38,7 @@ export const BlackCard = React.memo(({text, setUserIsDragging, socket, isMyCards
   );
 });
 
-const PickUpPile = React.memo(({id, text, setUserIsDragging, socket, isMyCardsOpen, isSubmittedTableOpen}) => {
+const PickUpPile = React.memo(({ id, text, setUserIsDragging, socket, isMyCardsOpen, isSubmittedTableOpen }) => {
   return (
     <DraggableCard
       isFlippable={false}
@@ -56,7 +56,7 @@ const PickUpPile = React.memo(({id, text, setUserIsDragging, socket, isMyCardsOp
   );
 });
 
-const TourToast = ({setTourOpen}) => (
+const TourToast = ({ setTourOpen }) => (
   <TourToastButton type="button" onClick={setTourOpen}>
     Tap here to learn how to play! (Recommended)
   </TourToastButton>
@@ -94,7 +94,7 @@ class Game extends React.PureComponent {
 
       // confirm that we've joined the right room on the client
       this.socket.on('joined a room', (theRoom) => {
-        console.log({theRoom});
+        console.log({ theRoom });
 
         // once we've joined a room, lets get the cards
         const deckQueryString = queryString.parse(this.props.location.search)
@@ -133,7 +133,7 @@ class Game extends React.PureComponent {
         }
       });
 
-      const newPlayers = [...this.state.players, {socket: null}];
+      const newPlayers = [...this.state.players, { socket: null }];
 
       this.setState({
         players: newPlayers,
@@ -142,7 +142,7 @@ class Game extends React.PureComponent {
 
     this.socket.on(
       'get initialCards for game',
-      ({whiteCards = [], blackCards = []}) => {
+      ({ whiteCards = [], blackCards = [] }) => {
         this.setState({
           whiteCards,
           blackCards,
@@ -159,30 +159,30 @@ class Game extends React.PureComponent {
 
     // when a player changes their name, update players state with new name
     this.socket.on('name change', (players) => {
-      console.log({players});
-      this.setState({players});
+      console.log({ players });
+      this.setState({ players });
     });
 
     // when a player disconnects from the server, remove them from state
     this.socket.on('user disconnected', (players) => {
-      this.setState({players});
+      this.setState({ players });
     });
 
     // when a new user connects
     // send that specific user the latest server states
     this.socket.on(
       'new connection',
-      ({players, blackCards, whiteCards, submittedCards, socketId}) => {
+      ({ players, blackCards, whiteCards, submittedCards, socketId }) => {
         if (whiteCards && whiteCards.length > 0) {
-          this.setState({whiteCards});
+          this.setState({ whiteCards });
         }
 
         if (blackCards && blackCards.length > 0) {
-          this.setState({blackCards});
+          this.setState({ blackCards });
         }
 
         if (submittedCards && submittedCards.length > 0) {
-          this.setState({submittedCards});
+          this.setState({ submittedCards });
         }
 
         console.log('new connection!', players);
@@ -195,24 +195,24 @@ class Game extends React.PureComponent {
     );
 
     // when a new user connects, let every client know.
-    this.socket.on('user connected', ({players}) => {
-      this.setState({players});
+    this.socket.on('user connected', ({ players }) => {
+      this.setState({ players });
     });
 
-    this.socket.on('dropped in my cards', ({players, whiteCards}) => {
-      this.setState({whiteCards, players});
+    this.socket.on('dropped in my cards', ({ players, whiteCards }) => {
+      this.setState({ whiteCards, players });
     });
 
     this.socket.on('update players', (players) => {
-      this.setState({players});
+      this.setState({ players });
     });
 
     this.socket.on('update submittedCards', (submittedCards) => {
-      this.setState({submittedCards});
+      this.setState({ submittedCards });
     });
 
-    this.socket.on('submitted a card', ({submittedCards, players}) => {
-      this.setState({submittedCards, players});
+    this.socket.on('submitted a card', ({ submittedCards, players }) => {
+      this.setState({ submittedCards, players });
     });
 
     this.socket.on('player rejoins', (players) => {
@@ -220,19 +220,19 @@ class Game extends React.PureComponent {
         (player) => this.socket.id === player.id
       );
       if (playerWithWhiteCards.whiteCards) {
-        this.setState({myCards: playerWithWhiteCards.whiteCards});
+        this.setState({ myCards: playerWithWhiteCards.whiteCards });
       }
 
-      this.setState({players});
+      this.setState({ players });
     });
 
-    this.socket.on('dropped in player drop', ({players, blackCards}) => {
-      this.setState({players, blackCards});
+    this.socket.on('dropped in player drop', ({ players, blackCards }) => {
+      this.setState({ players, blackCards });
     });
 
     this.socket.on(
       'draw seven white cards update',
-      ({players, whiteCards, sevenWhiteCards, socketId}) => {
+      ({ players, whiteCards, sevenWhiteCards, socketId }) => {
         this.setState({
           players,
           whiteCards,
@@ -259,9 +259,9 @@ class Game extends React.PureComponent {
         (player) => player.blackCards && player.blackCards.length === winner
       );
       if (winner === 0 || numberOfWinners > 1) {
-        return this.setState({winningPlayerIndex: -1});
+        return this.setState({ winningPlayerIndex: -1 });
       }
-      this.setState({winningPlayerIndex: index});
+      this.setState({ winningPlayerIndex: index });
     }
     if (prevState.animationOver !== this.state.animationOver) {
       if (this.state.animationOver) {
@@ -315,7 +315,7 @@ class Game extends React.PureComponent {
 
   whiteCardRef = React.createRef();
 
-  getTheCurrentHost = (index) => this.setState({currentHost: index});
+  getTheCurrentHost = (index) => this.setState({ currentHost: index });
 
   addCardToPlayer = (passedInCard, playerDroppedOn) => {
     if (!this.state.userIsDragging) {
@@ -338,10 +338,10 @@ class Game extends React.PureComponent {
                   (blackCard) => blackCard.text === passedInCard.text
                 )
               ) {
-                player.blackCards = [...player.blackCards, {...passedInCard}];
+                player.blackCards = [...player.blackCards, { ...passedInCard }];
               }
             } else {
-              player.blackCards = [{...passedInCard}];
+              player.blackCards = [{ ...passedInCard }];
             }
           } else {
             if (player.blackCards) {
@@ -414,7 +414,7 @@ class Game extends React.PureComponent {
           return blackCard.text !== passedInCard.text;
         });
 
-        return {...player, blackCards: newPlayerBlackCards};
+        return { ...player, blackCards: newPlayerBlackCards };
       }
 
       return player;
@@ -472,24 +472,24 @@ class Game extends React.PureComponent {
 
   getBlankPlayerCards(players) {
     const length = MAX_PLAYERS - players.length;
-    const arr = Array.from({length}, (_, i) => i);
+    const arr = Array.from({ length }, (_, i) => i);
 
     return arr;
   }
 
   updateMyName = (e) => {
     const myName = e.target.value.toUpperCase().trim();
-    this.setState({myName});
+    this.setState({ myName });
 
     // send event that a user just changed their name
-    this.socket.emit('name change', {id: this.socket.id, name: myName});
+    this.socket.emit('name change', { id: this.socket.id, name: myName });
   };
 
   handleSubmit = (e) => {
     e.preventDefault();
 
     if (!this.socket.connected) {
-      this.setState({nameError: 'Cannot connect to server. Try again.'});
+      this.setState({ nameError: 'Cannot connect to server. Try again.' });
       return;
     }
     if (this.state.myName.trim().length < 2) {
@@ -513,7 +513,7 @@ class Game extends React.PureComponent {
           player.name === this.state.myName && player.id !== this.socket.id
       )
     ) {
-      this.setState({nameError: 'Name taken. Please choose another name.'});
+      this.setState({ nameError: 'Name taken. Please choose another name.' });
       return;
     }
 
@@ -536,7 +536,7 @@ class Game extends React.PureComponent {
       // once we update our name, let's update our player in players
       const newPlayers = prevState.players.map((player) => {
         if (player.id === this.socket.id) {
-          const newPlayer = {...player};
+          const newPlayer = { ...player };
           newPlayer.name = this.state.myName;
           return newPlayer;
         }
@@ -565,7 +565,7 @@ class Game extends React.PureComponent {
   };
 
   setUserIsDragging = (type) => {
-    this.setState({userIsDragging: type});
+    this.setState({ userIsDragging: type });
   };
 
   copyLink = () => {
@@ -612,7 +612,7 @@ class Game extends React.PureComponent {
   inviteInputRef = React.createRef();
 
   setChatOpen = (bool) => {
-    this.setState({chatOpen: bool});
+    this.setState({ chatOpen: bool });
   };
 
   setUnreadCount = (count) => {
@@ -623,7 +623,7 @@ class Game extends React.PureComponent {
       return;
     }
 
-    this.setState({unreadCount: 0});
+    this.setState({ unreadCount: 0 });
   };
 
   setAnimationOver = () => {
@@ -811,7 +811,7 @@ class Game extends React.PureComponent {
           )}
           <DndProvider
             backend={TouchBackend}
-            options={{enableMouseEvents: true}}
+            options={{ enableMouseEvents: true }}
           >
             <Table>
               <CardsWrap>
@@ -882,7 +882,7 @@ class Game extends React.PureComponent {
                 </Piles>
                 <PlayerDecks className="Table-playerDecks">
                   {this.state.players &&
-                    this.state.players.map(({name}, index) => (
+                    this.state.players.map(({ name }, index) => (
                       <PlayerDrop
                         className={index === 0 ? 'PlayerOneSlot' : index === 1 ? 'PlayerTwoSlot' : ''}
                         setUserIsDragging={this.setUserIsDragging}
@@ -1024,10 +1024,10 @@ const moveToBottom = (cardDimensions) => keyframes`
   }
   100% {
     transform: translate3d(calc(${
-      window ? `${window.innerWidth / 2 - 25}px` : 0
-    } - ${cardDimensions?.left}px - 50%), calc(${
+  window ? `${window.innerWidth / 2 - 25}px` : 0
+  } - ${cardDimensions?.left}px - 50%), calc(${
   window ? `${window.innerHeight - 25}px` : 0
-} - ${cardDimensions?.top}px - 50%), 0);
+  } - ${cardDimensions?.top}px - 50%), 0);
     opacity: 0;
   }
 `;
