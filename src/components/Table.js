@@ -40,6 +40,7 @@ const RegularButton = styled.button`
   appearance: none;
   transition: opacity 0.25s;
   background: transparent;
+  vertical-align: middle;
 
   @media (hover) {
     &:hover {
