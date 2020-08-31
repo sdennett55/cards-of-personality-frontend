@@ -16,7 +16,7 @@ const Table = ({children, headers, color, isCollapsible}) => {
           {isCollapsible && (
             <th style={{textAlign: 'right', padding: 0, height: 42}}>
               <Button
-                style={{padding: '0 1em', display: 'inline-block', verticalAlign: 'middle', margin: 0}}
+                style={{padding: '0 1em', display: 'inline-block', verticalAlign: 'middle', margin: 0, height: '100%'}}
                 onClick={() => {
                   setIsOpen((isOpen) => !isOpen);
                 }}
@@ -42,7 +42,6 @@ const RegularButton = styled.button`
   background: transparent;
   display: inline-block;
   vertical-align: middle;
-
 
   @media (hover) {
     &:hover {
