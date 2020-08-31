@@ -584,7 +584,7 @@ const RegularButton = styled.button`
   transition: color 0.25s;
   background: transparent;
   color: #fff; 
-  padding: 1px 6px;
+  padding: 1px .5em;
 
   @media (hover) {
     &:hover {
