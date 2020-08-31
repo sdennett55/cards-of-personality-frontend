@@ -372,7 +372,7 @@ const EditADeck = ({ title, reactGA }) => {
                       .map(({ text, type }) => (
                         <tr key={text}>
                           <td>{text}</td>
-                          <td style={{ textAlign: 'center' }}>
+                          <td style={{ textAlign: 'center', padding: '.5em' }}>
                             <RegularButton onClick={e => deleteCard({
                               e, setIsDeleting,
                               type,
