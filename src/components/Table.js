@@ -16,7 +16,7 @@ const Table = ({children, headers, color, isCollapsible}) => {
           {isCollapsible && (
             <th style={{textAlign: 'right', padding: 0, height: 42}}>
               <Button
-                style={{padding: '0.5em 1em'}}
+                style={{padding: '0.5em 1em', display: 'inline-block', verticalAlign: 'middle'}}
                 onClick={() => {
                   setIsOpen((isOpen) => !isOpen);
                 }}
