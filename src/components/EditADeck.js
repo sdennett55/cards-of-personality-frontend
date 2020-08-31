@@ -399,7 +399,7 @@ const EditADeck = ({ title, reactGA }) => {
                       .map(({ text, type, _id }) => (
                         <tr key={text}>
                           <td>{text}</td>
-                          <td style={{ textAlign: 'center' }}>
+                          <td style={{ textAlign: 'center', padding: '.5em' }}>
                             <RegularButton onClick={e => deleteCard({
                               e, setIsDeleting,
                               type,
@@ -583,7 +583,7 @@ const RegularButton = styled.button`
   appearance: none;
   transition: color 0.25s;
   background: transparent;
-  color: #fff; 
+  color: #fff;
   padding: 1px .5em;
 
   @media (hover) {
