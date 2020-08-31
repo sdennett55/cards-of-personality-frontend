@@ -5,7 +5,6 @@ import {PlusIcon, MinusIcon} from '../icons';
 const Table = ({children, headers, color, isCollapsible}) => {
   const [isOpen, setIsOpen] = useState(false);
   const TableElem = color === 'white' ? WhiteTable : GreenTable;
-  const Button = !isOpen ? OverlayButton : RegularButton;
   return (
     <TableElem>
       <thead>
@@ -16,7 +15,6 @@ const Table = ({children, headers, color, isCollapsible}) => {
           {isCollapsible && (
             <th style={{textAlign: 'right', padding: 0, height: 42}}>
               <Button
-                style={{padding: '0 1em', display: 'inline-block', verticalAlign: 'middle', margin: 0, height: '100%'}}
                 onClick={() => {
                   setIsOpen((isOpen) => !isOpen);
                 }}
@@ -36,33 +34,17 @@ const Table = ({children, headers, color, isCollapsible}) => {
 
 export default Table;
 
-const RegularButton = styled.button`
-  appearance: none;
-  transition: opacity 0.25s;
-  background: transparent;
-  display: inline-block;
-  vertical-align: middle;
-
-  @media (hover) {
-    &:hover {
-      opacity: 0.5;
-    }
-  }
-  &:focus {
-    outline: 0;
-  }
-`;
-
-const OverlayButton = styled.button`
+const Button = styled.button`
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
+  height: 42px;
   appearance: none;
   text-align: right;
   transition: opacity 0.25s;
   background: transparent;
+  padding: 0 1em;
 
   @media (hover) {
     &:hover,
