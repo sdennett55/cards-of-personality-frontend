@@ -95,7 +95,7 @@ const Landing = ({ title }) => {
         {errorMsg.type === "join" && !errorMsg.message ? (
           <GameExistsMessage>
             Game doesn't exist. Would you like to{" "}
-            <Link to={`/g/${joinGameInputRef.current.value}`}>create it?</Link>
+            <Link to={`/g/${joinGameInputRef.current.value}?deck=safe-for-work`}>create it?</Link>
           </GameExistsMessage>
         ) : (
           errorMsg.type === "join" &&
