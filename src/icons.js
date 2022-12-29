@@ -524,7 +524,7 @@ export const BackIcon = () => (
     width="24"
     height="24"
     viewBox="0 0 24 24"
-    style={{ transform: 'rotate(-180deg)' }}
+    style={{transform: 'rotate(-180deg)'}}
   >
     <path d="M12 2c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm2 12l-4.5 4.5 1.527 1.5 5.973-6-5.973-6-1.527 1.5 4.5 4.5z" />
   </svg>
@@ -563,13 +563,13 @@ export const Confetti = () => {
         <Animation transform="">
           <g transform="translate(0 280.64502622999976)">
             <g transform="translate(76.2029048431485 0)">
-              <g className="ld ld-fall" style={{ animationDuration: '4s' }}>
+              <g className="ld ld-fall" style={{animationDuration: '4s'}}>
                 <rect
                   x="-4.766917699735915"
                   y="-3.724911285515274"
                   width="9.53383539947183"
                   height="7.449822571030548"
-                  style={{ transform: 'scale(2.1307603942302493)' }}
+                  style={{transform: 'scale(2.1307603942302493)'}}
                   fill="#34bbe6"
                 ></rect>
               </g>
@@ -587,7 +587,7 @@ export const Confetti = () => {
                   y="-5.23057512338983"
                   width="10.770692798411972"
                   height="10.46115024677966"
-                  style={{ transform: 'scale(2.197907727729092)' }}
+                  style={{transform: 'scale(2.197907727729092)'}}
                   fill="#eb7532"
                 ></rect>
               </g>
@@ -605,7 +605,7 @@ export const Confetti = () => {
                   y="-4.51774604191513"
                   width="11.8351933048901"
                   height="9.03549208383026"
-                  style={{ transform: 'scale(3.161016626197947)' }}
+                  style={{transform: 'scale(3.161016626197947)'}}
                   fill="#e6261f"
                 ></rect>
               </g>
@@ -623,7 +623,7 @@ export const Confetti = () => {
                   y="-4.4359853657190165"
                   width="9.871518717828096"
                   height="8.871970731438033"
-                  style={{ transform: 'scale(2.143083943018241)' }}
+                  style={{transform: 'scale(2.143083943018241)'}}
                   fill="#d23be7"
                 ></rect>
               </g>
@@ -641,7 +641,7 @@ export const Confetti = () => {
                   y="-5.792892369613526"
                   width="11.75465378507102"
                   height="11.585784739227051"
-                  style={{ transform: 'scale(1.622749109220245)' }}
+                  style={{transform: 'scale(1.622749109220245)'}}
                   fill="#4355db"
                 ></rect>
               </g>
@@ -659,7 +659,7 @@ export const Confetti = () => {
                   y="-4.751648919600823"
                   width="7.011390522365426"
                   height="9.503297839201647"
-                  style={{ transform: 'scale(1.6292185027420265)' }}
+                  style={{transform: 'scale(1.6292185027420265)'}}
                   fill="#eb7532"
                 ></rect>
               </g>
@@ -677,7 +677,7 @@ export const Confetti = () => {
                   y="-3.4366623488460197"
                   width="6.790639143232545"
                   height="6.8733246976920395"
-                  style={{ transform: 'scale(1.747533585264248)' }}
+                  style={{transform: 'scale(1.747533585264248)'}}
                   fill="#d23be7"
                 ></rect>
               </g>
@@ -695,7 +695,7 @@ export const Confetti = () => {
                   y="-5.001523728022294"
                   width="10.682227005731102"
                   height="10.003047456044587"
-                  style={{ transform: 'scale(2.1751275615796217)' }}
+                  style={{transform: 'scale(2.1751275615796217)'}}
                   fill="#d23be7"
                 ></rect>
               </g>
@@ -713,7 +713,7 @@ export const Confetti = () => {
                   y="-5.953396594524586"
                   width="10.759644948525079"
                   height="11.906793189049171"
-                  style={{ transform: 'scale(2.9237102433014863)' }}
+                  style={{transform: 'scale(2.9237102433014863)'}}
                   fill="#4355db"
                 ></rect>
               </g>
@@ -731,7 +731,7 @@ export const Confetti = () => {
                   y="-3.07085784537849"
                   width="7.180318362483147"
                   height="6.14171569075698"
-                  style={{ transform: 'scale(1.8314767165361232)' }}
+                  style={{transform: 'scale(1.8314767165361232)'}}
                   fill="#e6261f"
                 ></rect>
               </g>
@@ -749,7 +749,7 @@ export const Confetti = () => {
                   y="-3.8261086152029247"
                   width="6.125981127299898"
                   height="7.652217230405849"
-                  style={{ transform: 'scale(2.1245527387942995)' }}
+                  style={{transform: 'scale(2.1245527387942995)'}}
                   fill="#4355db"
                 ></rect>
               </g>
@@ -767,7 +767,7 @@ export const Confetti = () => {
                   y="-5.70478297013469"
                   width="7.529164153440767"
                   height="11.40956594026938"
-                  style={{ transform: 'scale(3.0219071854295314)' }}
+                  style={{transform: 'scale(3.0219071854295314)'}}
                   fill="#d23be7"
                 ></rect>
               </g>
@@ -785,7 +785,7 @@ export const Confetti = () => {
                   y="-5.247411437061523"
                   width="8.878746980516976"
                   height="10.494822874123045"
-                  style={{ transform: 'scale(2.9996217441770923)' }}
+                  style={{transform: 'scale(2.9996217441770923)'}}
                   fill="#e6261f"
                 ></rect>
               </g>
@@ -803,7 +803,7 @@ export const Confetti = () => {
                   y="-3.159366225853575"
                   width="8.662095272619997"
                   height="6.31873245170715"
-                  style={{ transform: 'scale(3.430285106529233)' }}
+                  style={{transform: 'scale(3.430285106529233)'}}
                   fill="#e6261f"
                 ></rect>
               </g>
@@ -821,7 +821,7 @@ export const Confetti = () => {
                   y="-3.0336845405802433"
                   width="6.876760168637263"
                   height="6.067369081160487"
-                  style={{ transform: 'scale(3.356727549917121)' }}
+                  style={{transform: 'scale(3.356727549917121)'}}
                   fill="#e6261f"
                 ></rect>
               </g>
@@ -839,7 +839,7 @@ export const Confetti = () => {
                   y="-5.466915420778446"
                   width="11.198925265337348"
                   height="10.933830841556892"
-                  style={{ transform: 'scale(3.411664005259214)' }}
+                  style={{transform: 'scale(3.411664005259214)'}}
                   fill="#d23be7"
                 ></rect>
               </g>
@@ -857,7 +857,7 @@ export const Confetti = () => {
                   y="-4.539097708475467"
                   width="10.249720099691357"
                   height="9.078195416950933"
-                  style={{ transform: 'scale(3.080357051701965)' }}
+                  style={{transform: 'scale(3.080357051701965)'}}
                   fill="#d23be7"
                 ></rect>
               </g>
@@ -875,7 +875,7 @@ export const Confetti = () => {
                   y="-4.5937034382157185"
                   width="8.867223670827439"
                   height="9.187406876431437"
-                  style={{ transform: 'scale(1.5449802804899784)' }}
+                  style={{transform: 'scale(1.5449802804899784)'}}
                   fill="#eb7532"
                 ></rect>
               </g>
@@ -893,7 +893,7 @@ export const Confetti = () => {
                   y="-4.53108039680051"
                   width="11.854121462561942"
                   height="9.06216079360102"
-                  style={{ transform: 'scale(2.7288238761622727)' }}
+                  style={{transform: 'scale(2.7288238761622727)'}}
                   fill="#a3e048"
                 ></rect>
               </g>
@@ -911,7 +911,7 @@ export const Confetti = () => {
                   y="-3.710866378498138"
                   width="11.059001173219068"
                   height="7.421732756996276"
-                  style={{ transform: 'scale(2.432681944289455)' }}
+                  style={{transform: 'scale(2.432681944289455)'}}
                   fill="#f7d038"
                 ></rect>
               </g>
@@ -929,7 +929,7 @@ export const Confetti = () => {
                   y="-5.517587911370663"
                   width="11.863106293858287"
                   height="11.035175822741326"
-                  style={{ transform: 'scale(2.0555571130285837)' }}
+                  style={{transform: 'scale(2.0555571130285837)'}}
                   fill="#34bbe6"
                 ></rect>
               </g>
@@ -947,7 +947,7 @@ export const Confetti = () => {
                   y="-5.824924834703157"
                   width="8.345020204597988"
                   height="11.649849669406313"
-                  style={{ transform: 'scale(1.974070707032764)' }}
+                  style={{transform: 'scale(1.974070707032764)'}}
                   fill="#d23be7"
                 ></rect>
               </g>
@@ -965,7 +965,7 @@ export const Confetti = () => {
                   y="-3.5085869465315205"
                   width="6.032115368158921"
                   height="7.017173893063041"
-                  style={{ transform: 'scale(3.128453487798505)' }}
+                  style={{transform: 'scale(3.128453487798505)'}}
                   fill="#eb7532"
                 ></rect>
               </g>
@@ -983,7 +983,7 @@ export const Confetti = () => {
                   y="-3.531299668616427"
                   width="11.140018155064094"
                   height="7.062599337232854"
-                  style={{ transform: 'scale(3.4107272648618956)' }}
+                  style={{transform: 'scale(3.4107272648618956)'}}
                   fill="#e6261f"
                 ></rect>
               </g>
@@ -1001,7 +1001,7 @@ export const Confetti = () => {
                   y="-5.137204312598396"
                   width="11.13909976040916"
                   height="10.274408625196791"
-                  style={{ transform: 'scale(1.9230427441734217)' }}
+                  style={{transform: 'scale(1.9230427441734217)'}}
                   fill="#a3e048"
                 ></rect>
               </g>
@@ -1009,13 +1009,13 @@ export const Confetti = () => {
           </g>
           <g transform="translate(0 -694.3549737700002)">
             <g transform="translate(76.2029048431485 0)">
-              <g className="ld ld-fall" style={{ animationDuration: '4s' }}>
+              <g className="ld ld-fall" style={{animationDuration: '4s'}}>
                 <rect
                   x="-4.766917699735915"
                   y="-3.724911285515274"
                   width="9.53383539947183"
                   height="7.449822571030548"
-                  style={{ transform: 'scale(2.1307603942302493)' }}
+                  style={{transform: 'scale(2.1307603942302493)'}}
                   fill="#34bbe6"
                 ></rect>
               </g>
@@ -1033,7 +1033,7 @@ export const Confetti = () => {
                   y="-5.23057512338983"
                   width="10.770692798411972"
                   height="10.46115024677966"
-                  style={{ transform: 'scale(2.197907727729092)' }}
+                  style={{transform: 'scale(2.197907727729092)'}}
                   fill="#eb7532"
                 ></rect>
               </g>
@@ -1051,7 +1051,7 @@ export const Confetti = () => {
                   y="-4.51774604191513"
                   width="11.8351933048901"
                   height="9.03549208383026"
-                  style={{ transform: 'scale(3.161016626197947)' }}
+                  style={{transform: 'scale(3.161016626197947)'}}
                   fill="#e6261f"
                 ></rect>
               </g>
@@ -1069,7 +1069,7 @@ export const Confetti = () => {
                   y="-4.4359853657190165"
                   width="9.871518717828096"
                   height="8.871970731438033"
-                  style={{ transform: 'scale(2.143083943018241)' }}
+                  style={{transform: 'scale(2.143083943018241)'}}
                   fill="#d23be7"
                 ></rect>
               </g>
@@ -1087,7 +1087,7 @@ export const Confetti = () => {
                   y="-5.792892369613526"
                   width="11.75465378507102"
                   height="11.585784739227051"
-                  style={{ transform: 'scale(1.622749109220245)' }}
+                  style={{transform: 'scale(1.622749109220245)'}}
                   fill="#4355db"
                 ></rect>
               </g>
@@ -1105,7 +1105,7 @@ export const Confetti = () => {
                   y="-4.751648919600823"
                   width="7.011390522365426"
                   height="9.503297839201647"
-                  style={{ transform: 'scale(1.6292185027420265)' }}
+                  style={{transform: 'scale(1.6292185027420265)'}}
                   fill="#eb7532"
                 ></rect>
               </g>
@@ -1123,7 +1123,7 @@ export const Confetti = () => {
                   y="-3.4366623488460197"
                   width="6.790639143232545"
                   height="6.8733246976920395"
-                  style={{ transform: 'scale(1.747533585264248)' }}
+                  style={{transform: 'scale(1.747533585264248)'}}
                   fill="#d23be7"
                 ></rect>
               </g>
@@ -1141,7 +1141,7 @@ export const Confetti = () => {
                   y="-5.001523728022294"
                   width="10.682227005731102"
                   height="10.003047456044587"
-                  style={{ transform: 'scale(2.1751275615796217)' }}
+                  style={{transform: 'scale(2.1751275615796217)'}}
                   fill="#d23be7"
                 ></rect>
               </g>
@@ -1159,7 +1159,7 @@ export const Confetti = () => {
                   y="-5.953396594524586"
                   width="10.759644948525079"
                   height="11.906793189049171"
-                  style={{ transform: 'scale(2.9237102433014863)' }}
+                  style={{transform: 'scale(2.9237102433014863)'}}
                   fill="#4355db"
                 ></rect>
               </g>
@@ -1177,7 +1177,7 @@ export const Confetti = () => {
                   y="-3.07085784537849"
                   width="7.180318362483147"
                   height="6.14171569075698"
-                  style={{ transform: 'scale(1.8314767165361232)' }}
+                  style={{transform: 'scale(1.8314767165361232)'}}
                   fill="#e6261f"
                 ></rect>
               </g>
@@ -1195,7 +1195,7 @@ export const Confetti = () => {
                   y="-3.8261086152029247"
                   width="6.125981127299898"
                   height="7.652217230405849"
-                  style={{ transform: 'scale(2.1245527387942995)' }}
+                  style={{transform: 'scale(2.1245527387942995)'}}
                   fill="#4355db"
                 ></rect>
               </g>
@@ -1213,7 +1213,7 @@ export const Confetti = () => {
                   y="-5.70478297013469"
                   width="7.529164153440767"
                   height="11.40956594026938"
-                  style={{ transform: 'scale(3.0219071854295314)' }}
+                  style={{transform: 'scale(3.0219071854295314)'}}
                   fill="#d23be7"
                 ></rect>
               </g>
@@ -1231,7 +1231,7 @@ export const Confetti = () => {
                   y="-5.247411437061523"
                   width="8.878746980516976"
                   height="10.494822874123045"
-                  style={{ transform: 'scale(2.9996217441770923)' }}
+                  style={{transform: 'scale(2.9996217441770923)'}}
                   fill="#e6261f"
                 ></rect>
               </g>
@@ -1249,7 +1249,7 @@ export const Confetti = () => {
                   y="-3.159366225853575"
                   width="8.662095272619997"
                   height="6.31873245170715"
-                  style={{ transform: 'scale(3.430285106529233)' }}
+                  style={{transform: 'scale(3.430285106529233)'}}
                   fill="#e6261f"
                 ></rect>
               </g>
@@ -1267,7 +1267,7 @@ export const Confetti = () => {
                   y="-3.0336845405802433"
                   width="6.876760168637263"
                   height="6.067369081160487"
-                  style={{ transform: 'scale(3.356727549917121)' }}
+                  style={{transform: 'scale(3.356727549917121)'}}
                   fill="#e6261f"
                 ></rect>
               </g>
@@ -1285,7 +1285,7 @@ export const Confetti = () => {
                   y="-5.466915420778446"
                   width="11.198925265337348"
                   height="10.933830841556892"
-                  style={{ transform: 'scale(3.411664005259214)' }}
+                  style={{transform: 'scale(3.411664005259214)'}}
                   fill="#d23be7"
                 ></rect>
               </g>
@@ -1303,7 +1303,7 @@ export const Confetti = () => {
                   y="-4.539097708475467"
                   width="10.249720099691357"
                   height="9.078195416950933"
-                  style={{ transform: 'scale(3.080357051701965)' }}
+                  style={{transform: 'scale(3.080357051701965)'}}
                   fill="#d23be7"
                 ></rect>
               </g>
@@ -1321,7 +1321,7 @@ export const Confetti = () => {
                   y="-4.5937034382157185"
                   width="8.867223670827439"
                   height="9.187406876431437"
-                  style={{ transform: 'scale(1.5449802804899784)' }}
+                  style={{transform: 'scale(1.5449802804899784)'}}
                   fill="#eb7532"
                 ></rect>
               </g>
@@ -1339,7 +1339,7 @@ export const Confetti = () => {
                   y="-4.53108039680051"
                   width="11.854121462561942"
                   height="9.06216079360102"
-                  style={{ transform: 'scale(2.7288238761622727)' }}
+                  style={{transform: 'scale(2.7288238761622727)'}}
                   fill="#a3e048"
                 ></rect>
               </g>
@@ -1357,7 +1357,7 @@ export const Confetti = () => {
                   y="-3.710866378498138"
                   width="11.059001173219068"
                   height="7.421732756996276"
-                  style={{ transform: 'scale(2.432681944289455)' }}
+                  style={{transform: 'scale(2.432681944289455)'}}
                   fill="#f7d038"
                 ></rect>
               </g>
@@ -1375,7 +1375,7 @@ export const Confetti = () => {
                   y="-5.517587911370663"
                   width="11.863106293858287"
                   height="11.035175822741326"
-                  style={{ transform: 'scale(2.0555571130285837)' }}
+                  style={{transform: 'scale(2.0555571130285837)'}}
                   fill="#34bbe6"
                 ></rect>
               </g>
@@ -1393,7 +1393,7 @@ export const Confetti = () => {
                   y="-5.824924834703157"
                   width="8.345020204597988"
                   height="11.649849669406313"
-                  style={{ transform: 'scale(1.974070707032764)' }}
+                  style={{transform: 'scale(1.974070707032764)'}}
                   fill="#d23be7"
                 ></rect>
               </g>
@@ -1411,7 +1411,7 @@ export const Confetti = () => {
                   y="-3.5085869465315205"
                   width="6.032115368158921"
                   height="7.017173893063041"
-                  style={{ transform: 'scale(3.128453487798505)' }}
+                  style={{transform: 'scale(3.128453487798505)'}}
                   fill="#eb7532"
                 ></rect>
               </g>
@@ -1429,7 +1429,7 @@ export const Confetti = () => {
                   y="-3.531299668616427"
                   width="11.140018155064094"
                   height="7.062599337232854"
-                  style={{ transform: 'scale(3.4107272648618956)' }}
+                  style={{transform: 'scale(3.4107272648618956)'}}
                   fill="#e6261f"
                 ></rect>
               </g>
@@ -1447,7 +1447,7 @@ export const Confetti = () => {
                   y="-5.137204312598396"
                   width="11.13909976040916"
                   height="10.274408625196791"
-                  style={{ transform: 'scale(1.9230427441734217)' }}
+                  style={{transform: 'scale(1.9230427441734217)'}}
                   fill="#a3e048"
                 ></rect>
               </g>
@@ -1484,5 +1484,29 @@ export const DeleteIcon = () => (
   <svg viewBox="0 0 386.1 486" width="18">
     <path d="M328.5 52h-51.1c-2.5-29-27-52-56.8-52h-55.2c-29.8 0-54.2 23-56.8 52H57.5C26.1 52 0 77.7 0 109.1v43.7c0 9.4 8.1 17.2 17.5 17.2H38v258.9c0 31.4 25.1 57.1 56.6 57.1h196.9c31.4 0 56.6-25.7 56.6-57.1V170h20.5c9.4 0 17.5-7.8 17.5-17.2v-43.7C386 77.7 359.9 52 328.5 52zM165.4 34h55.2c11 0 20.2 8 22.5 18H142.9c2.3-10 11.5-18 22.5-18zM314 428.9c0 12.7-9.9 23.1-22.6 23.1H94.6C81.9 452 72 441.6 72 428.9V170h242v258.9zM352 136H34v-26.9C34 96.4 44.8 86 57.5 86h271c12.7 0 23.5 10.4 23.5 23.1V136z" />
     <path d="M244 396.6c9.4 0 17-7.6 17-17v-150c0-9.4-7.6-17-17-17s-17 7.6-17 17v150c0 9.4 7.6 17 17 17zM142 396.6c9.4 0 17-7.6 17-17v-150c0-9.4-7.6-17-17-17s-17 7.6-17 17v150c0 9.4 7.6 17 17 17z" />
+  </svg>
+);
+
+export const EditIcon = () => (
+  <svg
+    width={18}
+    viewBox="0 0 179.338 179.758"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path d="M172.686 31.36 148.608 7.28c-4.48-4.48-10.64-7.281-16.8-7.281-6.72 0-12.32 2.8-17.36 7.281L23.73 97.437c-.558.559-1.121 1.68-1.68 2.801l-21.84 70c-.558 2.238 0 5.04 1.68 7.281 1.121 1.121 3.36 2.239 5.04 2.239.558 0 1.679 0 2.238-.56l70-21.84c1.12-.558 2.238-1.12 2.8-1.679l90.16-90.16c9.52-9.523 9.52-24.64.559-34.16zm-48.719-14c2.238-2.24 4.48-3.36 7.281-3.36 2.801 0 5.04 1.12 7.282 2.8l7.28 7.282-89.042 88.477c-2.801-6.16-8.399-11.2-14-14.56zM36.608 155.68 23.73 142.8l10.078-33.039C41.088 112 46.127 118.16 46.127 126c0 3.922 2.8 6.719 6.719 6.719 7.84 0 14 5.04 16.238 12.32zm126-100.24L80.846 137.2c-2.8-6.16-8.398-11.199-14-14l88.48-88.48 7.281 7.281c3.918 2.797 3.918 9.52 0 13.438z" />
+  </svg>
+);
+
+export const CheckIcon = () => (
+  <svg
+    width={16}
+    viewBox="0 0 282.505 201.268"
+    xmlns="http://www.w3.org/2000/svg"
+    fill="#2cce9f"
+  >
+    <path
+      d="m277.552 33.566-150.12 162.82c-4.414 4.406-10.633 5.797-16.258 4.305-4.109-.125-8.187-1.715-11.328-4.856L4.901 100.897c-6.535-6.535-6.535-17.137 0-23.672l4.754-4.754c6.536-6.535 17.137-6.535 23.672 0l79.781 79.781 135.83-147.31c6.598-6.59 17.281-6.59 23.871 0l4.754 4.75c6.59 6.594 6.59 17.285-.008 23.875z"
+      fillRule="evenodd"
+    />
   </svg>
 );

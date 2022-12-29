@@ -85,9 +85,6 @@ const WhiteTable = styled.table`
     color: #fff;
     vertical-align: middle;
   }
-  tbody > tr > td {
-    padding: 0.5em 1em;
-  }
   p {
     margin: 0.25em 0;
   }
@@ -125,9 +122,6 @@ const GreenTable = styled.table`
   }
   td {
     vertical-align: middle;
-  }
-  tbody > tr > td {
-    padding: 0.5em 1em;
   }
   p {
     margin: 0.25em 0;
