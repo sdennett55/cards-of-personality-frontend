@@ -1,7 +1,7 @@
 export const SERVER_URL =
   process.env.NODE_ENV === "development"
     ? "http://localhost:3001"
-    : "https://cards-of-personality-backend-production.up.railway.app";
+    : "https://cards-of-personality-backend.onrender.com";
 
 export const CLIENT_URL =
   process.env.NODE_ENV === "development"
